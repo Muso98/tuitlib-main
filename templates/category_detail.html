@@ -1,0 +1,896 @@
+<!Doctype html>
+{% load static %}
+{% load i18n %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- Codezeel added -->
+	<link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,700" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="{% static "css/theme.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/font-awesome.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/front.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/myprestacomments.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/vews/front.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/psblog.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/lightbox.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/czcouponpop.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/views/front.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/jquery-ui.min.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/jquery.ui.theme.min.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/jquery.fancybox.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/nivo-slider.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/custom.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/index.css" %}">
+	<link rel="stylesheet" href="{% static "css/loadingspinner.css" %}">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+	      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+	<script type="text/javascript">
+        var buttoncompare_title_add = "Add to Compare";
+        var buttoncompare_title_remove = "Remove from Compare";
+        var buttonwishlist_title_add = "Add to Wishlist";
+        var buttonwishlist_title_remove = "Remove from WishList";
+        var comparator_max_item = 3;
+        var compared_products = [];
+        var isLogged = false;
+        var prestashop = {
+            "cart": {
+                "products": [],
+                "totals": {
+                    "total": {"type": "total", "label": "Total", "amount": 0, "value": "\u20ac0.00"},
+                    "total_including_tax": {
+                        "type": "total",
+                        "label": "Total (tax incl.)",
+                        "amount": 0,
+                        "value": "\u20ac0.00"
+                    },
+                    "total_excluding_tax": {
+                        "type": "total",
+                        "label": "Total (tax excl.)",
+                        "amount": 0,
+                        "value": "\u20ac0.00"
+                    }
+                },
+                "subtotals": {
+                    "products": {"type": "products", "label": "Subtotal", "amount": 0, "value": "\u20ac0.00"},
+                    "discounts": null,
+                    "shipping": {"type": "shipping", "label": "Shipping", "amount": 0, "value": "Free"},
+                    "tax": null
+                },
+                "products_count": 0,
+                "summary_string": "0 items",
+                "vouchers": {"allowed": 0, "added": []},
+                "discounts": [],
+                "minimalPurchase": 0,
+                "minimalPurchaseRequired": ""
+            },
+            "currency": {"name": "Euro", "iso_code": "EUR", "iso_code_num": "978", "sign": "\u20ac"},
+            "customer": {
+                "lastname": null,
+                "firstname": null,
+                "email": null,
+                "birthday": null,
+                "newsletter": null,
+                "newsletter_date_add": null,
+                "optin": null,
+                "website": null,
+                "company": null,
+                "siret": null,
+                "ape": null,
+                "is_logged": false,
+                "gender": {"type": null, "name": null},
+                "addresses": []
+            },
+            "language": {
+                "name": "English (English)",
+                "iso_code": "en",
+                "locale": "en-US",
+                "language_code": "en-us",
+                "is_rtl": "0",
+                "date_format_lite": "m\/d\/Y",
+                "date_format_full": "m\/d\/Y H:i:s",
+                "id": 1
+            },
+            "page": {
+                "title": "",
+                "canonical": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1",
+                "meta": {
+                    "title": "Cooking",
+                    "description": "The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable that it has a more-or-less normal distribution of letters.",
+                    "keywords": "",
+                    "robots": "index"
+                },
+                "page_name": "category",
+                "body_classes": {
+                    "lang-en": true,
+                    "lang-rtl": false,
+                    "country-DE": true,
+                    "currency-EUR": true,
+                    "layout-left-column": true,
+                    "page-category": true,
+                    "tax-display-enabled": true,
+                    "category-id-9": true,
+                    "category-Cooking": true,
+                    "category-id-parent-2": true,
+                    "category-depth-level-2": true
+                },
+                "admin_notifications": []
+            },
+            "shop": {
+                "name": "Bookrow - Book Store",
+                "logo": "\/prestashop\/PRS17\/PRS170418\/img\/demo-store-logo-1629801402.jpg",
+                "stores_icon": "\/prestashop\/PRS17\/PRS170418\/img\/logo_stores.png",
+                "favicon": "\/prestashop\/PRS17\/PRS170418\/img\/favicon.ico"
+            },
+            "urls": {
+                "base_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/",
+                "current_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1",
+                "shop_domain_url": "https:\/\/demo.codezeel.com",
+                "img_ps_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/",
+                "img_cat_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/c\/",
+                "img_lang_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/l\/",
+                "img_prod_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/",
+                "img_manu_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/m\/",
+                "img_sup_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/su\/",
+                "img_ship_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/s\/",
+                "img_store_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/st\/",
+                "img_col_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/co\/",
+                "img_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/themes\/Bookrow\/assets\/img\/",
+                "css_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/themes\/Bookrow\/assets\/css\/",
+                "js_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/themes\/Bookrow\/assets\/js\/",
+                "pic_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/upload\/",
+                "pages": {
+                    "address": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=address",
+                    "addresses": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=addresses",
+                    "authentication": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication",
+                    "cart": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=cart",
+                    "category": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=category",
+                    "cms": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=cms",
+                    "contact": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=contact",
+                    "discount": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=discount",
+                    "guest_tracking": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=guest-tracking",
+                    "history": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=history",
+                    "identity": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=identity",
+                    "index": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php",
+                    "my_account": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=my-account",
+                    "order_confirmation": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-confirmation",
+                    "order_detail": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-detail",
+                    "order_follow": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-follow",
+                    "order": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order",
+                    "order_return": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-return",
+                    "order_slip": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-slip",
+                    "pagenotfound": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=pagenotfound",
+                    "password": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=password",
+                    "pdf_invoice": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=pdf-invoice",
+                    "pdf_order_return": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=pdf-order-return",
+                    "pdf_order_slip": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=pdf-order-slip",
+                    "prices_drop": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=prices-drop",
+                    "product": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=product",
+                    "search": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=search",
+                    "sitemap": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=sitemap",
+                    "stores": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=stores",
+                    "supplier": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=supplier",
+                    "register": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&create_account=1",
+                    "order_login": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order&login=1"
+                },
+                "alternative_langs": {
+                    "en-us": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1",
+                    "fr-fr": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=3",
+                    "es-es": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=4",
+                    "de-de": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=5",
+                    "it-it": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=6",
+                    "pl-pl": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=7",
+                    "nl-nl": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=8",
+                    "ru-ru": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=9",
+                    "ar-sa": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=10"
+                },
+                "theme_assets": "\/prestashop\/PRS17\/PRS170418\/themes\/Bookrow\/assets\/",
+                "actions": {"logout": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?mylogout="},
+                "no_picture_image": {
+                    "bySize": {
+                        "cart_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-cart_default.jpg",
+                            "width": 85,
+                            "height": 123
+                        },
+                        "small_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-small_default.jpg",
+                            "width": 85,
+                            "height": 123
+                        },
+                        "home_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-home_default.jpg",
+                            "width": 277,
+                            "height": 400
+                        },
+                        "medium_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-medium_default.jpg",
+                            "width": 585,
+                            "height": 844
+                        },
+                        "large_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-large_default.jpg",
+                            "width": 693,
+                            "height": 1000
+                        }
+                    },
+                    "small": {
+                        "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-cart_default.jpg",
+                        "width": 85,
+                        "height": 123
+                    },
+                    "medium": {
+                        "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-home_default.jpg",
+                        "width": 277,
+                        "height": 400
+                    },
+                    "large": {
+                        "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-large_default.jpg",
+                        "width": 693,
+                        "height": 1000
+                    },
+                    "legend": ""
+                }
+            },
+            "configuration": {
+                "display_taxes_label": true,
+                "display_prices_tax_incl": true,
+                "is_catalog": false,
+                "show_prices": true,
+                "opt_in": {"partner": true},
+                "quantity_discount": {"type": "discount", "label": "Discount"},
+                "voucher_enabled": 0,
+                "return_enabled": 0
+            },
+            "field_required": [],
+            "breadcrumb": {
+                "links": [{
+                    "title": "Home",
+                    "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php"
+                }, {
+                    "title": "Cooking",
+                    "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1"
+                }], "count": 2
+            },
+            "link": {"protocol_link": "https:\/\/", "protocol_content": "https:\/\/"},
+            "time": 1706004804,
+            "static_token": "8bd9f42887793a736c2d38fd8a0dceff",
+            "token": "ef790335294386fee1fcfae858c954d8"
+        };
+        var productcompare_add = "The product has been added to list compare";
+        var productcompare_max_item = "You cannot add more than 3 product(s) to the product comparison";
+        var productcompare_remove = "The product was successfully removed from list compare";
+        var productcompare_url = "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?fc=module&module=stfeature&controller=productscompare&id_lang=1";
+        var productcompare_viewlistcompare = "View list compare";
+        var psr_icon_color = "#F19D76";
+        var wishlist_add = "The product was successfully added to your wishlist";
+        var wishlist_cancel_txt = "Cancel";
+        var wishlist_confirm_del_txt = "Delete selected item?";
+        var wishlist_del_default_txt = "Cannot delete default wishlist";
+        var wishlist_email_txt = "Email";
+        var wishlist_loggin_required = "You must be logged in to manage your wishlist";
+        var wishlist_ok_txt = "Ok";
+        var wishlist_quantity_required = "You must enter a quantity";
+        var wishlist_remove = "The product was successfully removed from your wishlist";
+        var wishlist_reset_txt = "Reset";
+        var wishlist_send_txt = "Send";
+        var wishlist_send_wishlist_txt = "Send wishlist";
+        var wishlist_url = "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?fc=module&module=stfeature&controller=mywishlist&id_lang=1";
+        var wishlist_viewwishlist = "View your wishlist";
+	</script>
+</head>
+<body id="category"
+      class="lang-en country-de currency-eur layout-left-column page-category tax-display-enabled category-id-9 category-cooking category-id-parent-2 category-depth-level-2">
+<main id="page">
+
+	<!-- header -->
+	<header id="header">
+            <div class="header-banner">
+            </div>
+            <div class="header-top">
+               <div class="header_logo">
+                  <a href="{% url "main" %}">
+                  <img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="Bookrow - Book Store">
+                  </a>
+               </div>
+               <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
+                    <span class="search_button"></span>
+                    <div class="search_toggle">
+                        <form method="get" action="{% url 'search' %}">
+                            <input type="hidden" name="controller" value="search">
+                            <input type="text" name="q" value="{{ request.GET.q|default_if_none:'' }}" placeholder="Search our catalog">
+                            <button type="submit"></button>
+                            <button type="button" class="voice-search-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+               </div>
+                
+                <style>
+                    /* Qidiruv vidjeti uchun maxsus CSS */
+                    #search_widget {
+                        position: relative;
+                        width: 100%;
+                        max-width: 400px;
+                        margin: auto;
+                    }
+                
+                    #search_widget .search_toggle {
+                        display: flex;
+                        align-items: center;
+                        background: #f8f9fa;
+                        border-radius: 8px;
+                        padding: 5px;
+                        border: 1px solid #ddd;
+                    }
+                
+                    #search_widget input[type="text"] {
+                        flex: 1;
+                        border: none;
+                        outline: none;
+                        padding: 8px;
+                        font-size: 16px;
+                    }
+                
+                    #search_widget button {
+                        background: #ff0000;
+                        border: none;
+                        color: white;
+                        padding: 8px 12px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                
+                    #search_widget button:hover {
+                        background: #b30000;
+                    }
+                    #search_widget {
+                        position: relative;
+                        width: 100%;
+                        max-width: 400px;
+                        margin: auto;
+                    }
+                    
+                    #search_widget .search_toggle {
+                        display: flex;
+                        align-items: center;
+                        background: #f8f9fa;
+                        border-radius: 8px;
+                        padding: 5px;
+                        border: 1px solid #ddd;
+                    }
+                    
+                    #search-input {
+                        flex: 1;
+                        border: none;
+                        outline: none;
+                        padding: 8px;
+                        font-size: 16px;
+                    }
+                    
+                    #search-form button[type="submit"] {
+                        background: #ff0026;
+                        border: none;
+                        color: white;
+                        padding: 8px 12px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                    
+                    #search-form button[type="submit"]:hover {
+                        background: #b30000;
+                    }
+                    
+                    .voice-search-btn {
+                        border: none;
+                        background-color: transparent;
+                        cursor: pointer;
+                        padding: 0;
+                        margin-left: 5px;
+                    }
+                </style>
+               <!-- /Block search module TOP -->
+               <div class="user-info dropdown js-dropdown">
+                  <span class="user-info-title expand-more _gray-darker" data-toggle="dropdown"><span class="account_text">{% if user.is_authenticated %}{{ user.first_name }} {{ user.last_name }}{% else %}My Account{% endif %}</span></span>
+                  <ul class="dropdown-menu">
+                     <li>
+                         {% if user.is_authenticated %}
+                            <!-- User is authenticated, show logout link or any other authenticated content -->
+	                         <li>
+	                            <a href="{% url "profile" %}" title="Profile">{% trans "Profile" %}</a>
+	                         </li>
+                            <li>
+                                <a href="{% url 'logout' %}" title="Logout">{% trans "Logout" %}</a>
+                            </li>
+
+                         {% else %}
+                            <!-- User is not authenticated, show login and register links -->
+                            <li>
+                                <a class="dropdown-item" href="{% url 'login' %}" title="Log in to your customer account" rel="nofollow">
+                                    <span>Sign in</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'register' %}" data-link-action="display-register-form">{% trans "Register" %}</a>
+                            </li>
+                        {% endif %}
+                  </ul>
+               </div>
+                <div class="language-selector" id="language-selector">
+	                <div class="language_block">
+		                {% get_current_language as CURRENT_LANGUAGE %}
+		                {% get_available_languages as AVAILABLE_LANGUAGES %}
+		                {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+		                <span class="language-title">{% trans "Til" %}:</span>
+		                <ul>
+			                {% for language in languages %}
+				                <li  {% if language.code == CURRENT_LANGUAGE %} class="current"{% endif %}>
+					                <a href="/{{ language.code }}/" class="language-item">{{ language.name_local }}</a>
+				                </li><br>
+			                {% endfor %}
+		                </ul>
+	                </div>
+                </div>
+               <div class="header-top-inner">
+                  <div class="text-xs-left mobile hidden-lg-up mobile-menu">
+                     <div class="menu-icon">
+                        <div class="cat-title">Menu</div>
+                     </div>
+                     <div id="mobile_top_menu_wrapper" class="row hidden-lg-up">
+                        <div class="mobile-menu-inner">
+                           <div class="menu-icon">
+                              <div class="cat-title">Menu</div>
+                           </div>
+                           <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="menu col-lg-12 js-top-menu position-static hidden-md-down" id="_desktop_top_menu">
+                     <ul class="top-menu  container" id="top-menu" data-depth="0">
+                        <li class="category" id="category-search">
+                            <a class="dropdown-item" href="{% url 'searching_dissertations' %}" data-depth="0">
+                                Dissertatsiyalar bazasi
+                            </a>
+                        </li>
+                        {% for category in categories %}
+                            <li class="category" id="category-6">
+                                <a
+                                   class="dropdown-item"
+                                   href="{% url "category" category.id %}" data-depth="0"
+                                   >
+                                   {{ category.name }}
+                                </a>
+                             </li>
+                        {% endfor %}
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </header>
+	<!-- end header -->
+	<aside id="notifications">
+		<div class="container">
+		</div>
+	</aside>
+	<section id="wrapper">
+		<nav data-depth="2" class="breadcrumb">
+			<div class="container">
+				<form action="{% url "search" %}" id="search-form">
+					<input name="q" type="text" placeholder="{% trans "Qidiruv" %}" autocomplete="off" autofocus>
+					<a id="submit-url" href="{% url "recog" %}"></a>
+					<button type="button" id="start-recording"><i id="mic-icon" class="fas fa-microphone"></i></button>
+					<!-- Button to start recording -->
+					<button type="button" id="stop-recording" style="display: none;"><i
+							class="fas fa-microphone-slash"></i></button>
+					<!-- Button to stop recording -->
+				</form>
+				<p class="info"></p>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div id="columns_inner">
+				<div id="left-column" class="col-xs-12" style="width:24.5%">
+
+					<div id="newproduct_block" class="block products-block">
+						<h4 class="block_title hidden-md-down">
+							{% trans "Eng ko'p yuklanganlar" %}
+						</h4>
+						<h4 class="block_title hidden-lg-up" data-target="#newproduct_block_toggle"
+						    data-toggle="collapse">
+							{% trans "Eng ko'p yuklanganlar" %}
+							<span class="pull-xs-right">
+                           <span class="navbar-toggler collapse-icons">
+                           <i class="fa-icon add"></i>
+                           <i class="fa-icon remove"></i>
+                           </span>
+                           </span>
+						</h4>
+						<div id="newproduct_block_toggle" class="block_content  collapse">
+							<ul class="products">
+								{% for download in downloads %}
+									<li class="product_item">
+										<div class="product-miniature js-product-miniature" data-id-product="33"
+										     data-id-product-attribute="305" itemscope>
+											<div class="product_thumbnail">
+												<a href="{% url "book" download.id %}"
+												   class="thumbnail product-image">
+												</a>
+											</div>
+											<div class="product-info">
+												<h1 class="h3 news_book" itemprop="name"><a href="{% url "book" download.id %}">{{ download.name }}</a></h1>
+											</div>
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
+
+						</div>
+					</div>
+					<!-- Block categories module -->
+
+					<!-- /Block categories module -->
+				</div>
+				<div id="content-wrapper" class="left-column col-xs-12 col-sm-8 col-md-9" style="width:75.5%">
+					<section id="main">
+						<input id="getCartLink" name="getCartLink" value="#" type="hidden">
+						<input id="getTokenId" name="getTokenId" value="8bd9f42887793a736c2d38fd8a0dceff" type="hidden">
+
+						<section id="products">
+							<div id="">
+								<div id="js-product-list-top" class="products-selection">
+									<div class="col-md-6 hidden-md-down total-products">
+										<ul class="display hidden-xs grid_list">
+											<li id="list"><a href="#" title="List">List</a></li>
+										</ul>
+										<p>{{ books.paginator.count }}</p>
+									</div>
+									<div class="col-md-6">
+
+									</div>
+									<div class="col-sm-12 hidden-lg-up showing">
+										Showing 1-12 of 15 item(s)
+									</div>
+								</div>
+							</div>
+{#							loading spinner#}
+							<div id="loading-spinner" class="spinner-container">
+								<div class="spinner"></div>
+							</div>
+
+							<div id="">
+								<div id="js-product-list">
+									<div class="products row">
+										<ul class="product_list gridcount list row">
+											{% for book in books %}
+												<li class="product_item col-lg-2 col-xs-12">
+													<div class="product-description center-block col-xs-4 col-xs-7 col-md-8">
+														<h3 class="h3 news_books" itemprop="name">
+															<a href="{% url "book" book.id %}">{{ book.name }}</a>
+														</h3>
+
+														<div class="product-detail" itemprop="description">
+															<p>{% trans "Authors" %}: {{ book.author }}</p>
+									                        <p>{% trans "Key words" %}: {{ book.key_words }}</p>
+									                        <p>{% trans "Published year" %}: {{ book.published_year }}</p>
+														</div>
+														<div class="outer-functional">
+															<div class="functional-buttons" style="text-align: left;">
+																<div class="product-actions">
+																	<form action="" method="post"
+																	      class="add-to-cart-or-refresh">
+																		<a class="btn btn-primary add-to-cart"
+																		   href="{% url "book" book.id %}">
+																			{% trans "Batafsil" %}
+																		</a>
+																	</form>
+																</div>
+
+															</div>
+														</div>
+													</div>
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+									<nav class="pagination">
+										<div class="col-md-4">
+											Resurslar: {{ books.number }}-{{ books.paginator.num_pages }}
+										</div>
+										<div class="col-md-8">
+											<ul class="page-list clearfix text-xs-right">
+												<li>
+													{% if books.has_previous %}
+														<a
+																rel=""
+																href="?page={{ books.previous_page_number }}"
+																class=""
+														>
+															<i class="fa fa-long-arrow-left"></i>
+														</a>
+													{% endif %}
+												</li>
+												<li class="current">
+													<a
+
+															href="?page={{ books.number }}"
+															class=""
+													>
+														{{ books.number }}
+													</a>
+												</li>
+
+												<li>
+													{% if books.has_next %}
+														<a
+																rel="next"
+																href="?page={{ books.next_page_number }}"
+																class=""
+														>
+															<i class="fa fa-long-arrow-right"></i>
+														</a>
+													{% endif %}
+												</li>
+											</ul>
+										</div>
+									</nav>
+								</div>
+							</div>
+							<div id="js-product-list-bottom">
+								<div id="js-product-list-bottom"></div>
+							</div>
+						</section>
+					</section>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- footer  -->
+	<footer id="footer">
+		<div class="footer-before">
+			<div class="container">
+			</div>
+		</div>
+		<div class="footer-container">
+			<div class="container">
+				<div class="row footer">
+					<div id="czfootercmsblock" class="footer-cms-block col-md-4 links block">
+						<div id="footerlogo">
+							<div class="footerdiv">
+								<div class="footerlogo"></div>
+								<div
+										class="footerdesc">{% trans "Oliy ta'lim muassasalarining yagona elektron kutubxona axborot tizimi" %}</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 links block">
+						<h3 class="h3 hidden-md-down">{% trans "Bo'limlar" %}</h3>
+						<div class="title h3 block_title hidden-lg-up" data-target="#footer_sub_menu_91655"
+						     data-toggle="collapse">
+							<span class="">{% trans "Bo'limlar" %}</span>
+							<span class="pull-xs-right">
+                          <span class="navbar-toggler collapse-icons">
+                          <i class="fa-icon add"></i>
+                          <i class="fa-icon remove"></i>
+                          </span>
+                          </span>
+						</div>
+						<ul id="footer_sub_menu_91655" class="collapse block_content">
+
+							<li>
+								<a
+										id="link-product-page-new-products-1"
+										class="cms-page-link"
+										href="#"
+										title="Our new products">
+									{% trans 'Yangiliklar' %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-product-page-best-sales-1"
+										class="cms-page-link"
+										href="#"
+										title="Our best sales">
+									{% trans "Bizning Jamoa" %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-static-page-contact-1"
+										class="cms-page-link"
+										href="#"
+										title="Use our form to contact us">
+									{% trans "Biz bilan bog'lanish" %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-static-page-sitemap-1"
+										class="cms-page-link"
+										href="#">
+									{% trans "Biz haqimizda" %}
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-4 links block">
+						<h3 class="h3 hidden-md-down">{% trans 'Resurslar' %}</h3>
+						<div class="title h3 block_title hidden-lg-up" data-target="#footer_sub_menu_23580"
+						     data-toggle="collapse">
+							<span class="">{% trans 'Resurslar' %}</span>
+							<span class="pull-xs-right">
+                          <span class="navbar-toggler collapse-icons">
+                          <i class="fa-icon add"></i>
+                          <i class="fa-icon remove"></i>
+                          </span>
+                          </span>
+						</div>
+						<ul id="footer_sub_menu_23580" class="collapse block_content">
+							<li>
+								<a
+										id="link-cms-page-1-2"
+										class="cms-page-link"
+										href="#"
+										title="Our terms and conditions of delivery">
+									{% trans 'Adabiyotlar' %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-cms-page-2-2"
+										class="cms-page-link"
+										href="#"
+										title="Legal notice">
+									{% trans 'Maqolalar' %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-cms-page-3-2"
+										class="cms-page-link"
+										href="#"
+										title="Our terms and conditions of use">
+									{% trans 'Dissertatsiyalar' %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-cms-page-4-2"
+										class="cms-page-link"
+										href="#"
+										title="Learn more about us">
+									{% trans 'Monografiyalar' %}
+								</a>
+							</li>
+
+						</ul>
+					</div>
+					<div class="block-contact col-md-4 links wrapper">
+						<h3 class="text-uppercase block-contact-title hidden-sm-down"><a href="#">Bog'lanish</a>
+						</h3>
+						<div class="title clearfix hidden-md-up" data-target="#block-contact_list"
+						     data-toggle="collapse">
+							<span class="h3">{% trans "Bog'lanish" %}</span>
+							<span class="pull-xs-right">
+                          <span class="navbar-toggler collapse-icons">
+                          <i class="fa-icon add"></i>
+                          <i class="fa-icon remove"></i>
+                          </span>
+                          </span>
+						</div>
+						<ul id="block-contact_list" class="collapse">
+							<li>
+								<i class="fa fa-map-marker"></i>
+								<span>{% trans "Manzil: Toshkent 100084, Amir Temur shox ko‘chasi 108 uy" %}</span>
+							</li>
+							<li>
+								<i class="fa fa-phone"></i>
+								<span>+998 90 716 10 67</span>
+							</li>
+							<li>
+								<i class="fa fa-envelope-o"></i>
+								<span>smartuit@gmail.com</span>
+							</li>
+						</ul>
+					</div>
+					<style>
+                        #cookie_notice {
+                            background: #222222;
+                            padding: 12px;
+                            text-align: center;
+                            color: #fff;
+                            z-index: 99;
+                            position: fixed;
+                            width: 100%;
+                            bottom: 0px;
+                            right: 0;
+                            left: 0;
+                        }
+
+                        #cookie_notice a {
+                            text-decoration: underline;
+                            color: #fff;
+                        }
+
+                        #cookie_notice a:hover {
+                            text-decoration: none;
+                        }
+
+                        .closeButtonNormal {
+                            text-align: center;
+                            padding: 2px 5px;
+                            border-radius: 2px;
+                            cursor: pointer;
+                        }
+
+                        #cookieNotice p {
+                            margin: 0px;
+                            padding: 0px;
+                        }
+
+                        .cookie-button {
+                            padding: 4px 13px;
+                            margin-left: 10px;
+                            font-size: 13px;
+                            background: #fff;
+                            color: #000;
+                            border-radius: 3px;
+                        }
+
+                        #footer {
+                            margin-bottom: 56px;
+                        }
+
+                        .top_button {
+                            bottom: 100px;
+                        }
+					</style>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="footer-after">
+			<div class="container">
+				<div class="copyright">
+					<a class="_blank" href="">
+						© 2024 - {% trans "O‘zbekiston Respublikasi Oliy ta'lim, fan va innovatsiyalar vazirligi" %}
+					</a>
+				</div>
+			</div>
+		</div>
+		<a class="top_button" href="#" style="">&nbsp;</a>
+	</footer>
+	<!-- end footer  -->
+</main>
+<script type="text/javascript" src="{% static "js/core.js" %}"></script>
+<script type="text/javascript" src="{% static "js/theme.js" %}"></script>
+<script type="text/javascript" src="{% static "js/front.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.rating.pack.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.textareaCounter.plugin.js" %}"></script>
+<script type="text/javascript" src="{% static "js/myprestacomments.js" %}"></script>
+<script type="text/javascript" src="{% static "js/stfeature_compare.js" %}"></script>
+<script type="text/javascript" src="{% static "js/stfeature_wishlist.js" %}"></script>
+<script type="text/javascript" src="{% static "js/czcouponpop.js" %}"></script>
+<script type="text/javascript" src="{% static "js/front.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.fancybox.js" %}"></script>
+<script type="text/javascript" src="{% static "js/ps_searchbar.js" %}"></script>
+<script type="text/javascript" src="{% static "js/ps_shoppingcart.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.nivo.slider.js" %}"></script>
+<script type="text/javascript" src="{% static "js/parallax.js" %}"></script>
+<script type="text/javascript" src="{% static "js/owl.carousel.js" %}"></script>
+<script type="text/javascript" src="{% static "js/totalstorage.js" %}"></script>
+<script type="text/javascript" src="{% static "js/lightbox.js" %}"></script>
+<script type="text/javascript" src="{% static "js/lazysizes.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/custom.js" %}"></script>
+<script src="{% static "js/index.js" %}"></script>
+</body>
+</html>

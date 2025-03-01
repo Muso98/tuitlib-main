@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Face ID Login</title>
+	<link rel="stylesheet" href="{% static 'css/faceid.css' %}">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="{% static "js/fingerprint.js" %}"></script>
+</head>
+<body>
+<div class="container">
+	<div id="loading" class="spinner-container">
+		<div class="spinner"></div>
+	</div>
+	<div class="face-id">
+		<h2>Face ID Login</h2>
+		<div class="video-container">
+			<video id="video" autoplay muted playsinline></video>
+		</div>
+		<a href="{% url "face" %}" id="submit-url"></a>
+		<button id="send-button" onclick="send()">Send Photo</button>
+	</div>
+</div>
+
+<script>
+    var face;
+    var video = document.querySelector("#video");
+    var interval;
+    var maxWidth = video.videoWidth;
+    var maxHeight = video.videoHeight;
+
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({video: true})
+            .then(function (stream) {
+                video.srcObject = stream;
+            })
+            .catch(function (err) {
+                console.log(err)
+            });
+    }
+
+    function resize(width, height) {
+        var maxWidth = 640; // O'zgartirishingiz mumkin
+        var maxHeight = 480; // O'zgartirishingiz mumkin
+        var aspectRatio = width / height;
+
+        if (width > maxWidth || height > maxHeight) {
+            if (aspectRatio > 1) {
+                width = maxWidth;
+                height = width / aspectRatio;
+            } else {
+                height = maxHeight;
+                width = height * aspectRatio;
+            }
+        }
+        return {width: width, height: height};
+    }
+
+    function capture() {
+        var canvas = document.createElement("canvas");
+        var size = resize(video.videoWidth, video.videoHeight);
+        canvas.width = size.width;
+        canvas.height = size.height;
+        var context = canvas.getContext("2d");
+        canvas.getContext('2d').drawImage(video, 0, 0, size.width, size.height);
+        var new_img = context.canvas.toDataURL('image/jpeg');
+        face = new_img.replace(/^data:.+;base64,/, '');
+    }
+
+    var fp = new Fingerprint({
+        canvas: true, ie_activex: true, screen_resolution: true
+    });
+
+    var uid = fp.get();
+
+    function send() {
+        capture();
+        var obj = {
+            image: face,
+	        uid: uid
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "face" %}',
+            data: obj,
+            dataType: 'json',
+            beforeSend: function () {
+                // Yuklash animatsiyasini chiqarish (masalan, loading spinner)
+                $('#loading').show();
+            },
+
+            success: function (data) {
+                if (data["success"] === false) {
+					window.location.href = data['url']
+                } else {
+                    window.location.href = data['url']
+                }
+            },
+
+            error: function (xhr, status, error) {
+                console.log("error", error)
+            },
+            complete: function () {
+                // Yuklash animatsiyasini yashirish
+                $('#loading').hide();
+            }
+        });
+    }
+</script>
+</body>
+</html>

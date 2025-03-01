@@ -1,0 +1,127 @@
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+ */
+
+.product-recommend{
+	box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
+	-webkit-box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
+	-o-box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
+	border-radius: 5px;
+	overflow: hidden;
+	padding: 10px 0;
+}
+.product-recommend-content{
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	-o-align-items: center;
+	align-items: center;
+}
+.product-notification .notify-close {
+	width: 27px;
+	height: 27px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 27px;
+	text-align: center;
+}
+.product-notification .notify-close,
+.product-notification .notify-close:hover{
+	color: #000;
+}
+.product-notification {
+	position: fixed;
+	width: 350px;
+	opacity: 0;
+	z-index: 999;
+	border-radius: 4px;
+	visibility: hidden;
+	transition: all ease 1s;
+	min-height: 115px;
+}
+.product-notification.active {
+	opacity: 1;
+	visibility: visible
+}
+.product-notification .product-recommend {
+	background: white;
+	width: 100%;
+}
+.product-notification .column-left {
+	padding: 0 10px;
+    width: 33.33333%;
+}
+.product-notification .column-right {
+	font-size: 13px;
+	color: #222222;
+	line-height: 24px;
+	padding: 0 10px;
+    width: 66.66666%;
+}
+.product-notification .column-right a.product-name {
+	color: #222222;
+	display: block;
+	text-transform: capitalize;
+	font-weight: 600;
+    line-height: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.product-notification .column-right a:hover{
+	color: #555555;
+}
+.product-notification .column-right .customer-detail{
+	text-transform: capitalize;
+}
+.product-notification .column-right .time-ago{
+	padding-bottom: 7px;
+}
+.product-notification .product-image {
+	display: block;
+    max-width: 95px;
+}
+.product-notification .product-image img{
+	width: 100%;
+}
+
+.lang-rtl .product-notification .notify-close{
+	right: auto;
+	left: 0;
+}
+
+@media (max-width: 380px) {
+	.product-notification {
+		left: 5px !important;
+		right: 5px !important;
+		width: auto;
+	}
+}

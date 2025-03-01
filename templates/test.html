@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Face snap</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div style="margin:0 auto; max-width: 480px;">
+    <div style="width: 100%;">
+        <div style="float: left; width: 50%;">
+            <div style="width: 100%; border: 1px dashed gray; padding-top: 100%; position: relative;">
+                <video id="video" style="max-width: 100%; max-height: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" autoplay="true"></video>
+            </div>
+        </div>
+        <div style="float: left; width: 50%; margin-left: -1px;">
+            <div style="float: left; width: 100%; border: 1px dashed gray; padding-top: 100%; position: relative;">
+                <img id="preview" src="{% static 'img/no-img.jpg' %}" style="max-width: 100%; max-height: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            </div>
+        </div>
+    </div>
+    <input type="file" id="face">
+    <button id="startBtn">Start</button>
+    <p>Замечания: <span id="warning">0</span></p>
+</div>
+
+<script>
+    var face1 = "";
+    var face2 = "";
+    var warning = 0;
+    var video = document.querySelector("#video");
+    var interval;
+
+    var maxWidth = 720;
+    var maxHeight = 1280;
+
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                video.srcObject = stream;
+            })
+            .catch(function (err0r) {
+                console.log("Something went wrong!");
+            });
+    }
+
+    function capture() {
+        var canvas = document.createElement("canvas");
+        var size = resize(video.videoWidth, video.videoHeight);
+        canvas.width = size.width;
+        canvas.height = size.height;
+        var context = canvas.getContext("2d");
+        canvas.getContext('2d').drawImage(video, 0, 0, size.width, size.height);
+        var new_img = context.canvas.toDataURL("image/jpeg");
+        $('#preview').attr('src', new_img);
+        face2 = new_img.replace(/^data:.+;base64,/, '');
+    }
+
+    function loadFace(obj){
+        var files = obj.files;
+        if(files.length > 0){
+            var reader = new FileReader();
+            reader.onloadend = function(){
+                var url = reader.result;
+                var img = document.createElement("img");
+                img.src = url;
+                img.onload = function(){
+                    var canvas = document.createElement("canvas");
+                    var size = resize(img.width, img.height);
+                    canvas.width = size.width;
+                    canvas.height = size.height;
+                    var context = canvas.getContext("2d");
+                    context.drawImage(img, 0, 0, size.width, size.height);
+                    var new_img = context.canvas.toDataURL("image/jpeg");
+                    $('#preview').attr('src', new_img);
+                    face1 = reader.result.replace(/^data:.+;base64,/, '');
+                }
+            }
+            reader.readAsDataURL(files[0]);
+        }
+    }
+
+    function send(){
+        capture();
+        var obj = {
+            image1: face1,
+            image2: face2
+        };
+        $.ajax({
+            type: 'POST',
+            url: '{% url "face_id" %}',
+            data: JSON.stringify(obj),
+            success: function(data) {
+                console.log(data);
+                var json = JSON.parse(data);
+                if(!json.is_same){
+                    warning++;
+                    $("#warning").html(warning);
+                    if(warning >= 3) stop();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    }
+
+    function start(){
+        interval = setInterval(send, 3000);
+    }
+
+    function stop(){
+        clearInterval(interval);
+        alert("Exit");
+    }
+
+    function resize(width, height){
+        if(width > maxWidth) {
+            var ratio = calculateAspectRatio(width, height, maxWidth, maxHeight);
+            width = ratio.width;
+            height = ratio.height;
+        }
+        if(height > maxHeight) {
+            var ratio = calculateAspectRatio(width, height, maxWidth, maxHeight);
+            width = ratio.width;
+            height = ratio.height;
+        }
+        return { width: width, height: height };
+    }
+
+    function calculateAspectRatio(srcWidth, srcHeight, maxWidth, maxHeight) {
+        var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+        return { width: srcWidth * ratio, height: srcHeight * ratio };
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+#overlay, #newsletter-main{
+    display: none;
+}
+.newsletter-main {
+    position: fixed;
+    right: 0;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    margin: 0 auto;
+    height: 400px;
+    min-width: 290px;
+    max-width: 860px;
+    width: 90%;
+    z-index: 99999;
+    background-color: #fff;
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+#overlay{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 99991;
+    opacity:0.7;
+    filter:alpha(opacity=80);
+    background: #000;
+    width: 100%;
+    height: 100%;
+}
+.right-block {
+    width: 56.9%;
+    float: left;
+    padding: 0 40px;
+}
+.left-block {
+    width: 43.1%;
+    float: left;
+}
+.left-block .cz-newsletter-popup img{
+    width: 100%;
+}
+.cz-newsletter-popup .inner{
+    position:  relative;
+	text-align:left;
+	width: 100%;
+    float: right;
+	}
+.newsletter-form .checkbox .checker{float:none;display:inline-block;}
+.dashed-border{
+    width: 100%;
+    float: left;
+    border: 1px solid #afafaf;
+    border-style: dashed;
+    position: relative;
+}
+.dashed-border:before {
+    content: "";
+    background-image: url(../img/shears.svg);
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    left: 10px;
+    bottom: -12px;
+}
+.cz-show-newsletter-popup{display:none;}
+.coupon-side{
+    width: 100%;
+    float: left; 
+    text-align: center;
+    margin-top: 15px;
+}
+.cz-newsletter-popup-close {
+    position: relative;
+}
+.cz-newsletter-popup-close .cz_close{
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    top: 0px;
+    right: 0px;
+    background-color: #000;
+}
+.cz_close .clear {
+    position: absolute;
+    color: #fff;
+    font-size: 20px;
+    left: 5px;
+    top: 3px;
+}
+.newsletter-content {
+    width: 100%;
+    float: left;
+    text-align: center;
+}
+.innerbox-newsletter .newsletter-text p {
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #555;
+    letter-spacing: 0.3px;
+    line-height: 22px;
+    font-weight: 400;
+    text-transform: none;
+}
+.innerbox-newsletter .newsletter_title {
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 24px;
+    margin: 50px 0 30px;
+    color: #000;
+}
+.cz-newsletter-popup .inner .newsletter-content{
+   	padding-left:25px;
+}
+.newsletter-checkbox{width: 100%; float: left;color:#fff;text-align: right; text-transform: initial;}
+.newsletter-checkbox .checkbox{    
+    color: #666;
+    position: absolute;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    line-height: 24px;
+    font-weight: 400;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    bottom: 0;
+    right: 10px;}
+#coupon-text-before,#coupon-text-after{
+    width: 100%;
+    float: left;
+    font-size:14px;
+    font-weight:400;
+    color:#000;
+    letter-spacing: 0.6px;
+    line-height: 24px;
+    margin: 5px 0;
+    text-transform: initial;
+}
+
+.newsletter-input-email{
+    color: #000;
+}
+#regisNewsletterMessage{
+    font-size: 13px;
+}
+#regisNewsletterMessage .alert-danger,
+#regisNewsletterMessage .alert-warning,
+#regisNewsletterMessage .alert-success {
+    margin: 0;
+    padding: 3px 10px;
+    width: 100%;
+    float: left;
+    font-size: 13px;
+    line-height: 26px;    
+    text-align: center;
+}
+#newsletter-main .newsletter-form{
+    width: 100%;
+    float: left;
+}
+.newsletter-input-email{
+    background: #fff;
+    padding: 7px 16px;
+    border: 1px solid #ccc;
+    height: 40px;
+    width: 100%;
+    font-size: 13px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+}
+
+.newsletter-input-email::placeholder{
+    color: #000;
+}
+.newsletter-input-email:focus{
+    border-color: #ccc;
+}
+.newsletter-form .button{
+    background: #ddd;
+    border: none;
+    font-size: 13px;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    padding: 9px 16px;
+    color: #000 !important;
+    text-transform: uppercase;
+    height: 34px;
+    line-height: initial;
+    border-radius: 0px;
+}
+.newsletter-form .button .arrow_forward {
+    position: relative;
+    display: none;
+}
+.newsletter-popup-form
+{
+    width: 100%;
+	position:relative;
+    margin:0 auto;
+	background: #fff;
+    float: left;
+    margin-bottom: 15px;
+}
+@media (max-width: 991px){
+    .left-block {
+        display: none;
+    }
+    .right-block {
+        width: 100%;
+    }
+    .newsletter-popup-form {width: 100%;}
+    .newsletter-main {
+        max-width: 100%;
+        width: 500px;
+    max-height: calc(100% - 30px);
+    overflow: auto;
+    height: auto;
+    }
+    .newsletter-checkbox .checkbox{    
+        position: static;
+    }
+.innerbox-newsletter .newsletter_title { 
+        margin-top: 30px;
+}
+}
+@media (max-width: 767px){
+	.cz-popup .inner{width:100%;}
+}  
+@media (max-width: 575px){
+    .newsletter-main {
+        max-width: 100%;
+        width: calc(100% - 30px);
+    }
+    .newsletter-form .button{
+        font-size:  0px;
+        background: none;
+        right: 0;
+        top: 0;
+        padding: 8px 6px;
+    }
+    .newsletter-form .button .arrow_forward {
+        display: block;
+    }
+}
+@media (max-width: 479px){
+    .right-block {
+        padding: 0px 15px;
+    }
+    .innerbox-newsletter .newsletter_title { 
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+} 
+
+.lang-rtl .newsletter-form .button{
+    right: auto;
+    left: 3px;
+}
+.lang-rtl .left-block{
+    float: right;
+}
+.lang-rtl .right-block{
+    float: left;
+}
+.lang-rtl .checkbox{
+    right: auto;
+    left: 10px;
+}
+.lang-rtl .cz-newsletter-popup-close .cz_close{
+    right: auto;
+    left: 0px;
+}

@@ -1,0 +1,558 @@
+<!doctype html>
+{% load i18n %}
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Smart TUIT</title>
+	<meta name="description" content="smarttuit Smart TUIT">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="{% static "css/theme.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/font-awesome.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/front.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/myprestacomments.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/vews/front.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/psblog.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/lightbox.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/czcouponpop.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/views/front.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/jquery-ui.min.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/jquery.ui.theme.min.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/jquery.fancybox.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/nivo-slider.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/custom.css" %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static "css/index.css" %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+	      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+	{% block head_js %}
+
+	{% endblock %}
+</head>
+<body id="index" class="lang-en country-de currency-eur layout-full-width page-index tax-display-enabled">
+<main id="page">
+	<!-- header -->
+	<header id="header">
+		<div class="header-banner">
+		</div>
+		<div class="header-top">
+			<div class="header_logo">
+				<a href="{% url "main" %}">
+					<img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="smarttuit logo">
+				</a>                
+			</div>
+            
+            <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
+                <span class="search_button"></span>
+                <div class="search_toggle">
+                    <form method="get" action="{% url 'search' %}">
+                        <input type="hidden" name="controller" value="search">
+                        <input type="text" name="q" value="{{ request.GET.q|default_if_none:'' }}" placeholder="Search our catalog">
+                        <button type="submit"></button>
+                        <button type="button" class="voice-search-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <style>
+                /* Qidiruv vidjeti uchun maxsus CSS */
+                #search_widget {
+                    position: relative;
+                    width: 100%;
+                    max-width: 400px;
+                    margin: auto;
+                }
+            
+                #search_widget .search_toggle {
+                    display: flex;
+                    align-items: center;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    padding: 5px;
+                    border: 1px solid #ddd;
+                }
+            
+                #search_widget input[type="text"] {
+                    flex: 1;
+                    border: none;
+                    outline: none;
+                    padding: 8px;
+                    font-size: 16px;
+                }
+            
+                #search_widget button {
+                    background: #ff0000;
+                    border: none;
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+            
+                #search_widget button:hover {
+                    background: #b30000;
+                }
+                #search_widget {
+                    position: relative;
+                    width: 100%;
+                    max-width: 400px;
+                    margin: auto;
+                }
+                
+                #search_widget .search_toggle {
+                    display: flex;
+                    align-items: center;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    padding: 5px;
+                    border: 1px solid #ddd;
+                }
+                
+                #search-input {
+                    flex: 1;
+                    border: none;
+                    outline: none;
+                    padding: 8px;
+                    font-size: 16px;
+                }
+                
+                #search-form button[type="submit"] {
+                    background: #ff0026;
+                    border: none;
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+                
+                #search-form button[type="submit"]:hover {
+                    background: #b30000;
+                }
+                
+                .voice-search-btn {
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
+                    padding: 0;
+                    margin-left: 5px;
+                }
+            </style>
+
+        
+			<!-- /Block search module TOP -->
+			<div class="user-info dropdown js-dropdown">
+				<span class="user-info-title expand-more _gray-darker" data-toggle="dropdown"><span
+						class="account_text">{% if user.is_authenticated %}{{ user.first_name }}
+					{{ user.last_name }}{% else %}Mening hisobim{% endif %}</span></span>
+				<ul class="dropdown-menu">
+					<li>
+						{% if user.is_authenticated %}
+							<!-- User is authenticated, show logout link or any other authenticated content -->
+							<li>
+								<a href="{% url "profile" %}" title="Profile">{% trans "Profil" %}</a>
+							</li>
+							<li>
+								<a href="{% url 'logout' %}" title="Logout">{% trans "Chiqish" %}</a>
+							</li>
+
+						{% else %}
+							<!-- User is not authenticated, show login and register links -->
+							<li>
+								<a class="dropdown-item" href="{% url 'login' %}"
+								   title="Log in to your customer account" rel="nofollow">
+									<span>{% trans "Kirish" %}</span>
+								</a>
+							</li>
+							<li>
+								<a href="{% url 'register' %}"
+								   data-link-action="display-register-form">{% trans "Ro'yxatdan o'tish" %}</a>
+							</li>
+						{% endif %}
+				</ul>
+			</div>
+			<div class="language-selector" id="language-selector">
+				<div class="language_block">
+					{% get_current_language as CURRENT_LANGUAGE %}
+					{% get_available_languages as AVAILABLE_LANGUAGES %}
+					{% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+					<span class="language-title">{% trans "Til" %}:</span>
+					<ul>
+						{% for language in languages %}
+							<li  {% if language.code == CURRENT_LANGUAGE %} class="current"{% endif %}>
+								<a href="/{{ language.code }}/" class="language-item">{{ language.name_local }}</a>
+							</li><br>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="header-top-inner">
+				<div class="text-xs-left mobile hidden-lg-up mobile-menu">
+					<div class="menu-icon">
+						<div class="cat-title">Menu</div>
+					</div>
+					<div id="mobile_top_menu_wrapper" class="row hidden-lg-up">
+						<div class="mobile-menu-inner">
+							<div class="menu-icon">
+								<div class="cat-title">Menu</div>
+							</div>
+							<div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+						</div>
+					</div>
+				</div>
+				<div class="menu col-lg-12 js-top-menu position-static hidden-md-down" id="_desktop_top_menu">
+					<ul class="top-menu container" id="top-menu" data-depth="0">
+                        <li class="category" id="category-search">
+                            <a class="dropdown-item" href="{% url 'searching_dissertations' %}" data-depth="0">
+                                Dissertatsiyalar bazasi
+                            </a>
+                        </li>
+                        {% for category in categories %}
+                            <li class="category" id="category-{{ category.id }}">
+                                <a class="dropdown-item" href="{% url 'category' category.id %}" data-depth="0">
+                                    {{ category.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	{% block content %}
+
+	{% endblock %}
+
+	<footer id="footer">
+		<div class="footer-before">
+			<div class="container">
+			</div>
+		</div>
+		<div class="footer-container">
+			<div class="container">
+				<div class="row footer">
+					<div id="czfootercmsblock" class="footer-cms-block col-md-4 links block">
+						<div id="footerlogo">
+							<div class="footerdiv">
+								<div class="footerlogo"></div>
+								<div
+										class="footerdesc">{% trans "Oliy ta'lim muassasalarining yagona elektron kutubxona axborot tizimi" %}</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 links block">
+						<h3 class="h3 hidden-md-down">{% trans "Bo'limlar" %}</h3>
+						<div class="title h3 block_title hidden-lg-up" data-target="#footer_sub_menu_91655"
+						     data-toggle="collapse">
+							<span class="">{% trans "Bo'limlar" %}</span>
+							<span class="pull-xs-right">
+                          <span class="navbar-toggler collapse-icons">
+                          <i class="fa-icon add"></i>
+                          <i class="fa-icon remove"></i>
+                          </span>
+                          </span>
+						</div>
+						<ul id="footer_sub_menu_91655" class="collapse block_content">
+
+							<li>
+								<a
+										id="link-product-page-new-products-1"
+										class="cms-page-link"
+										href="#"
+										title="Our new products">
+									{% trans 'Yangiliklar' %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-product-page-best-sales-1"
+										class="cms-page-link"
+										href="#"
+										title="Our best sales">
+									{% trans "Bizning Jamoa" %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-static-page-contact-1"
+										class="cms-page-link"
+										href="#"
+										title="Use our form to contact us">
+									{% trans "Biz bilan bog'lanish" %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-static-page-sitemap-1"
+										class="cms-page-link"
+										href="#">
+									{% trans "Biz haqimizda" %}
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-4 links block">
+						<h3 class="h3 hidden-md-down">{% trans 'Resurslar' %}</h3>
+						<div class="title h3 block_title hidden-lg-up" data-target="#footer_sub_menu_23580"
+						     data-toggle="collapse">
+							<span class="">{% trans 'Resurslar' %}</span>
+							<span class="pull-xs-right">
+                          <span class="navbar-toggler collapse-icons">
+                          <i class="fa-icon add"></i>
+                          <i class="fa-icon remove"></i>
+                          </span>
+                          </span>
+						</div>
+						<ul id="footer_sub_menu_23580" class="collapse block_content">
+							<li>
+								<a
+										id="link-cms-page-1-2"
+										class="cms-page-link"
+										href="#"
+										title="Our terms and conditions of delivery">
+									{% trans 'Adabiyotlar' %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-cms-page-2-2"
+										class="cms-page-link"
+										href="#"
+										title="Legal notice">
+									{% trans 'Maqolalar' %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-cms-page-3-2"
+										class="cms-page-link"
+										href="#"
+										title="Our terms and conditions of use">
+									{% trans 'Dissertatsiyalar' %}
+								</a>
+							</li>
+							<li>
+								<a
+										id="link-cms-page-4-2"
+										class="cms-page-link"
+										href="#"
+										title="Learn more about us">
+									{% trans 'Monografiyalar' %}
+								</a>
+							</li>
+
+						</ul>
+					</div>
+					<div class="block-contact col-md-4 links wrapper">
+						<h3 class="text-uppercase block-contact-title hidden-sm-down"><a href="#">Bog'lanish</a>
+						</h3>
+						<div class="title clearfix hidden-md-up" data-target="#block-contact_list"
+						     data-toggle="collapse">
+							<span class="h3">{% trans "Bog'lanish" %}</span>
+							<span class="pull-xs-right">
+                          <span class="navbar-toggler collapse-icons">
+                          <i class="fa-icon add"></i>
+                          <i class="fa-icon remove"></i>
+                          </span>
+                          </span>
+						</div>
+						<ul id="block-contact_list" class="collapse">
+							<li>
+								<i class="fa fa-map-marker"></i>
+								<span>{% trans "Manzil: Toshkent 100084, Amir Temur shox ko‘chasi 108 uy" %}</span>
+							</li>
+							<li>
+								<i class="fa fa-phone"></i>
+								<span>+998 90 716 10 67</span>
+							</li>
+							<li>
+								<i class="fa fa-envelope-o"></i>
+								<span>smartuit@gmail.com</span>
+							</li>
+						</ul>
+					</div>
+					<style>
+                        #cookie_notice {
+                            background: #222222;
+                            padding: 12px;
+                            text-align: center;
+                            color: #fff;
+                            z-index: 99;
+                            position: fixed;
+                            width: 100%;
+                            bottom: 0px;
+                            right: 0;
+                            left: 0;
+                        }
+
+                        #cookie_notice a {
+                            text-decoration: underline;
+                            color: #fff;
+                        }
+
+                        #cookie_notice a:hover {
+                            text-decoration: none;
+                        }
+
+                        .closeButtonNormal {
+                            text-align: center;
+                            padding: 2px 5px;
+                            border-radius: 2px;
+                            cursor: pointer;
+                        }
+
+                        #cookieNotice p {
+                            margin: 0px;
+                            padding: 0px;
+                        }
+
+                        .cookie-button {
+                            padding: 4px 13px;
+                            margin-left: 10px;
+                            font-size: 13px;
+                            background: #fff;
+                            color: #000;
+                            border-radius: 3px;
+                        }
+
+                        #footer {
+                            margin-bottom: 56px;
+                        }
+
+                        .top_button {
+                            bottom: 100px;
+                        }
+					</style>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="footer-after">
+			<div class="container">
+				<div class="copyright">
+					<a class="_blank" href="">
+						© 2024 - {% trans "O‘zbekiston Respublikasi Oliy ta'lim, fan va innovatsiyalar vazirligi" %}
+					</a>
+				</div>
+			</div>
+		</div>
+		<a class="top_button" href="#" style="">&nbsp;</a>
+	</footer>
+</main>
+<script>
+    const startRecordingButton = document.getElementById('start-recording');
+    const stopRecordingButton = document.getElementById('stop-recording');
+    const searchInput = document.querySelector('input[name="q"]');
+    const searchForm = document.getElementById('search-form');
+    const infoParagraph = document.querySelector('.info');
+    
+    if ('webkitSpeechRecognition' in window) {
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.lang = 'uz-UZ'; // O'zbek tili
+    
+        startRecordingButton.addEventListener('click', () => {
+            recognition.start();
+            startRecordingButton.style.display = 'none';
+            stopRecordingButton.style.display = 'inline-block';
+            infoParagraph.textContent = 'Ovoz yozilmoqda...';
+        });
+    
+        stopRecordingButton.addEventListener('click', () => {
+            recognition.stop();
+            stopRecordingButton.style.display = 'none';
+            startRecordingButton.style.display = 'inline-block';
+            infoParagraph.textContent = '';
+        });
+    
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+    
+            // Ovoz natijasini serverga yuborish
+            const formData = new FormData();
+            formData.append('recorded_audio', new Blob([transcript], { type: 'text/plain' }), 'transcript.txt');
+    
+            fetch("{% url 'recog' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken') // CSRF tokenini qo'shish
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    searchInput.value = data.word; // Qidiruv maydoniga natijani qo'yish
+                    searchForm.submit(); // Formani yuborish
+                } else {
+                    alert('Ovoz orqali qidirishda xatolik yuz berdi.');
+                }
+            })
+            .catch(error => {
+                console.error('Xatolik:', error);
+                alert('Ovoz orqali qidirishda xatolik yuz berdi.');
+            });
+        };
+    
+        recognition.onerror = (event) => {
+            console.error('Ovoz orqali qidirish xatosi:', event.error);
+            alert('Ovoz orqali qidirishda xatolik yuz berdi.');
+            stopRecordingButton.style.display = 'none';
+            startRecordingButton.style.display = 'inline-block';
+            infoParagraph.textContent = '';
+        };
+    } else {
+        startRecordingButton.style.display = 'none';
+        stopRecordingButton.style.display = 'none';
+        infoParagraph.textContent = 'Ovoz orqali qidirish qo\'llab-quvvatlanmaydi.';
+    }
+    
+    // CSRF tokenini olish funksiyasi
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% block javascript %}
+	<script type="text/javascript" src="{% static "js/core.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/theme.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/front.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/jquery.rating.pack.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/jquery.textareaCounter.plugin.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/myprestacomments.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/stfeature_compare.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/stfeature_wishlist.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/czcouponpop.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/front.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/jquery.fancybox.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/ps_shoppingcart.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/jquery.nivo.slider.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/parallax.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/owl.carousel.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/totalstorage.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/lightbox.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/lazysizes.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/custom.js" %}"></script>
+	<script src="{% static "js/index.js" %}"></script>
+{% endblock %}
+</body>
+</html>

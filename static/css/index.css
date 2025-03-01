@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+
+
+/* .container {
+  padding: 30px 50px;
+} */
+#search-form {
+  width: 60%;
+  margin: 0 auto;
+  position: relative;
+}
+#search-form input {
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 10px 15px;
+  border: 2px solid #ccc;
+  border-radius: 7px;
+  background-color: transparent;
+  color: #fff;
+}
+#search-form input:focus-visible{
+  color: #fff;
+  border: #fff solid 1px;
+}
+#search-form input[type="text"]:focus-visible {
+  
+  border: 2px solid red !important;
+  
+}
+#search-form button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  width: 3.3rem;
+  text-align: center;
+  font-size: 1.75rem;
+  cursor: pointer;
+  color: #fff;
+}
+.info {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 1200px) {
+  #search-form { width: 50%; }
+}
+@media (max-width: 768px) {
+  .container { padding: 30px 35px; }
+  #search-form { width: 100%; }
+  .info { font-size: 0.5rem; }
+}
+.product-info .news_book{
+  font-size: 14px !important;
+  font-weight: normal !important;
+  color: #000000;
+  line-height: normal;
+  /* height: 90px;  */
+  overflow: hidden;
+  /* text-align: center; */
+  font-family: 'Libre Baskerville', serif !important;
+}
+.product-description .news_books{
+  font-size: 14px !important;
+  font-weight: normal !important;
+  color: #000000;
+  line-height: normal;
+  font-family: 'Libre Baskerville', serif !important;
+  height: 73px !important; 
+  overflow: hidden !important; 
+  font-weight: 400 !important;
+  text-align: center; 
+  text-transform:inherit;
+  
+}
+.product-description .news_books_adab{
+  font-size: 18px !important;
+  font-weight: normal !important;
+  color: #000000;
+  line-height: normal;
+  font-family: 'Libre Baskerville', serif !important;
+  /* height: 73px !important;  */
+  overflow: hidden !important; 
+  font-weight: 400 !important;
+  text-align: center; 
+  text-transform:inherit;
+}
+.product_list .thumbnail-container {
+  height: 390px;
+}
+@media (max-width: 661px) {
+  .product_list .thumbnail-container {
+    height: 290px !important;
+  }
+  
+}

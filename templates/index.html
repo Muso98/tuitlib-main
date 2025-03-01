@@ -1,0 +1,591 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block head_js %}
+	<script type="text/javascript">
+        var buttoncompare_title_add = "Add to Compare";
+        var buttoncompare_title_remove = "Remove from Compare";
+        var buttonwishlist_title_add = "Add to Wishlist";
+        var buttonwishlist_title_remove = "Remove from WishList";
+        var comparator_max_item = 3;
+        var compared_products = [];
+        var isLogged = false;
+        var prestashop = {
+            "cart": {
+                "products": [],
+                "totals": {
+                    "total": {
+                        "type": "total",
+                        "label": "Total",
+                        "amount": 0,
+                        "value": "\u20ac0.00"
+                    },
+                    "total_including_tax": {
+                        "type": "total",
+                        "label": "Total (tax incl.)",
+                        "amount": 0,
+                        "value": "\u20ac0.00"
+                    },
+                    "total_excluding_tax": {
+                        "type": "total",
+                        "label": "Total (tax excl.)",
+                        "amount": 0,
+                        "value": "\u20ac0.00"
+                    }
+                },
+
+                "language": {
+                    "name": "English (English)",
+                    "iso_code": "en",
+                    "locale": "en-US",
+                    "language_code": "en-us",
+                    "is_rtl": "0",
+                    "date_format_lite": "m\/d\/Y",
+                    "date_format_full": "m\/d\/Y H:i:s",
+                    "id": 1
+                },
+                "page": {
+                    "title": "",
+                    "canonical": null,
+                    "meta": {
+                        "title": "Bookrow - Book Store",
+                        "description": "Shop powered by PrestaShop",
+                        "keywords": "",
+                        "robots": "index"
+                    },
+                    "page_name": "index",
+                    "body_classes": {
+                        "lang-en": true,
+                        "lang-rtl": false,
+                        "country-DE": true,
+                        "currency-EUR": true,
+                        "layout-full-width": true,
+                        "page-index": true,
+                        "tax-display-enabled": true
+                    },
+                    "admin_notifications": []
+                },
+
+
+                "no_picture_image": {
+                    "bySize": {
+                        "cart_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-cart_default.jpg",
+                            "width": 85,
+                            "height": 123
+                        },
+                        "small_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-small_default.jpg",
+                            "width": 85,
+                            "height": 123
+                        },
+                        "home_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-home_default.jpg",
+                            "width": 277,
+                            "height": 400
+                        },
+                        "medium_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-medium_default.jpg",
+                            "width": 585,
+                            "height": 844
+                        },
+                        "large_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-large_default.jpg",
+                            "width": 693,
+                            "height": 1000
+                        }
+                    },
+                    "small": {
+                        "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-cart_default.jpg",
+                        "width": 85,
+                        "height": 123
+                    },
+                    "medium": {
+                        "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-home_default.jpg",
+                        "width": 277,
+                        "height": 400
+                    },
+                    "large": {
+                        "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-large_default.jpg",
+                        "width": 693,
+                        "height": 1000
+                    },
+                    "legend": ""
+                }
+            },
+            "configuration": {
+                "display_taxes_label": true,
+                "display_prices_tax_incl": true,
+                "is_catalog": false,
+                "show_prices": true,
+                "opt_in": {
+                    "partner": true
+                },
+                "quantity_discount": {
+                    "type": "discount",
+                    "label": "Discount"
+                },
+                "voucher_enabled": 0,
+                "return_enabled": 0
+            },
+            "field_required": [],
+            "breadcrumb": {
+                "links": [{
+                    "title": "Home",
+                    "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php"
+                }],
+                "count": 1
+            },
+
+
+        };
+        var productcompare_add = "The product has been added to list compare";
+        var productcompare_max_item = "You cannot add more than 3 product(s) to the product comparison";
+        var productcompare_remove = "The product was successfully removed from list compare";
+        var productcompare_url = "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?fc=module&module=stfeature&controller=productscompare&id_lang=1";
+        var productcompare_viewlistcompare = "View list compare";
+        var psr_icon_color = "#F19D76";
+        var wishlist_add = "The product was successfully added to your wishlist";
+        var wishlist_cancel_txt = "Cancel";
+        var wishlist_confirm_del_txt = "Delete selected item?";
+        var wishlist_del_default_txt = "Cannot delete default wishlist";
+        var wishlist_email_txt = "Email";
+        var wishlist_loggin_required = "You must be logged in to manage your wishlist";
+        var wishlist_ok_txt = "Ok";
+        var wishlist_quantity_required = "You must enter a quantity";
+        var wishlist_remove = "The product was successfully removed from your wishlist";
+        var wishlist_reset_txt = "Reset";
+        var wishlist_send_txt = "Send";
+        var wishlist_send_wishlist_txt = "Send wishlist";
+        var wishlist_url = "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?fc=module&module=stfeature&controller=mywishlist&id_lang=1";
+        var wishlist_viewwishlist = "View your wishlist";
+	</script>
+{% endblock %}
+{% block content %}
+	<aside id="notifications">
+		<div class="container">
+		</div>
+	</aside>
+
+	<section id="wrapper">
+		<nav data-depth="1" class="breadcrumb">
+			<div class="container">
+				<ol itemscope itemtype="#">
+					<li itemprop="itemListElement" itemscope itemtype="#">
+						<a itemprop="item" href="#">
+							<span itemprop="name">Home</span>
+						</a>
+						<meta itemprop="position" content="1">
+					</li>
+				</ol>
+			</div>
+		</nav>
+		<div class="home-container">
+			<div id="columns_inner">
+				<div id="content-wrapper">
+					<section id="main">
+						<section id="content" class="page-home">
+							<div class="display-top-inner">
+								<div class="czhomeslider">
+									<div class="loadingdiv spinner"></div>
+									<div id="nivoslider" class="nivoSlider" data-interval="8000" data-pause="true">
+										<a href="#" title="sample-1">
+											<img src="{% static "img/views/tuit1.png" %}"
+											     data-thumb="{% static "img/views/sample-1.jpg" %}" alt="sample-1"
+											     title="Sample 1"/>
+										</a>
+										<a href="#" title="sample-1">
+											<img src="{% static "img/views/tuit2.png" %}"
+											     data-thumb="{% static "img/views/sample-1.jpg" %}" alt="sample-1"
+											     title="Sample 1"/>
+										</a>
+										<a href="#" title="sample-2">
+											<img src="{% static "img/views/tuit3.png" %}"
+											     data-thumb="{% static "img/views/sample-2.jpg" %}" alt="sample-2"
+											     title="Sample 2"/>
+										</a>
+										<a href="#" title="sample-1">
+											<img src="{% static "img/views/tuit4.png" %}"
+											     data-thumb="{% static "img/views/sample-1.jpg" %}" alt="sample-1"
+											     title="Sample 1"/>
+										</a>
+										<a href="#" title="sample-2">
+											<img src="{% static "img/views/tuit5.png" %}"
+											     data-thumb="{% static "img/views/sample-2.jpg" %}" alt="sample-2"
+											     title="Sample 2"/>
+										</a>
+									</div>
+								</div>
+							</div>
+							<section class="newproducts clearfix">
+								<div class="container">
+									<h2 class="h1 products-section-title ">
+										{% trans "Ommabop adabiyotlar" %}
+									</h2>
+									<div class="newproducts-wrapper">
+										<div class="products">
+											<!-- Define Number of product for SLIDER -->
+											<ul id="newproduct-carousel" class="cz-carousel product_list">
+												{% for adabiyot in Adabiyotlar %}
+													<li class="item">
+														<div class="product-miniature js-product-miniature"
+														     data-id-product="33" data-id-product-attribute="305"
+														     itemscope itemtype="http://schema.org/Product">
+															<div class="thumbnail-container">
+																<a href="{% url "book" adabiyot.id %}"
+																   class="thumbnail product-thumbnail">
+																	<img
+																			class="lazyload"
+																			data-src="{{ adabiyot.image.url }}"
+																			alt="The art of social media"
+																			data-full-size-image-url="{{ adabiyot.image.url }}"
+																	>
+																</a>
+																<ul class="product-flags">
+
+																	<li class="new">{% trans "Yangi" %}</li>
+																</ul>
+															</div>
+															<div class="product-description">
+
+																<h1 class="h3 news_books_adab" itemprop="name"><a
+																		href="{% url "book" adabiyot.id %}">{{ adabiyot.name }} </a>
+																</h1>
+
+																<div class="outer-functional">
+																	<div class="functional-buttons">
+																		<div class="product-actions">
+																			<form action="" method="post"
+																			      class="add-to-cart-or-refresh">
+
+																				<a href="{% url "book" adabiyot.id %}"
+																				   class="btn btn-primary add-to-cart">
+																					{% trans "Batafsil" %}
+																				</a>
+																			</form>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</li>
+												{% endfor %}
+											</ul>
+											<div class="customNavigation">
+												<a class="btn prev newproduct_prev">Prev</a>
+												<a class="btn next newproduct_next">Next</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							{% comment %} <div id="czbannercmsblock" class="block czbanners">
+                              <div class="czbanner_container">
+                                 <div class="cmsbanners">
+                                    <div class="one-third cmsbanner-part1">
+                                       <div class="cmsbanner-inner">
+                                          <div class="cmsbanner cmsbanner1">
+                                             <a href="#" class="banner-anchor"><img src="{% static "img/cms/cms-banner-1.jpg" %}" alt="cms-banner1" class="banner-image1" /></a>
+                                             <div class="cmsbanner-detail">
+                                                <div class="offer-title">The Good Dog</div>
+                                                <div class="main-title">Red Wolves Club</div>
+                                                <div class="shopnow"><a class="shop-now" href="#">Shop Now</a></div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="one-third cmsbanner-part2">
+                                       <div class="cmsbanner-inner">
+                                          <div class="cmsbanner cmsbanner2">
+                                             <a href="#" class="banner-anchor"><img src={% static "img/cms/cms-banner-2.jpg" %} alt="cms-banner2" class="banner-image2" /></a>
+                                             <div class="cmsbanner-detail">
+                                                <div class="offer-title">Summer Book Lover</div>
+                                                <div class="main-title">Big Sale Offer</div>
+                                                <div class="sub-title">Flat 50% Discount</div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="one-third cmsbanner-part3">
+                                       <div class="cmsbanner-inner">
+                                          <div class="cmsbanner cmsbanner3">
+                                             <a href="#" class="banner-anchor"><img src="{% static "img/cms/cms-banner-3.jpg" %}" alt="cms-banner3" class="banner-image3" /></a>
+                                             <div class="cmsbanner-detail">
+                                                <div class="offer-title">Of The Month</div>
+                                                <div class="main-title">Professional Book</div>
+                                                <div class="shopnow"><a class="shop-now" href="#">Shop Now</a></div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div> {% endcomment %}
+							<section class="featured-products clearfix">
+								<div class="container">
+									<h2 class="h1 products-section-title text-uppercase">
+										{% trans "Ommabop Jurnallar" %}
+									</h2>
+									<div class="featured-products-wrapper">
+										<div class="products">
+											<!-- Define Number of product for SLIDER -->
+											<ul id="feature-carousel" class="cz-carousel product_list">
+												{% for jurnal in Jurnallar %}
+													<li class="item">
+														<div class="product-miniature js-product-miniature"
+														     data-id-product="1" data-id-product-attribute="40"
+														     itemscope itemtype="http://schema.org/Product">
+															<div class="thumbnail-container" style="height: 400px">
+																<a href="{% url "book" jurnal.id %}"
+																   class="thumbnail product-thumbnail">
+																	<img
+																			class="lazyload"
+																			data-src="{{ jurnal.image.url }}"
+																			alt="Amor es relacion kevelation"
+																			data-full-size-image-url="{{ jurnal.image.url }}"
+																	>
+																</a>
+																<ul class="product-flags">
+																	<li class="new">{% trans "Yangi" %}</li>
+																</ul>
+															</div>
+															<div class="product-description">
+
+																<h1 class="h3 news_books_adab" itemprop="name"><a
+																		href="{% url "book" jurnal.id %}">{{ jurnal.name }}</a>
+																</h1>
+																<div class="outer-functional">
+																	<div class="functional-buttons">
+																		<div class="product-actions">
+																			<form action="#" method="post"
+																			      class="add-to-cart-or-refresh">
+																				<input type="hidden" name="token"
+																				       value="8bd9f42887793a736c2d38fd8a0dceff">
+																				<input type="hidden" name="id_product"
+																				       value="1"
+																				       class="product_page_product_id">
+																				<input type="hidden"
+																				       name="id_customization" value="0"
+																				       class="product_customization_id">
+																				<a class="btn btn-primary add-to-cart"
+																				   href="{% url "book" jurnal.id %}">
+																					{% trans "Batafsil" %}
+																				</a>
+																			</form>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</li>
+												{% endfor %}
+											</ul>
+											<div class="customNavigation">
+												<a class="btn prev feature_prev">&nbsp;</a>
+												<a class="btn next feature_next">&nbsp;</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<div id="czparallaxcmsblock" class="block czparallax">
+								<div class="parallax czparallax_1"
+								     data-source-url="{% static "/img/tuit_slide_four.jpg" %}">
+									<div class="parallax_container container">
+										<div class="parallax-text">
+											{% comment %} <div class="offer-title">Our Featured Book</div> {% endcomment %}
+											<div class="mainheadding"
+											     style="font-size:40px  ;">{% trans "Muhammad al-Xorazmiy nomidagi Toshkent Axborot Texnologiyalari Universiteti" %}</div>
+											{% comment %} <div class="shopnow"><a href="https://tuit.uz/" target="_blank" class="shopnow-button btn btn-primary" style="text-transform:none;">Rasmiy sayt o'tish</a></div> {% endcomment %}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="container">
+								<section class="special-products">
+									<div class="block">
+										<h2 class="h1 products-section-title text-uppercase">
+											{% trans "Ommabop dissertatsiya" %}
+										</h2>
+										<div class="block_content">
+											<div class="special-products-wrapper">
+												<div class="products">
+													<!-- Define Number of product for SLIDER -->
+													<ul id="special-carousel" class="cz-carousel product_list">
+														{% for dissertatsiya in Dissertatsiyalar %}
+															<li class="item">
+																<div class="product-miniature js-product-miniature"
+																     data-id-product="1" data-id-product-attribute="40"
+																     itemscope itemtype="http://schema.org/Product">
+																	<div class="thumbnail-container">
+																		<a href="{% url "book" dissertatsiya.id %}"
+																		   class="thumbnail product-thumbnail">
+																			<img
+																					class="lazyload"
+																					data-src="{{ dissertatsiya.image.url }}"
+																					alt="Amor es relacion kevelation"
+																					data-full-size-image-url="{{ dissertatsiya.image.url }}"
+																			>
+																		</a>
+																		<ul class="product-flags">
+																			<li class="new">{% trans "Yangi" %}</li>
+																		</ul>
+																	</div>
+																	<div class="product-description">
+																		<h1 class="h3 news_books" itemprop="name"><a
+																				href="{% url "book" dissertatsiya.id %}">{{ dissertatsiya.name }} </a>
+																		</h1>
+																		<div class="outer-functional">
+																			<div class="functional-buttons">
+																				<div class="functional-buttons">
+																					<div class="product-actions">
+																						<form action="#" method="post"
+																						      class="add-to-cart-or-refresh">
+																							<input type="hidden"
+																							       name="token"
+																							       value="8bd9f42887793a736c2d38fd8a0dceff">
+																							<input type="hidden"
+																							       name="id_product"
+																							       value="1"
+																							       class="product_page_product_id">
+																							<input type="hidden"
+																							       name="id_customization"
+																							       value="0"
+																							       class="product_customization_id">
+																							<a class="btn btn-primary add-to-cart"
+																							   href="{% url "book" dissertatsiya.id %}">
+																								{% trans "Batafsil" %}
+																							</a>
+																						</form>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</li>
+														{% endfor %}
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+							</div>
+							<section class="brands">
+								<div class="container">
+									<div class="products">
+										<!-- Define Number of product for SLIDER -->
+										<div class="customNavigation">
+											<a class="btn prev brand_prev">&nbsp;</a>
+											<a class="btn next brand_next">&nbsp;</a>
+										</div>
+										<ul id="brand-carousel" class="cz-carousel product_list">
+											<li class="item">
+												<div class="brand-image">
+													<a href="https://edu.uz/uz#gsc.tab=0" target="_blank"
+													   title="Oliy va o'rta maxsus ta'lim vazirligi">
+														<img class="lazyload"
+														     data-src="{% static "img/logolar/oliy_talim.png" %}"
+														     alt="Oliy va o'rta maxsus ta'lim vazirligi"/>
+													</a>
+
+												</div>
+											</li>
+											<li class="item">
+												<div class="brand-image">
+													<a href="https://digital.uz/" target="_blank"
+													   title="Raqamli texnologiyalar vazirligi ">
+														<img class="lazyload"
+														     data-src="{% static "img/logolar/raqamli.png" %}"
+														     alt="Raqamli texnologiyalar vazirligi "/>
+													</a>
+												</div>
+											</li>
+											<li class="item">
+												<div class="brand-image">
+													<a href="https://uzedu.uz/uz" target="_blank"
+													   title="Maktab va maktabgacha ta'lim vazirligi ">
+														<img class="lazyload"
+														     data-src="{% static "img/logolar/maktabgacha.png" %}"
+														     alt="Maktab va maktabgacha ta'lim vazirligi "/>
+													</a>
+												</div>
+											</li>
+											<li class="item">
+												<div class="brand-image">
+													<a href="http://old.natlib.uz:8101/e-library/" target="_blank"
+													   title="Alisher Navoiy nomidagi Milliy kutubxona">
+														<img class="lazyload"
+														     data-src="{% static "img/logolar/milliy.png" %}"
+														     alt="Alisher Navoiy nomidagi Milliy kutubxona"/>
+													</a>
+												</div>
+											</li>
+											<li class="item">
+												<div class="brand-image">
+													<a href="http://tuit.uz" target="_blank"
+													   title="Muhammad al-Xorazmiy nomidagi Toshkent axborot texnologiyalari universiteti">
+														<img class="lazyload"
+														     data-src="{% static "img/logolar/tuit.png" %}"
+														     alt="Muhammad al-Xorazmiy nomidagi Toshkent axborot texnologiyalari universiteti"/>
+													</a>
+												</div>
+											</li>
+
+
+										</ul>
+									</div>
+								</div>
+							</section>
+							<!-- Block Last post-->
+							<div class="lastest_block block homeblog-latest">
+								<div class="container">
+									<h2 class="h1 products-section-title text-uppercase">
+										<span class="main-title">{% trans "Ommabop monografiyalar" %}</span>
+									</h2>
+									<div class="homeblog-wrapper">
+										<div class="homeblog-inner">
+											<!-- Define Number of product for SLIDER -->
+											<ul id="blog-carousel" class="ps-carousel product_list">
+												{% for monograf in Monografiyalar %}
+													<li class="blog-post item">
+														<div class="blog-item">
+															<div class="blog-image text-xs-center">
+																<a href="{% url "book" monograf.id %}"
+																   title="Curabitur at elit Vestibulum" class="link">
+																	<img data-src="{{ monograf.image.url }}"
+																	     alt="Curabitur at elit Vestibulum"
+																	     class="img-fluid lazyload"/>
+																	<span class="post-image-hover"></span>
+																</a>
+																<span class="blogicons">
+                                       <a title="Click to view Full Image" href="{{ monograf.image.url }}"
+                                          data-lightbox="example-set" class="icon zoom">&nbsp;</a>
+                                       <a title="Click to view Read More" href="{% url "book" monograf.id %}"
+                                          class="icon readmore_link">&nbsp;</a>
+                                       </span>
+																<div class="blog-meta">
+																</div>
+															</div>
+															<div class="blog-content-wrap">
+
+																<h4 class="title">
+																	<a href="{% url "book" monograf.id %}"
+																	   title="Curabitur at elit Vestibulum">{{ monograf.name }}</a>
+																</h4>
+
+															</div>
+														</div>
+													</li>
+												{% endfor %}
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /Block Last Post -->
+
+				</div>
+			</div>
+	</section>
+{% endblock %}

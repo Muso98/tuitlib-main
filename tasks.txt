@@ -1,0 +1,9 @@
+resurs sohasi
+sahifalar soni
+isbn
+nashriyot
+uzbek-kiril
+uzbek-lotin
+kutubxona - nomi - manzili - rasm - location
+
+rasmlarni listview dan olib tashlash

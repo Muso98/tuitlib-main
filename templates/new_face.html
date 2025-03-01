@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+{% load static %}
+
+<head>
+    <title>{% trans "Face ID orqali tizimga kirish" %}</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        .camera-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+        }
+        #video {
+            border-radius: 50%;
+            border: 4px solid #007bff;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        #captured-alert {
+            display: none;
+            text-align: center;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">{% trans "Face ID orqali tizimga kirish" %}</h2>
+
+    <div class="camera-container">
+        <video id="video" autoplay></video>
+        <canvas id="canvas" style="display: none;"></canvas>
+
+        <p id="captured-alert">{% trans "✅ Rasm olindi! Kirish tugmasini bosing." %}</p>
+
+        <div class="btn-container">
+            <button id="capture-btn" class="btn btn-info">{% trans "📸 Rasmga olish" %}</button>
+            <button id="login-btn" class="btn btn-success" disabled>{% trans "✅ Kirish" %}</button>
+        </div>
+    </div>
+
+    <form id="face-login-form" method="POST" class="mt-3">
+        {% csrf_token %}
+        <input type="hidden" name="image" id="image">
+    </form>
+
+    <div id="loading">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2">{% trans "Yuzingiz tekshirilmoqda, kuting..." %}</p>
+    </div>
+</div>
+
+<script>
+    $("#login-btn").click(function (event) {
+        event.preventDefault();
+        $("#loading").show();
+
+        var imageData = document.getElementById('image').value;
+
+        // ✅ Base64 stringdan oldidagi "data:image/jpeg;base64," qismini olib tashlash
+        if (imageData.includes(",")) {
+            imageData = imageData.split(",")[1];
+        }
+
+        var requestData = JSON.stringify({ "image": imageData });
+
+        console.log("📡 Yuborilayotgan JSON:", requestData);
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'face_login' %}",
+            data: requestData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                console.log("✅ Serverdan javob:", response);
+
+                if (response.success) {
+                    console.log("📌 Yo‘naltiriladigan URL:", response.url);  // 🔍 Foydalanuvchini qayerga yo‘naltirayotganini ko‘rish
+                    window.location.href = response.url;
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("❌ AJAX xatolik:", xhr.responseText);
+                alert("Xatolik yuz berdi: " + error);
+            },
+            complete: function () {
+                $("#loading").hide();
+            }
+        });
+    });
+</script>
+
+<script>
+    var video = document.getElementById('video');
+    var canvas = document.getElementById('canvas');
+    var captureBtn = document.getElementById('capture-btn');
+    var loginBtn = document.getElementById('login-btn');
+    var form = document.getElementById('face-login-form');
+
+
+    // Kamerani ishga tushirish
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => { video.srcObject = stream; })
+        .catch(err => console.error("Kamera ishlamadi", err));
+
+    // Rasm olish
+    captureBtn.addEventListener("click", function () {
+        var context = canvas.getContext("2d");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // ✅ **Rasmni `Base64` formatda butunlay olish**
+        var imageData = canvas.toDataURL("image/jpeg");
+        document.getElementById('image').value = imageData;
+
+        document.getElementById('captured-alert').style.display = "block";
+        loginBtn.removeAttribute("disabled");
+    });
+
+    // Kirish tugmasini bosganda yuzni tekshirish
+    loginBtn.addEventListener("click", function (event) {
+        event.preventDefault();  // ❗ Default submit harakatini oldini olamiz
+        $("#loading").show();
+
+        var imageData = document.getElementById('image').value;
+
+        // ✅ Base64 stringdan oldidagi "data:image/jpeg;base64," qismini olib tashlash
+        if (imageData.includes(",")) {
+            imageData = imageData.split(",")[1];
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'face_login' %}",
+            data: JSON.stringify({
+                image: imageData  // ✅ To‘g‘ri formatda jo‘natish
+            }),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                console.log("✅ Javob:", response);  // ✅ JSON javobni log qilish
+                if (response.success) {
+                    window.location.href = response.url;
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("Xatolik yuz berdi: " + error);
+            },
+            complete: function () {
+                $("#loading").hide();
+            }
+        });
+    });
+
+
+
+</script>
+
+</body>
+{% endblock %}

@@ -1,0 +1,768 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-23 13:42+0500\n"
+"PO-Revision-Date: 2024-04-23 13:46+0500\n"
+"Last-Translator: Admin Admin <admin@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.9.9\n"
+
+#: core/settings.py:105
+msgid "Uzbek"
+msgstr "Узбекский"
+
+#: core/settings.py:106 lib/models.py:53
+msgid "English"
+msgstr "Английский"
+
+#: core/settings.py:107 lib/models.py:52
+msgid "Russian"
+msgstr "Русский"
+
+#: lib/models.py:9 lib/models.py:21 lib/models.py:39 lib/models.py:63
+#: lib/models.py:91
+msgid "name"
+msgstr "имя"
+
+#: lib/models.py:16
+msgid "Category"
+msgstr "Категория"
+
+#: lib/models.py:17
+msgid "Categories"
+msgstr "Категории"
+
+#: lib/models.py:22 lib/models.py:101
+msgid "about"
+msgstr "о"
+
+#: lib/models.py:23
+msgid "country"
+msgstr "страна"
+
+#: lib/models.py:24
+msgid "area"
+msgstr "область"
+
+#: lib/models.py:25 users/models.py:32
+msgid "phone_number"
+msgstr "номер телефона"
+
+#: lib/models.py:26
+msgid "website"
+msgstr "Веб-сайт"
+
+#: lib/models.py:27 users/models.py:29
+msgid "email"
+msgstr "э-почта"
+
+#: lib/models.py:28
+msgid "address"
+msgstr "адрес"
+
+#: lib/models.py:34
+msgid "University"
+msgstr "Университет"
+
+#: lib/models.py:35
+msgid "Universities"
+msgstr "Университеты"
+
+#: lib/models.py:45
+msgid "Resource Type"
+msgstr "Ресурсная поле"
+
+#: lib/models.py:46
+msgid "Resource Types"
+msgstr "Ресурсная поле"
+
+#: lib/models.py:50
+msgid "Uzbek-Latin"
+msgstr "Узбекско-Латинский"
+
+#: lib/models.py:51
+msgid "Uzbek-Kiril"
+msgstr "Узбек-Кирилл"
+
+#: lib/models.py:57
+msgid "public"
+msgstr "издатель"
+
+#: lib/models.py:58
+msgid "private"
+msgstr "частный"
+
+#: lib/models.py:69 lib/models.py:97
+msgid "Resource Area"
+msgstr "Ресурсная поле"
+
+#: lib/models.py:70
+msgid "Resource Areas"
+msgstr "Ресурсная поле"
+
+#: lib/models.py:86 lib/models.py:99
+msgid "Library"
+msgstr "Библиотека"
+
+#: lib/models.py:87
+msgid "Libraries"
+msgstr "Библиотека"
+
+#: lib/models.py:92 templates/blok.html:540
+msgid "ISBN"
+msgstr "ISBN"
+
+#: lib/models.py:93
+msgid "reprint"
+msgstr "переиздание"
+
+#: lib/models.py:94
+msgid "Agar kitob qayta nashr qilingan bo'lsa qayta nashr yilini kiriting"
+msgstr "Если книга переиздавалась, укажите год переиздания."
+
+#: lib/models.py:95
+msgid "published_year"
+msgstr "опубликованный_год"
+
+#: lib/models.py:96
+msgid "Pages Count"
+msgstr "Количество страниц"
+
+#: lib/models.py:100
+msgid "key_words"
+msgstr "ключевые_слова"
+
+#: lib/models.py:102
+msgid "author"
+msgstr "автор"
+
+#: lib/models.py:106
+msgid "publisher"
+msgstr "издатель"
+
+#: lib/models.py:107
+msgid "language"
+msgstr "язык"
+
+#: lib/models.py:109
+msgid "file"
+msgstr "файл"
+
+#: lib/models.py:110
+msgid "image"
+msgstr "изображение"
+
+#: lib/models.py:111
+msgid "permission"
+msgstr "разрешение"
+
+#: lib/models.py:112
+msgid "download_count"
+msgstr "количество загрузок"
+
+#: lib/models.py:133
+msgid "Book"
+msgstr "Книга"
+
+#: lib/models.py:134
+msgid "Books"
+msgstr "Книги"
+
+#: lib/models.py:138
+msgid "access_token"
+msgstr "принял"
+
+#: lib/models.py:139
+msgid "refresh_token"
+msgstr "refresh_token"
+
+#: lib/validators.py:8
+msgid "Invalid ISBN format"
+msgstr "Неверный формат ISBN"
+
+#: lib/validators.py:17
+msgid "Invalid ISBN-10"
+msgstr "Неверный ISBN-10."
+
+#: lib/validators.py:23
+msgid "Invalid ISBN-13"
+msgstr "Неверный ISBN-13."
+
+#: templates/accounts/download_requests.html:480
+#: templates/accounts/downloads.html:484 templates/category_detail.html:516
+#: templates/search.html:592
+msgid "Authors"
+msgstr "Авторы"
+
+#: templates/accounts/download_requests.html:481
+#: templates/accounts/downloads.html:485 templates/category_detail.html:517
+#: templates/search.html:593
+msgid "Key words"
+msgstr "ключевые_слова"
+
+#: templates/accounts/download_requests.html:482
+#: templates/accounts/downloads.html:486 templates/category_detail.html:518
+#: templates/search.html:594
+msgid "Published year"
+msgstr "опубликованный_год"
+
+#: templates/accounts/download_requests.html:491
+#: templates/accounts/downloads.html:495 templates/category_detail.html:527
+#: templates/index.html:263 templates/index.html:373 templates/index.html:460
+msgid "Batafsil"
+msgstr "Более"
+
+#: templates/accounts/download_requests.html:568
+#: templates/accounts/downloads.html:573 templates/accounts/history.html:547
+#: templates/accounts/login.html:496 templates/accounts/myaccedit.html:497
+#: templates/accounts/register.html:551 templates/base.html:154
+#: templates/blok.html:645 templates/category_detail.html:605
+#: templates/map.html:217 templates/myaccount.html:495
+#: templates/search.html:681
+msgid "Oliy ta'lim muassasalarining yagona elektron kutubxona axborot tizimi"
+msgstr ""
+"Единая электронно-библиотечная информационная система высших учебных "
+"заведений"
+
+#: templates/accounts/download_requests.html:573
+#: templates/accounts/download_requests.html:576
+#: templates/accounts/downloads.html:578 templates/accounts/downloads.html:581
+#: templates/accounts/history.html:552 templates/accounts/history.html:555
+#: templates/accounts/login.html:501 templates/accounts/login.html:504
+#: templates/accounts/myaccedit.html:502 templates/accounts/myaccedit.html:505
+#: templates/accounts/register.html:556 templates/accounts/register.html:559
+#: templates/base.html:159 templates/base.html:162 templates/blok.html:650
+#: templates/blok.html:653 templates/category_detail.html:610
+#: templates/category_detail.html:613 templates/map.html:222
+#: templates/map.html:225 templates/myaccount.html:500
+#: templates/myaccount.html:503 templates/search.html:686
+#: templates/search.html:689
+msgid "Bo'limlar"
+msgstr "Отделы"
+
+#: templates/accounts/download_requests.html:592
+#: templates/accounts/downloads.html:597 templates/accounts/history.html:571
+#: templates/accounts/login.html:520 templates/accounts/myaccedit.html:521
+#: templates/accounts/register.html:575 templates/base.html:178
+#: templates/blok.html:669 templates/category_detail.html:629
+#: templates/map.html:241 templates/myaccount.html:519
+#: templates/search.html:705
+msgid "Yangiliklar"
+msgstr "Новости"
+
+#: templates/accounts/download_requests.html:601
+#: templates/accounts/downloads.html:606 templates/accounts/history.html:580
+#: templates/accounts/login.html:529 templates/accounts/myaccedit.html:530
+#: templates/accounts/register.html:584 templates/base.html:187
+#: templates/blok.html:678 templates/category_detail.html:638
+#: templates/map.html:250 templates/myaccount.html:528
+#: templates/search.html:714
+msgid "Bizning Jamoa"
+msgstr "Наша команда"
+
+#: templates/accounts/download_requests.html:610
+#: templates/accounts/downloads.html:615 templates/accounts/history.html:589
+#: templates/accounts/login.html:538 templates/accounts/myaccedit.html:539
+#: templates/accounts/register.html:593 templates/base.html:196
+#: templates/blok.html:687 templates/category_detail.html:647
+#: templates/map.html:259 templates/myaccount.html:537
+#: templates/search.html:723
+msgid "Biz bilan bog'lanish"
+msgstr "связаться с нами"
+
+#: templates/accounts/download_requests.html:619
+#: templates/accounts/downloads.html:623 templates/accounts/history.html:597
+#: templates/accounts/login.html:546 templates/accounts/myaccedit.html:547
+#: templates/accounts/register.html:601 templates/base.html:204
+#: templates/blok.html:696 templates/category_detail.html:655
+#: templates/map.html:268 templates/myaccount.html:546
+#: templates/search.html:731
+msgid "Biz haqimizda"
+msgstr "о нас"
+
+#: templates/accounts/download_requests.html:625
+#: templates/accounts/download_requests.html:628
+#: templates/accounts/downloads.html:629 templates/accounts/downloads.html:632
+#: templates/accounts/history.html:603 templates/accounts/history.html:606
+#: templates/accounts/login.html:552 templates/accounts/login.html:555
+#: templates/accounts/myaccedit.html:553 templates/accounts/myaccedit.html:556
+#: templates/accounts/register.html:607 templates/accounts/register.html:610
+#: templates/base.html:210 templates/base.html:213 templates/blok.html:702
+#: templates/blok.html:705 templates/category_detail.html:661
+#: templates/category_detail.html:664 templates/map.html:274
+#: templates/map.html:277 templates/myaccount.html:552
+#: templates/myaccount.html:555 templates/search.html:737
+#: templates/search.html:740
+msgid "Resurslar"
+msgstr "Ресурсы"
+
+#: templates/accounts/download_requests.html:643
+#: templates/accounts/downloads.html:647 templates/accounts/history.html:621
+#: templates/accounts/login.html:570 templates/accounts/myaccedit.html:571
+#: templates/accounts/register.html:625 templates/base.html:228
+#: templates/blok.html:720 templates/category_detail.html:679
+#: templates/map.html:292 templates/myaccount.html:570
+#: templates/search.html:755
+msgid "Adabiyotlar"
+msgstr "Книги"
+
+#: templates/accounts/download_requests.html:652
+#: templates/accounts/downloads.html:656 templates/accounts/history.html:630
+#: templates/accounts/login.html:579 templates/accounts/myaccedit.html:580
+#: templates/accounts/register.html:634 templates/base.html:237
+#: templates/blok.html:729 templates/category_detail.html:688
+#: templates/map.html:301 templates/myaccount.html:579
+#: templates/search.html:764
+msgid "Maqolalar"
+msgstr "Статьи"
+
+#: templates/accounts/download_requests.html:661
+#: templates/accounts/downloads.html:665 templates/accounts/history.html:639
+#: templates/accounts/login.html:588 templates/accounts/myaccedit.html:589
+#: templates/accounts/register.html:643 templates/base.html:246
+#: templates/blok.html:738 templates/category_detail.html:697
+#: templates/map.html:310 templates/myaccount.html:588
+#: templates/search.html:773
+msgid "Dissertatsiyalar"
+msgstr "Диссертации"
+
+#: templates/accounts/download_requests.html:670
+#: templates/accounts/downloads.html:674 templates/accounts/history.html:648
+#: templates/accounts/login.html:597 templates/accounts/myaccedit.html:598
+#: templates/accounts/register.html:652 templates/base.html:255
+#: templates/blok.html:747 templates/category_detail.html:706
+#: templates/map.html:319 templates/myaccount.html:597
+#: templates/search.html:782
+msgid "Monografiyalar"
+msgstr "Монографии"
+
+#: templates/accounts/download_requests.html:681
+#: templates/accounts/downloads.html:685 templates/accounts/history.html:659
+#: templates/accounts/login.html:608 templates/accounts/myaccedit.html:609
+#: templates/accounts/register.html:663 templates/base.html:266
+#: templates/blok.html:758 templates/category_detail.html:717
+#: templates/map.html:330 templates/myaccount.html:608
+#: templates/search.html:793
+msgid "Bog'lanish"
+msgstr "Связь"
+
+#: templates/accounts/download_requests.html:692
+#: templates/accounts/downloads.html:696 templates/accounts/history.html:670
+#: templates/accounts/login.html:619 templates/accounts/myaccedit.html:620
+#: templates/accounts/register.html:674 templates/base.html:277
+#: templates/blok.html:769 templates/category_detail.html:728
+#: templates/map.html:341 templates/myaccount.html:619
+#: templates/search.html:804
+msgid "Manzil: Toshkent 100084, Amir Temur shox ko‘chasi 108 uy"
+msgstr "Адрес: 100084, Ташкент, улица Амира Темура Шокса, 108."
+
+#: templates/accounts/download_requests.html:905
+#: templates/accounts/downloads.html:768 templates/accounts/history.html:742
+#: templates/accounts/login.html:691 templates/accounts/myaccedit.html:692
+#: templates/accounts/register.html:746 templates/base.html:349
+#: templates/category_detail.html:800 templates/myaccount.html:832
+#: templates/search.html:876
+msgid "O‘zbekiston Respublikasi Oliy ta'lim, fan va innovatsiyalar vazirligi"
+msgstr ""
+"Министерство высшего образования, науки и инноваций Республики Узбекистан"
+
+#: templates/accounts/downloads.html:321 templates/accounts/history.html:321
+#: templates/accounts/login.html:313 templates/accounts/myaccedit.html:311
+#: templates/accounts/register.html:311 templates/base.html:69
+#| msgid "Profile"
+msgid "Profil"
+msgstr "Профиль"
+
+#: templates/accounts/downloads.html:324 templates/accounts/history.html:324
+#: templates/accounts/login.html:316 templates/accounts/myaccedit.html:314
+#: templates/accounts/register.html:314 templates/base.html:72
+msgid "Chiqish"
+msgstr "Выход"
+
+#: templates/accounts/downloads.html:332 templates/accounts/history.html:332
+#: templates/accounts/login.html:324 templates/accounts/login.html:403
+#: templates/accounts/login.html:462 templates/accounts/myaccedit.html:322
+#: templates/accounts/register.html:322 templates/base.html:80
+msgid "Kirish"
+msgstr "Входить"
+
+#: templates/accounts/downloads.html:337 templates/accounts/history.html:337
+#: templates/accounts/login.html:329 templates/accounts/myaccedit.html:327
+#: templates/accounts/register.html:327 templates/accounts/register.html:399
+#: templates/accounts/register.html:522 templates/base.html:85
+msgid "Ro'yxatdan o'tish"
+msgstr "Зарегистрироваться"
+
+#: templates/accounts/login.html:435 templates/accounts/register.html:478
+msgid "Parol"
+msgstr "пароль"
+
+#: templates/accounts/login.html:444 templates/accounts/register.html:488
+#: templates/accounts/register.html:508
+msgid "Show"
+msgstr "Показывать"
+
+#: templates/accounts/login.html:454
+msgid "Face ID orqali kirish"
+msgstr "Войдите с помощью Face ID"
+
+#: templates/accounts/login.html:470
+msgid "Hisob yo'qmi? Bu yerda yarating"
+msgstr "У вас нет учетной записи? Создать здесь"
+
+#: templates/accounts/myaccedit.html:399
+msgid "Ma'lumotlar"
+msgstr "Информация"
+
+#: templates/accounts/myaccedit.html:418
+msgid "First Name"
+msgstr "имя"
+
+#: templates/accounts/myaccedit.html:425
+msgid "Last Name"
+msgstr "Фамилия"
+
+#: templates/accounts/myaccedit.html:432
+msgid "Phone Number"
+msgstr "номер телефона"
+
+#: templates/accounts/myaccedit.html:439
+msgid "Role"
+msgstr "Роль"
+
+#: templates/accounts/myaccedit.html:446 templates/accounts/register.html:465
+msgid "Research Area"
+msgstr "Область исследований"
+
+#: templates/accounts/myaccedit.html:454 templates/accounts/register.html:454
+msgid "Interests"
+msgstr "Интересы"
+
+#: templates/accounts/myaccedit.html:462
+msgid "Birth Date"
+msgstr "Дата рождения"
+
+#: templates/accounts/myaccedit.html:468
+msgid "Update"
+msgstr "Обновлять"
+
+#: templates/accounts/register.html:404
+msgid "Hisobingiz bormi?"
+msgstr "У тебя есть аккаунт?"
+
+#: templates/accounts/register.html:405
+msgid "Tizimga Kirish!"
+msgstr "Авторизоваться!"
+
+#: templates/accounts/register.html:422
+msgid "Ism"
+msgstr "Имя"
+
+#: templates/accounts/register.html:432
+msgid "Familiya"
+msgstr "Фамилия"
+
+#: templates/accounts/register.html:498
+msgid "Parolni takrorlang"
+msgstr "Повторите пароль"
+
+#: templates/base.html:53
+msgid "Search"
+msgstr "Поиск"
+
+#: templates/blok.html:436
+msgid "Yuklab olish"
+msgstr "Скачать"
+
+#: templates/blok.html:442
+msgid "Muallifdan so'rash"
+msgstr "Спросите автора"
+
+#: templates/blok.html:454
+msgid "Sizning so'rovingiz tasdiqlangan."
+msgstr "Ваш запрос подтвержден."
+
+#: templates/blok.html:457
+msgid "Sizning so'rovingiz ko'rib chiqilmoqda."
+msgstr "Ваш запрос обрабатывается."
+
+#: templates/blok.html:459
+msgid "Sizning so'rovingiz rad etilgan."
+msgstr "Ваш запрос отклонен."
+
+#: templates/blok.html:461
+msgid "Iltimos, avval tizimga kirishingiz kerak."
+msgstr "Пожалуйста, войдите сначала."
+
+#: templates/blok.html:493
+msgid "Mualliflar"
+msgstr "Авторы"
+
+#: templates/blok.html:498
+msgid "Kalit so'zlar"
+msgstr "Ключевые слова"
+
+#: templates/blok.html:503
+msgid "Nashriyot"
+msgstr "Издатель"
+
+#: templates/blok.html:508
+msgid "Nashr yili"
+msgstr "Год публикации"
+
+#: templates/blok.html:513
+msgid "Resurs turi"
+msgstr "Тип ресурса"
+
+#: templates/blok.html:518
+msgid "Resurs tili"
+msgstr "Язык ресурса"
+
+#: templates/blok.html:524
+msgid "Resurs sohasi"
+msgstr "Поле ресурса"
+
+#: templates/blok.html:529
+msgid "Davlat"
+msgstr "Страна"
+
+#: templates/blok.html:534
+msgid "qo'shgan muassasa"
+msgstr "добавлено учреждение"
+
+#: templates/blok.html:545
+msgid "Sahifalar soni"
+msgstr "Количество страниц"
+
+#: templates/blok.html:550
+msgid "Resurs ruxsati"
+msgstr "Разрешение ресурса"
+
+#: templates/blok.html:555
+msgid "Kutubxonalar "
+msgstr "Библиотеки"
+
+#: templates/blok.html:563
+msgid "Qisqacha malumot"
+msgstr "Краткая информация"
+
+#: templates/blok.html:575
+msgid "O'xshash resurslar"
+msgstr "Похожие ресурсы"
+
+#: templates/blok.html:577
+msgid "O'xshash resurslar mavjud emas"
+msgstr "Подобных ресурсов не существует"
+
+#: templates/category_detail.html:321
+msgid "Profile"
+msgstr "Профиль"
+
+#: templates/category_detail.html:324
+msgid "Logout"
+msgstr "Выйти"
+
+#: templates/category_detail.html:335
+msgid "Register"
+msgstr "регистр"
+
+#: templates/category_detail.html:345
+msgid "Til"
+msgstr "Язык"
+
+#: templates/category_detail.html:395
+#| msgid "Qidiruv tarixi"
+msgid "Qidiruv"
+msgstr "Поиск"
+
+#: templates/category_detail.html:412 templates/category_detail.html:416
+#: templates/myaccount.html:393
+msgid "Bosh Sahifa"
+msgstr "Главная страница"
+
+#: templates/category_detail.html:440 templates/category_detail.html:444
+msgid "Eng ko'p yuklanganlar"
+msgstr "Самые скачиваемые"
+
+#: templates/index.html:223
+msgid "Ommabop adabiyotlar"
+msgstr "Популярная литература"
+
+#: templates/index.html:246 templates/index.html:350 templates/index.html:434
+msgid "Yangi"
+msgstr "Новости"
+
+#: templates/index.html:328
+msgid "Ommabop Jurnallar"
+msgstr "Популярные журналы"
+
+#: templates/index.html:400
+msgid ""
+"Muhammad al-Xorazmiy nomidagi Toshkent Axborot Texnologiyalari Universiteti"
+msgstr ""
+"Ташкентский университет информационных технологий имени Мухаммада аль-"
+"Хорезми"
+
+#: templates/index.html:411
+msgid "Ommabop dissertatsiya"
+msgstr "Популярные Диссертации"
+
+#: templates/index.html:547
+msgid "Ommabop monografiyalar"
+msgstr "Популярные монографии"
+
+#: templates/myaccount.html:424
+msgid "Sizning hisobingiz"
+msgstr "Ваш запрос отклонен."
+
+#: templates/myaccount.html:438
+msgid "Ma`lumotlarni tahrirlash"
+msgstr "Редактирование данных"
+
+#: templates/myaccount.html:451
+msgid "Mening resurslarim"
+msgstr "Мои ресурсы"
+
+#: templates/myaccount.html:458
+msgid "So'ralgan kitoblar"
+msgstr "Запрошенные книги"
+
+#: templates/myaccount.html:464
+msgid "Qidiruv tarixi"
+msgstr "История поиска"
+
+#: templates/myaccount.html:473
+msgid "Tizimdan chiqish"
+msgstr "Авторизоваться!"
+
+#: users/models.py:30
+msgid "first_name"
+msgstr "имя"
+
+#: users/models.py:31
+msgid "last_name"
+msgstr "фамилия"
+
+#: users/models.py:37
+msgid "birth date"
+msgstr "Дата рождения"
+
+#: users/models.py:38
+msgid "staff status"
+msgstr "статус персонала"
+
+#: users/models.py:39
+msgid "active"
+msgstr "активный"
+
+#: users/models.py:40
+msgid "superuser status"
+msgstr "статус суперпользователя"
+
+#: users/models.py:59
+msgid "pending"
+msgstr "в ожидании"
+
+#: users/models.py:60
+msgid "accepted"
+msgstr "принял"
+
+#: users/models.py:61
+msgid "rejected"
+msgstr "отклоненный"
+
+#: users/tasks.py:24
+msgid "Verification code for Smart TUIT"
+msgstr "Код подтверждения для Smart TUIT"
+
+#: users/tasks.py:25
+msgid "Your verification code is"
+msgstr "Ваш код подтверждения:"
+
+#: users/tasks.py:38
+msgid "New book added to library"
+msgstr "В библиотеку добавлена новая книга"
+
+#: users/tasks.py:40
+msgid "View Book"
+msgstr "Посмотреть книгу"
+
+#: users/tasks.py:41
+#, python-brace-format
+msgid "New Book: {book.name}. Link: {link_html}"
+msgstr "Новая книга: {book.name}. Ссылка: {link_html}"
+
+#: users/views/auth.py:109 users/views/auth.py:122
+msgid "Code is wrong"
+msgstr "Код неправильный"
+
+#: users/views/auth.py:120
+msgid "User not found"
+msgstr "Пользователь не найден"
+
+#~ msgid "My Account"
+#~ msgstr "Мой аккоунт"
+
+#~ msgid "Sign in"
+#~ msgstr "Войти"
+
+#, fuzzy
+#~ msgid "Email address"
+#~ msgstr "адрес"
+
+#, fuzzy
+#~ msgid "Integer"
+#~ msgstr "Интересы"
+
+#, fuzzy
+#~ msgid "IPv4 address"
+#~ msgstr "адрес"
+
+#, fuzzy
+#~ msgid "IP address"
+#~ msgstr "адрес"
+
+#, fuzzy
+#~ msgid "Image"
+#~ msgstr "изображение"
+
+#, fuzzy
+#~ msgid "March"
+#~ msgstr "Поиск"
+
+#, fuzzy
+#~ msgid "November"
+#~ msgstr "номер телефона"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "March"
+#~ msgstr "Поиск"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "March"
+#~ msgstr "Поиск"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "November"
+#~ msgstr "номер телефона"
+
+#~ msgid "date of birth"
+#~ msgstr "Дата рождения"
+
+#~ msgid "Parolingiz esdan chiqdimi?"
+#~ msgstr "Забыли пароль?"

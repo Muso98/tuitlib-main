@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Recorder</title>
+</head>
+<body>
+<button id="startButton">Start Recording</button>
+<button id="stopButton" disabled>Stop Recording</button>
+<a id="downloadLink" download="recording.wav" href="#">Download</a>
+
+<script>
+navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(function(stream) {
+    var mediaRecorder = new MediaRecorder(stream);
+    var chunks = [];
+
+    document.getElementById('startButton').addEventListener('click', function() {
+      mediaRecorder.start();
+      document.getElementById('startButton').disabled = true;
+      document.getElementById('stopButton').disabled = false;
+    });
+
+    document.getElementById('stopButton').addEventListener('click', function() {
+      mediaRecorder.stop();
+      document.getElementById('startButton').disabled = false;
+      document.getElementById('stopButton').disabled = true;
+    });
+
+    mediaRecorder.ondataavailable = function(e) {
+      chunks.push(e.data);
+    }
+
+    mediaRecorder.onstop = function(e) {
+      var blob = new Blob(chunks, { 'type' : 'audio/wav' });
+      chunks = [];
+      var audioURL = URL.createObjectURL(blob);
+      document.getElementById('downloadLink').href = audioURL;
+      document.getElementById('downloadLink').style.display = 'block';
+    }
+  })
+  .catch(function(err) {
+    console.log('The following getUserMedia error occurred: ' + err);
+  });
+</script>
+</body>
+</html>
