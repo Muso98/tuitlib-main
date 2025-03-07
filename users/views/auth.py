@@ -162,6 +162,7 @@ def email_verify_view(request):
 
 def face_register_view(request):
     if request.method == "POST":
+        print("📡 POST so‘rovi qabul qilindi!")  # ✅ Log qo‘shing
         try:
             data = json.loads(request.body)  # ✅ JSON ma’lumotni dekodlash
             email = data.get("email")  # ✅ Foydalanuvchi email'ini olish

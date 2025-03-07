@@ -4,9 +4,10 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.views import View
 from django.core.paginator import Paginator
-from lib.models import Book, Category
+from lib.models import Book, Category, SearchQuery
 from users.tasks import save_user_search_history
 from django.core.serializers import serialize
+from django.contrib.auth.decorators import login_required
 
 API_URL = "https://diss.natlib.uz/api/query"
 
@@ -49,6 +50,8 @@ def fetch_api_results(query):
         return []
 
 
+
+
 class SearchView(View):
     def get(self, request):
         categories = Category.objects.all()
@@ -77,6 +80,11 @@ class SearchView(View):
 
         # ✅ Mahalliy + API natijalarini birlashtirish
         combined_results = local_results + formatted_api_results
+
+        # ✅ Agar natijalar topilmasa, foydalanuvchi qidiruvini saqlash
+        if not combined_results:
+            if request.user.is_authenticated:
+                SearchQuery.objects.create(user=request.user, title=query)
 
         # ✅ Sahifalash (Pagination)
         paginator = Paginator(combined_results, 12)  # Har sahifada 12 ta natija

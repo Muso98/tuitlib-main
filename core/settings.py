@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["www.libsmart.uz","libsmart.uz","3.86.157.16","127.0.0.1", "localhost"]
 
 # Application definition
 
@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'modeltranslation',
     'storages',  # ✅ django-storages ni yoqish
+    'corsheaders',
+
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -74,22 +77,22 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Yoki 'django.db.backends.mysql' MySQL uchun
-        'NAME': 'library',  # AWS RDS da yaratganingizni yozing
-        'USER': 'postgres',  # AWS RDS da tanlagan username
-        'PASSWORD': 'Abduqodir2025',  # AWS RDS paroli
-        'HOST': 'library.cqdqcq8e0noq.us-east-1.rds.amazonaws.com',  # AWS RDS endpoint
-        'PORT': '5432',  # PostgreSQL uchun, MySQL bo‘lsa '3306'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',  # Yoki 'django.db.backends.mysql' MySQL uchun
+#         'NAME': 'library',  # AWS RDS da yaratganingizni yozing
+#         'USER': 'postgres',  # AWS RDS da tanlagan username
+#         'PASSWORD': 'Abduqodir2025',  # AWS RDS paroli
+#         'HOST': 'library.cqdqcq8e0noq.us-east-1.rds.amazonaws.com',  # AWS RDS endpoint
+#         'PORT': '5432',  # PostgreSQL uchun, MySQL bo‘lsa '3306'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -163,7 +166,8 @@ CORS_ALLOW_ORIGINS = [
     '*.ngrok-free.app',
     'https://example.com',
 ]
-CSRF_TRUSTED_ORIGINS = ['https://*.ngrok-free.app', ]
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://localhost']
+CSRF_COOKIE_SECURE = False
 
 # email settings
 

@@ -4,7 +4,10 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from .validators import validate_isbn
 from django.contrib.auth.models import User
-
+from django.conf import settings  # settings.AUTH_USER_MODEL ni olish uchun
+from django.contrib.postgres.search import TrigramSimilarity
+from django.utils.timezone import now
+from datetime import timedelta
 
 class Category(models.Model):
     name = models.CharField(_("name"), max_length=255)
@@ -118,14 +121,11 @@ class Book(models.Model):
     def get_file_path(self):
         return self.file.url
 
+
     def similar_books(self):
-        key_words = self.key_words.split(',')
-        query = Q()
-        for word in key_words:
-            query |= Q(key_words__icontains=word.strip())
-        similar_books = Book.objects.filter(query).exclude(id=self.id)
-        similar_books = similar_books.annotate(same_key_words=Count('key_words')).order_by('-same_key_words')[:8]
-        return similar_books
+        return Book.objects.annotate(
+            similarity=TrigramSimilarity('key_words', self.key_words)
+        ).filter(similarity__gt=0.3).exclude(id=self.id).order_by('-similarity')[:8]
 
     def get_absolute_url(self):
         return reverse("book", args=[str(self.id)])
@@ -142,3 +142,30 @@ class STTModel(models.Model):
     def __str__(self):
         return self.id
 
+class Notification(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    message = models.TextField()
+    book = models.ForeignKey("lib.Book", on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)  # ✅ O‘qilganligini belgilash
+
+    def __str__(self):
+        return f"Notification for {self.user} - {'Read' if self.is_read else 'Unread'}"
+
+
+
+
+class SearchQuery(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Search Query: {self.title} by {self.user}"
+
+    @staticmethod
+    def cleanup_old_queries(days=30):
+        """Eski qidiruvlarni avtomatik tozalash"""
+        old_date = now() - timedelta(days=days)
+        SearchQuery.objects.filter(created_at__lt=old_date).delete()

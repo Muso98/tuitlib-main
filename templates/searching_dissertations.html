@@ -223,43 +223,40 @@
         </style>
     
         <div class="user-info dropdown js-dropdown">
-            <span class="user-info-title expand-more _gray-darker" data-toggle="dropdown">
-                <span class="account_text">
-                    {% if user.is_authenticated %}{{ user.first_name }} {{ user.last_name }}{% else %}Mening hisobim{% endif %}
-                </span>
-            </span>
-            <ul class="dropdown-menu">
-                <li>
-                    {% if user.is_authenticated %}
+              <span class="user-info-title expand-more _gray-darker" data-toggle="dropdown"><span class="account_text">{% if user.is_authenticated %}{{ user.first_name }} {{ user.last_name }}{% else %}My Account{% endif %}</span></span>
+              <ul class="dropdown-menu">
+                 <li>
+                     {% if user.is_authenticated %}
+                        <!-- User is authenticated, show logout link or any other authenticated content -->
+                         <li>
+                            <a href="{% url "profile" %}" title="Profile">Profile</a>
+                         </li>
                         <li>
-                            <a href="{% url "profile" %}" title="Profile">{% trans "Profil" %}</a>
+                            <a href="{% url 'logout' %}" title="Logout">Logout</a>
                         </li>
-                        <li>
-                            <a href="{% url 'logout' %}" title="Logout">{% trans "Chiqish" %}</a>
-                        </li>
-                    {% else %}
+    
+                     {% else %}
+                        <!-- User is not authenticated, show login and register links -->
                         <li>
                             <a class="dropdown-item" href="{% url 'login' %}" title="Log in to your customer account" rel="nofollow">
-                                <span>{% trans "Kirish" %}</span>
+                                <span>Sign in</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'register' %}" data-link-action="display-register-form">{% trans "Ro'yxatdan o'tish" %}</a>
+                            <a href="{% url 'register' %}" data-link-action="display-register-form">Register</a>
                         </li>
                     {% endif %}
-                </li>
-            </ul>
+              </ul>
         </div>
-    
         <div class="language-selector" id="language-selector">
             <div class="language_block">
                 {% get_current_language as CURRENT_LANGUAGE %}
                 {% get_available_languages as AVAILABLE_LANGUAGES %}
                 {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
-                <span class="language-title">{% trans "Til" %}:</span>
+                <span class="language-title">Language:</span>
                 <ul>
                     {% for language in languages %}
-                        <li {% if language.code == CURRENT_LANGUAGE %} class="current"{% endif %}>
+                        <li  {% if language.code == CURRENT_LANGUAGE %} class="current"{% endif %}>
                             <a href="/{{ language.code }}/" class="language-item">{{ language.name_local }}</a>
                         </li><br>
                     {% endfor %}
@@ -631,14 +628,13 @@
 
             let title = sanitizeInput(document.getElementById("title").value.trim());
             let author = sanitizeInput(document.getElementById("author").value.trim());
-            let year = document.getElementById("year").value;
             let resultsDiv = document.getElementById("search-results");
             let errorDiv = document.getElementById("error-message");
 
             resultsDiv.innerHTML = "";
             errorDiv.classList.add("d-none");
 
-            if (!title && !author && !year) {
+            if (!title && !author ) {
                 errorDiv.textContent = "❌ Iltimos, kamida bitta maydonni to‘ldiring!";
                 errorDiv.classList.remove("d-none");
                 return;
@@ -649,8 +645,7 @@
             // Axios soʻrovini yuborish
             axios.post("/ru/searching/", {  
                 title: title,
-                author: author,
-                year: year
+                author: author
             }, {
                 headers: { 
                     "Content-Type": "application/json",
@@ -799,29 +794,65 @@
                 const voiceSearchButton = document.querySelector('.voice-search-btn');
         const searchInput = document.querySelector('#search_widget input[type="text"]'); // Qidiruv maydonini tanlash
         
-        if ('webkitSpeechRecognition' in window) {
-            const recognition = new webkitSpeechRecognition();
-            recognition.continuous = false;
-            recognition.lang = 'uz-UZ';
+       
+        document.addEventListener("DOMContentLoaded", function () {
+            const voiceSearchButton = document.querySelector('.voice-search-btn');
+            const searchInput = document.getElementById('title'); // Qidiruv maydoni to‘g‘ri tanlanganligini tekshiring
+            const searchForm = document.getElementById("search-form");
         
-            voiceSearchButton.addEventListener('click', () => {
-                recognition.start();
-            });
+            if ('webkitSpeechRecognition' in window) {
+                const recognition = new webkitSpeechRecognition();
+                recognition.continuous = false;
+                recognition.lang = 'uz-UZ';
         
-            recognition.onresult = (event) => {
-                const transcript = event.results.transcript;
-                searchInput.value = transcript; // Ovoz bilan qidiruv maydonini yangilash
-                // Siz bu yerda formani avtomatik tarzda yuborishni xohlashingiz mumkin
-                // yoki qidiruvni boshlash uchun alohida tugma taqdim etishingiz mumkin
-            };
+                voiceSearchButton.addEventListener('click', () => {
+                    recognition.start();
+                });
         
-            // ... (xatoliklarni boshqarish) ...
-        } else {
-            // ... (brauzer muvofiqligi) ...
-        }
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript.trim();
+                    searchInput.value = transcript; // Matnni input maydoniga joylash
+                    
+                    console.log("Ovoz bilan qidirilgan matn:", transcript); // Konsolda tekshirish
+        
+                    // Formani avtomatik yuborish
+                    searchForm.dispatchEvent(new Event("submit"));
+                };
+        
+                recognition.onerror = (event) => {
+                    console.error("Ovozli qidiruv xatosi:", event.error);
+                };
+            } else {
+                console.warn("Brauzeringiz ovozli qidiruvni qo‘llab-quvvatlamaydi.");
+            }
+        });
+
     </script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="{% static "js/core.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/theme.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/front.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/myprestacomments.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/stfeature_compare.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/stfeature_wishlist.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/czcouponpop.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/front.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/ps_shoppingcart.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/parallax.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/owl.carousel.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/totalstorage.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/lightbox.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/lazysizes.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/custom.js" %}"></script>
+    <script src="{% static "js/index.js" %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="{% static "js/jquery.rating.pack.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.textareaCounter.plugin.js" %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.fancybox.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.nivo.slider.js" %}"></script>
     <script type="text/javascript" src="{% static "js/core.js" %}"></script>
     <script type="text/javascript" src="{% static "js/theme.js" %}"></script>
     <script type="text/javascript" src="{% static "js/front.js" %}"></script>
@@ -842,7 +873,5 @@
     <script type="text/javascript" src="{% static "js/lightbox.js" %}"></script>
     <script type="text/javascript" src="{% static "js/lazysizes.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/custom.js" %}"></script>
-    <script src="{% static "js/index.js" %}"></script>
-
 </body>
 </html>

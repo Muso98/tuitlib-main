@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import main, category, book, search
-from lib.views_ import library_list, map_view
+from lib.views_ import library_list, map_view, notifications_view, mark_notification_as_read, mark_all_notifications_as_read
 from . import views_
 from .views.api_integration import searching_dissertations
 
@@ -19,5 +19,8 @@ urlpatterns = [
     path('map/', map_view, name='map'),
     path('categories/', category.category_list_api, name='category_list'),
     path("searching/", searching_dissertations, name="searching_dissertations"),
+    path('notifications/', notifications_view, name='notifications'),
+    path('notifications/mark-read/<int:notification_id>/', mark_notification_as_read, name='mark_notification_as_read'),
+    path('notifications/mark-all-read/', mark_all_notifications_as_read, name='mark_all_notifications_as_read'),
 
 ]

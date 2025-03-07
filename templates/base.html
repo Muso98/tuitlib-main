@@ -45,7 +45,7 @@
 					<img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="smarttuit logo">
 				</a>                
 			</div>
-            
+        
             <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
                 <span class="search_button"></span>
                 <div class="search_toggle">
@@ -144,40 +144,81 @@
                     padding: 0;
                     margin-left: 5px;
                 }
+                .notifications-wrapper {
+                    position: absolute;
+                    top: 40px; /* Logoning ustida chiqib qolmasligi uchun */
+                    right: 50px; /* O‘ng tomonda chiqishi uchun */
+                }
+                
+                .notification-icon {
+                    font-size: 20px;
+                    text-decoration: none;
+                    position: relative;
+                }
+                
+                .notification-badge {
+                    position: absolute;
+                    top: -10px;
+                    right: -10px;
+                    background: red;
+                    color: white;
+                    border-radius: 50%;
+                    padding: 3px 7px;
+                    font-size: 14px;
+                }
+                /* === Mobil versiya uchun (max 768px) === */
+                @media (max-width: 768px) {
+                    .notifications-wrapper {
+                        top: 15px; /* Biroz pastroqda chiqishi uchun */
+                        right: 70px; /* O‘ngga yaqinroq joylashishi uchun */
+                    }
+                
+                    .notification-icon {
+                        font-size: 18px; /* Mobil ekranda biroz kichikroq */
+                    }
+                
+                    .notification-badge {
+                        top: -5px;
+                        right: -5px;
+                        font-size: 12px;
+                        padding: 2px 5px;
+                    }
+                }
             </style>
+            <div class="col-md-4 text-center notifications-wrapper">
+                <a href="{% url 'notifications' %}" class="notification-icon">
+                    📩  
+                    {% if unread_notifications_count > 0 %}
+                        <span class="notification-badge text-danger">({{ unread_notifications_count }})</span>
+                    {% endif %}
+                </a>
+            </div>
 
-        
+            
 			<!-- /Block search module TOP -->
-			<div class="user-info dropdown js-dropdown">
-				<span class="user-info-title expand-more _gray-darker" data-toggle="dropdown"><span
-						class="account_text">{% if user.is_authenticated %}{{ user.first_name }}
-					{{ user.last_name }}{% else %}Mening hisobim{% endif %}</span></span>
-				<ul class="dropdown-menu">
-					<li>
-						{% if user.is_authenticated %}
-							<!-- User is authenticated, show logout link or any other authenticated content -->
-							<li>
-								<a href="{% url "profile" %}" title="Profile">{% trans "Profil" %}</a>
-							</li>
-							<li>
-								<a href="{% url 'logout' %}" title="Logout">{% trans "Chiqish" %}</a>
-							</li>
+			<div class="d-flex align-items-center gap-3">
+                <div class="user-info dropdown js-dropdown">
+                    <span class="user-info-title expand-more _gray-darker" data-toggle="dropdown">
+                        <span class="account_text">
+                            {% if user.is_authenticated %}
+                                {{ user.first_name }} {{ user.last_name }}
+                            {% else %}
+                                Mening hisobim
+                            {% endif %}
+                        </span>
+                    </span>
+                    <ul class="dropdown-menu">
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'profile' %}" title="Profile">{% trans 'Profil' %}</a></li>
+                            <li><a href="{% url 'logout' %}" title="Logout">{% trans 'Chiqish' %}</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}" title="Log in to your customer account" rel="nofollow"><span>{% trans 'Kirish' %}</span></a></li>
+                            <li><a href="{% url 'register' %}" data-link-action="display-register-form">{% trans "Ro'yxatdan o'tish" %}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
 
-						{% else %}
-							<!-- User is not authenticated, show login and register links -->
-							<li>
-								<a class="dropdown-item" href="{% url 'login' %}"
-								   title="Log in to your customer account" rel="nofollow">
-									<span>{% trans "Kirish" %}</span>
-								</a>
-							</li>
-							<li>
-								<a href="{% url 'register' %}"
-								   data-link-action="display-register-form">{% trans "Ro'yxatdan o'tish" %}</a>
-							</li>
-						{% endif %}
-				</ul>
-			</div>
 			<div class="language-selector" id="language-selector">
 				<div class="language_block">
 					{% get_current_language as CURRENT_LANGUAGE %}

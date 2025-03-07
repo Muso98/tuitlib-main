@@ -1,13 +1,11 @@
-{% load i18n %}
-{% load l10n %}
+<!doctype html>
 {% load static %}
+{% load i18n %}
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>{% trans "Face ID orqali ro'yxatdan o'tish" %}</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-	<meta name="description" content="">
-	<meta name="keywords" content="">
+	<title>{{ book.name }}</title>
 	<link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="{% static "css/theme.css" %}" type="text/css" media="all">
@@ -25,9 +23,16 @@
 	<link rel="stylesheet" href="{% static "css/nivo-slider.css" %}" type="text/css" media="all">
 	<link rel="stylesheet" href="{% static "css/custom.css" %}" type="text/css" media="all">
 	<link rel="stylesheet" href="{% static "css/index.css" %}">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/vnd.microsoft.icon" href="/prestashop/PRS17/PRS170418/img/favicon.ico?1629801402">
-	<link rel="shortcut icon" type="image/x-icon" href="/prestashop/PRS17/PRS170418/img/favicon.ico?1629801402">
+	<link rel="stylesheet" href="{% static "css/loadingspinner.css" %}">
+	<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+	        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+	      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+	<meta property="og:type" content="product">
+	<meta property="og:title" content="{{ book.name }}">
+	<meta property="og:site_name" content="Smart TUIT">
 	<script type="text/javascript">
         var buttoncompare_title_add = "Add to Compare";
         var buttoncompare_title_remove = "Remove from Compare";
@@ -96,18 +101,26 @@
             },
             "page": {
                 "title": "",
-                "canonical": null,
-                "meta": {"title": "Login", "description": "", "keywords": "", "robots": "index"},
-                "page_name": "authentication",
+                "canonical": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1",
+                "meta": {
+                    "title": "Cooking",
+                    "description": "The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable that it has a more-or-less normal distribution of letters.",
+                    "keywords": "",
+                    "robots": "index"
+                },
+                "page_name": "category",
                 "body_classes": {
                     "lang-en": true,
                     "lang-rtl": false,
                     "country-DE": true,
                     "currency-EUR": true,
                     "layout-left-column": true,
-                    "page-authentication": true,
+                    "page-category": true,
                     "tax-display-enabled": true,
-                    "page-customer-account": true
+                    "category-id-9": true,
+                    "category-Cooking": true,
+                    "category-id-parent-2": true,
+                    "category-depth-level-2": true
                 },
                 "admin_notifications": []
             },
@@ -119,7 +132,7 @@
             },
             "urls": {
                 "base_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/",
-                "current_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account",
+                "current_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1",
                 "shop_domain_url": "https:\/\/demo.codezeel.com",
                 "img_ps_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/",
                 "img_cat_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/c\/",
@@ -169,15 +182,15 @@
                     "order_login": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order&login=1"
                 },
                 "alternative_langs": {
-                    "en-us": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account&id_lang=1",
-                    "fr-fr": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account&id_lang=3",
-                    "es-es": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account&id_lang=4",
-                    "de-de": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account&id_lang=5",
-                    "it-it": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account&id_lang=6",
-                    "pl-pl": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account&id_lang=7",
-                    "nl-nl": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account&id_lang=8",
-                    "ru-ru": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account&id_lang=9",
-                    "ar-sa": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&back=my-account&id_lang=10"
+                    "en-us": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1",
+                    "fr-fr": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=3",
+                    "es-es": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=4",
+                    "de-de": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=5",
+                    "it-it": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=6",
+                    "pl-pl": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=7",
+                    "nl-nl": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=8",
+                    "ru-ru": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=9",
+                    "ar-sa": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=10"
                 },
                 "theme_assets": "\/prestashop\/PRS17\/PRS170418\/themes\/Bookrow\/assets\/",
                 "actions": {"logout": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?mylogout="},
@@ -242,10 +255,13 @@
                 "links": [{
                     "title": "Home",
                     "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php"
-                }], "count": 1
+                }, {
+                    "title": "Cooking",
+                    "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1"
+                }], "count": 2
             },
             "link": {"protocol_link": "https:\/\/", "protocol_content": "https:\/\/"},
-            "time": 1705905111,
+            "time": 1706004804,
             "static_token": "8bd9f42887793a736c2d38fd8a0dceff",
             "token": "ef790335294386fee1fcfae858c954d8"
         };
@@ -270,56 +286,10 @@
         var wishlist_url = "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?fc=module&module=stfeature&controller=mywishlist&id_lang=1";
         var wishlist_viewwishlist = "View your wishlist";
 	</script>
-    
-    <style>
-        .camera-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 80vh;
-        }
-        #video, #preview-image {
-            border-radius: 50%;
-            border: 3px solid #007bff;
-            width: 300px;
-            height: 300px;
-            object-fit: cover;
-            display: none;
-        }
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
-        #captured-alert, #success-message, #error-message {
-            display: none;
-            text-align: center;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        @media (max-width: 768px) {
-            .camera-container video {
-                width: 100%;
-                height: auto;
-            }
-        
-            .camera-container img {
-                max-width: 100%;
-            }
-        }
-
-        #captured-alert { color: green; }
-        #success-message { color: green; }
-        #error-message { color: red; }
-    </style>
-
 </head>
-<body id="authentication"
-      class="lang-en country-de currency-eur layout-left-column page-authentication tax-display-enabled page-customer-account">
+<body id="product"
+      class="lang-en country-de currency-eur layout-full-width page-product tax-display-enabled product-id-1 product-amor-es-relacion-kevelation product-id-category-4 product-id-manufacturer-3 product-id-supplier-0 product-on-sale product-available-for-order">
 <main id="page">
-
 	<!-- header -->
 	<header id="header">
 		<div class="header-banner">
@@ -327,11 +297,10 @@
 		<div class="header-top">
 			<div class="header_logo">
 				<a href="{% url "main" %}">
-					<img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="Bookrow - Book Store">
+					<img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="Smart TUIT">
 				</a>
 			</div>
-
-			<div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
+            <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
                 <span class="search_button"></span>
                 <div class="search_toggle">
                     <form method="get" action="{% url 'search' %}">
@@ -385,6 +354,12 @@
                 #search_widget button:hover {
                     background: #b30000;
                 }
+                #search_widget {
+                    position: relative;
+                    width: 100%;
+                    max-width: 400px;
+                    margin: auto;
+                }
                 
                 #search_widget .search_toggle {
                     display: flex;
@@ -423,72 +398,6 @@
                     padding: 0;
                     margin-left: 5px;
                 }
-                @media (max-width: 768px) {
-                    #search_widget {
-                        max-width: 100%;
-                    }
-                
-                    .search_toggle {
-                        flex-direction: column;
-                        align-items: stretch;
-                    }
-                
-                    #search_widget input[type="text"] {
-                        width: 100%;
-                    }
-                
-                    #search_widget button {
-                        width: 100%;
-                        margin-top: 5px;
-                    }
-                
-                    .user-info {
-                        text-align: center;
-                    }
-                
-                    .language-selector ul {
-                        display: flex;
-                        flex-wrap: wrap;
-                        justify-content: center;
-                    }
-                
-                    .menu.col-lg-12 {
-                        display: none; /* Mobil versiyada asosiy menyuni yashirish */
-                    }
-                
-                }
-                
-                @media (max-width: 480px) {
-                    .header_logo img {
-                        max-width: 150px; /* Kichik ekranlar uchun logo o‘lchamini kamaytirish */
-                    }
-                
-                    .btn-container {
-                        display: flex;
-                        flex-direction: column;
-                        gap: 5px;
-                    }
-                
-                    .btn-container button,
-                    .btn-container input {
-                        width: 100%;
-                    }
-                }
-                @media (max-width: 768px) {
-                    .header-top {
-                        flex-direction: column;
-                        align-items: center;
-                    }
-                
-                    .user-info {
-                        text-align: center;
-                        margin-top: 10px;
-                    }
-                
-                    .language-selector {
-                        margin-top: 5px;
-                    }
-                }
             </style>
 			<!-- /Block search module TOP -->
 			<div class="user-info dropdown js-dropdown">
@@ -496,13 +405,14 @@
 						class="account_text">{% if user.is_authenticated %}{{ user.first_name }}
 					{{ user.last_name }}{% else %}Mening hisobim{% endif %}</span></span>
 				<ul class="dropdown-menu">
+					<li>
 						{% if user.is_authenticated %}
 							<!-- User is authenticated, show logout link or any other authenticated content -->
 							<li>
-								<a href="{% url "profile" %}" title="Profile">{% trans "Profil" %}</a>
+								<a href="{% url "profile" %}" title="Profil">Profil</a>
 							</li>
 							<li>
-								<a href="{% url 'logout' %}" title="Logout">{% trans "Chiqish" %}</a>
+								<a href="{% url 'logout' %}" title="Chiqish">Chiqish</a>
 							</li>
 
 						{% else %}
@@ -510,12 +420,12 @@
 							<li>
 								<a class="dropdown-item" href="{% url 'login' %}"
 								   title="Log in to your customer account" rel="nofollow">
-									<span>{% trans "Kirish" %}</span>
+									<span>Kirish</span>
 								</a>
 							</li>
 							<li>
-								<a href="{% url 'register' %}"
-								   data-link-action="display-register-form">{% trans "Ro'yxatdan o'tish" %}</a>
+								<a href="{% url 'register' %}" data-link-action="display-register-form">Ro'yxatdan
+									o'tish</a>
 							</li>
 						{% endif %}
 				</ul>
@@ -549,49 +459,169 @@
 						</div>
 					</div>
 				</div>
-				<div class="text-xs-left mobile hidden-lg-up mobile-menu">
-                    <button class="btn btn-primary" id="mobile-menu-toggle">☰ Menyu</button>
-                    <div id="mobile_top_menu_wrapper" class="hidden">
-                        <ul class="mobile-menu-inner">
-                            <li><a href="{% url 'searching_dissertations' %}">Dissertatsiyalar</a></li>
-                            {% for category in categories %}
-                                <li><a href="{% url "category" category.id %}">{{ category.name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+				<div class="menu col-lg-12 js-top-menu position-static hidden-md-down" id="_desktop_top_menu">
+					<ul class="top-menu  container" id="top-menu" data-depth="0">
+                        <li class="category" id="category-search">
+                            <a class="dropdown-item" href="{% url 'searching_dissertations' %}" data-depth="0">
+                                Dissertatsiyalar bazasi
+                            </a>
+                        </li>
+						{% for category in categories %}
+							<li class="category" id="category-6">
+								<a
+										class="dropdown-item"
+										href="{% url "category" category.id %}" data-depth="0"
+								>
+									{{ category.name }}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
 			</div>
 		</div>
 	</header>
+	<!-- end header -->
+	<aside id="notifications">
+		<div class="container">
+		</div>
+	</aside>
+	<section id="wrapper">
+		<nav data-depth="2" class="breadcrumb">
+			<div id="loading-spinner" class="spinner-container">
+				<div class="spinner"></div>
+			</div>
+			<div class="container">
+				<form action="{% url "search" %}" id="search-form">
+					<label>
+						<input name="q" type="text" placeholder="Qidiruv" autocomplete="off" autofocus>
+					</label>
+					<a id="submit-url" href="{% url "recog" %}"></a>
+					<button type="button" id="start-recording"><i id="mic-icon" class="fas fa-microphone"></i>
+					</button>
+					<!-- Button to start recording -->
+					<button type="button" id="stop-recording" style="display: none;"><i
+							class="fas fa-microphone-slash"></i></button>
+					<!-- Button to stop recording -->
+				</form>
+				<p class="info"></p>
+			</div>
 
-    <div class="container mt-4">
-        <h2 class="text-center">{% trans "Face ID orqali ro'yxatdan o'tish" %}</h2>
-    
-        <div class="camera-container">
-            <!-- Foydalanuvchi kameradan rasm olishi yoki rasm yuklashi mumkin -->
-            <video id="video" autoplay></video>
-            <img id="preview-image" src="#" alt="{% trans 'Yuklangan rasm' %}" />
-    
-            <canvas id="canvas" style="display: none;"></canvas>
-    
-            <p id="captured-alert">{% trans "✅ Rasm olindi yoki yuklandi! Tasdiqlash tugmasini bosing." %}</p>
-    
-            <div class="btn-container">
-                <button type="button" id="capture-btn" class="btn btn-info">{% trans "📸 Kameradan rasm olish" %}</button>
-                <input type="file" id="upload-image" class="btn btn-light" accept="image/*">
-                <button id="confirm-btn" class="btn btn-success" disabled>{% trans "✅ Yuzni tasdiqlash" %}</button>
+		</nav>
+		<div class="container">
+            <div id="columns_inner">
+                <div id="content-wrapper">
+                    <section id="main" itemscope itemtype="https://schema.org/Product">
+                        <div class="row">
+                            <section id="main">
+                                <header class="page-header d-flex justify-content-between align-items-center">
+                                    <h1>{% trans "Bildirishnomalar" %}</h1>
+                                    {% if notifications %}
+                                        <button id="mark-all-read" class="btn btn-danger">
+                                            📩 {% trans "Barchasini o‘qilgan qilish" %}
+                                        </button>
+                                    {% endif %}
+                                </header>
+                            
+                                <section id="content" class="page-content">
+                                    <aside id="notifications">
+                                        <div id="notifications-list">
+                                            {% if notifications %}
+                                                <ul class="list-group">
+                                                    {% for notification in notifications %}
+                                                        <li id="notification-{{ notification.id }}" class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span>{{ notification.message }}</span>
+                                                            {% if notification.book %}
+                                                                (<a href="{% url 'book' notification.book.id %}">{% trans "Ko‘rish" %}</a>)
+                                                            {% endif %}
+                                                            <button class="mark-as-read btn btn-outline-success btn-sm" data-id="{{ notification.id }}">
+                                                                <i class="bi bi-check-circle-fill"></i> {% trans "O‘qildi" %}
+                                                            </button>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                <p class="text-center text-muted mt-3">{% trans "Sizda yangi bildirishnomalar yo‘q" %}</p>
+                                            {% endif %}
+                                        </div>
+                                    </aside>
+                                </section>
+                            </section>
+
+                            <!-- Bootstrap va AJAX Qo‘llash -->
+                           <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                // ✅ Har bir bildirishnomani o‘qilgan qilish
+                                document.querySelectorAll('.mark-as-read').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        let notificationId = this.getAttribute('data-id');
+                                        fetch(`/notifications/mark-read/${notificationId}/`, { 
+                                            method: 'POST', 
+                                            headers: { 
+                                                'X-CSRFToken': getCSRFToken(),
+                                                'Content-Type': 'application/json'
+                                            } 
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                let li = document.getElementById(`notification-${notificationId}`);
+                                                li.remove();  // ✅ Sahifadagi bildirishnomani o‘chirish
+                            
+                                                // 🔴 Agar hammasi o‘qilsa, "Sizda yangi bildirishnomalar yo‘q" chiqsin
+                                                if (document.querySelectorAll('.list-group-item').length === 0) {
+                                                    document.getElementById("notifications-list").innerHTML = 
+                                                        `<p class="text-center text-muted mt-3">{% trans "Sizda yangi bildirishnomalar yo‘q" %}</p>`;
+                                                }
+                                            }
+                                        });
+                                    });
+                                });
+                            
+                                // ✅ Barcha bildirishnomalarni o‘qilgan qilish
+                                document.getElementById('mark-all-read')?.addEventListener('click', function () {
+                                    fetch(`/notifications/mark-all-read/`, { 
+                                        method: 'POST', 
+                                        headers: { 
+                                            'X-CSRFToken': getCSRFToken(),
+                                            'Content-Type': 'application/json'
+                                        } 
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            document.getElementById("notifications-list").innerHTML = 
+                                                `<p class="text-center text-muted mt-3">{% trans "Sizda yangi bildirishnomalar yo‘q" %}</p>`;
+                                        }
+                                    });
+                                });
+                            
+                                // ✅ CSRF Token olish uchun yordamchi funksiya
+                                function getCSRFToken() {
+                                    let cookieValue = null;
+                                    let cookies = document.cookie.split(';');
+                                    for (let i = 0; i < cookies.length; i++) {
+                                        let cookie = cookies[i].trim();
+                                        if (cookie.startsWith('csrftoken=')) {
+                                            cookieValue = cookie.substring('csrftoken='.length, cookie.length);
+                                            break;
+                                        }
+                                    }
+                                    return cookieValue;
+                                }
+                            });
+                            </script>
+
+
+                        </div>
+                    </section>
+                </div>
             </div>
-    
-            <p id="success-message"></p>
-            <p id="error-message"></p>
-    
-            <div class="mt-3">
-                <a href="{% url 'register' %}" class="btn btn-secondary">{% trans "🔙 Orqaga qaytish" %}</a>
-            </div>
-            
         </div>
-    </div>
-<footer id="footer">
+
+	</section>
+	<!-- footer  -->
+	<footer id="footer">
 		<div class="footer-before">
 			<div class="container">
 			</div>
@@ -603,8 +633,7 @@
 						<div id="footerlogo">
 							<div class="footerdiv">
 								<div class="footerlogo"></div>
-								<div
-										class="footerdesc">{% trans "Oliy ta'lim muassasalarining yagona elektron kutubxona axborot tizimi" %}</div>
+								<div class="footerdesc">{% trans "Oliy ta'lim muassasalarining yagona elektron kutubxona axborot tizimi" %}</div>
 							</div>
 						</div>
 					</div>
@@ -626,7 +655,7 @@
 								<a
 										id="link-product-page-new-products-1"
 										class="cms-page-link"
-										href="#"
+										href="#new-products"
 										title="Our new products">
 									{% trans 'Yangiliklar' %}
 								</a>
@@ -635,7 +664,7 @@
 								<a
 										id="link-product-page-best-sales-1"
 										class="cms-page-link"
-										href="#"
+										href="#best-sales"
 										title="Our best sales">
 									{% trans "Bizning Jamoa" %}
 								</a>
@@ -644,7 +673,7 @@
 								<a
 										id="link-static-page-contact-1"
 										class="cms-page-link"
-										href="#"
+										href="#contact"
 										title="Use our form to contact us">
 									{% trans "Biz bilan bog'lanish" %}
 								</a>
@@ -653,7 +682,8 @@
 								<a
 										id="link-static-page-sitemap-1"
 										class="cms-page-link"
-										href="#">
+										href="#sitemap"
+										title="Lost ? Find what your are looking for">
 									{% trans "Biz haqimizda" %}
 								</a>
 							</li>
@@ -712,7 +742,7 @@
 						</ul>
 					</div>
 					<div class="block-contact col-md-4 links wrapper">
-						<h3 class="text-uppercase block-contact-title hidden-sm-down"><a href="#">Bog'lanish</a>
+						<h3 class="text-uppercase block-contact-title hidden-sm-down"><a href="#stores">Bog'lanish</a>
 						</h3>
 						<div class="title clearfix hidden-md-up" data-target="#block-contact_list"
 						     data-toggle="collapse">
@@ -735,206 +765,30 @@
 							</li>
 							<li>
 								<i class="fa fa-envelope-o"></i>
-								<span>smartuit@gmail.com</span>
+								<span>smarttuit@gmail.com</span>
 							</li>
 						</ul>
 					</div>
-					<style>
-                        #cookie_notice {
-                            background: #222222;
-                            padding: 12px;
-                            text-align: center;
-                            color: #fff;
-                            z-index: 99;
-                            position: fixed;
-                            width: 100%;
-                            bottom: 0px;
-                            right: 0;
-                            left: 0;
-                        }
 
-                        #cookie_notice a {
-                            text-decoration: underline;
-                            color: #fff;
-                        }
-
-                        #cookie_notice a:hover {
-                            text-decoration: none;
-                        }
-
-                        .closeButtonNormal {
-                            text-align: center;
-                            padding: 2px 5px;
-                            border-radius: 2px;
-                            cursor: pointer;
-                        }
-
-                        #cookieNotice p {
-                            margin: 0px;
-                            padding: 0px;
-                        }
-
-                        .cookie-button {
-                            padding: 4px 13px;
-                            margin-left: 10px;
-                            font-size: 13px;
-                            background: #fff;
-                            color: #000;
-                            border-radius: 3px;
-                        }
-
-                        #footer {
-                            margin-bottom: 56px;
-                        }
-
-                        .top_button {
-                            bottom: 100px;
-                        }
-					</style>
-				</div>
 			</div>
 		</div>
 		</div>
 		<div class="footer-after">
 			<div class="container">
+				<!-- Block payment logo module -->
+
+				<!-- /Block payment logo module -->
+
 				<div class="copyright">
 					<a class="_blank" href="">
-						© 2024 - {% trans "O‘zbekiston Respublikasi Oliy ta'lim, fan va innovatsiyalar vazirligi" %}
+						© 2024 - O‘zbekiston Respublikasi Oliy ta'lim, fan va innovatsiyalar vazirligi
 					</a>
 				</div>
 			</div>
 		</div>
 		<a class="top_button" href="#" style="">&nbsp;</a>
-</footer>
-<script>
-    
-    var video = document.getElementById('video');
-    var previewImage = document.getElementById('preview-image');
-    var canvas = document.getElementById('canvas');
-    var captureBtn = document.getElementById('capture-btn');
-    var uploadInput = document.getElementById('upload-image');
-    var confirmBtn = document.getElementById('confirm-btn');
-    var alertMsg = document.getElementById('captured-alert');
-    var successMsg = document.getElementById('success-message');
-    var errorMsg = document.getElementById('error-message');
-    var selectedImage = null;
-
-    document.getElementById("mobile-menu-toggle").addEventListener("click", function() {
-        var menu = document.getElementById("mobile_top_menu_wrapper");
-        menu.classList.toggle("hidden");
-    });
-
-    // ✅ Kamerani ishga tushirish
-   navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        video.srcObject = stream;
-        video.style.display = "block";
-    })
-    .catch(err => {
-        console.error("❌ Kamera ishlamadi:", err);
-        uploadInput.style.display = "block";  // Fayl yuklash opsiyasini faollashtirish
-    });
-
-    // ✅ Kameradan rasm olish
-    captureBtn.addEventListener("click", function () {
-        var context = canvas.getContext("2d");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        selectedImage = canvas.toDataURL("image/jpeg").split(',')[1];  // ✅ Base64 formatga o‘tkazish
-        alertMsg.style.display = "block";
-        confirmBtn.removeAttribute("disabled");  // ✅ Tugmani faollashtirish
-    });
-
-    // ✅ Fayldan rasm yuklash
-    uploadInput.addEventListener("change", function (event) {
-        var file = event.target.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = "block";
-                video.style.display = "none";  // ✅ Kamerani o‘chirish
-
-                selectedImage = e.target.result.split(',')[1];  // ✅ Base64 formatga o‘tkazish
-                alertMsg.style.display = "block";
-                confirmBtn.removeAttribute("disabled");  // ✅ Tugmani faollashtirish
-            };
-            reader.readAsDataURL(file);
-        }
-        if (file && file.size > 2 * 1024 * 1024) {  // 2MB limit
-            errorMsg.innerText = "❌ Fayl hajmi 2MB dan oshmasligi kerak!";
-            errorMsg.style.display = "block";
-            return;
-        }
-    });
-
-    // ✅ URL'dan foydalanuvchi ma'lumotlarini olish
-    function getQueryParams() {
-        let params = {};
-        window.location.search.substring(1).split("&").forEach(function(pair) {
-            let keyValue = pair.split("=");
-            params[keyValue[0]] = decodeURIComponent(keyValue[1] || "");
-        });
-        return params;
-    }
-
-    // ✅ Yuzni tasdiqlash va serverga yuborish
-    confirmBtn.addEventListener("click", async function () {
-        if (!selectedImage) {
-            errorMsg.innerText = "❌ Rasm tanlanmagan!";
-            errorMsg.style.display = "block";
-            return;
-        }
-    
-        let params = getQueryParams();
-        let email = params["email"];
-    
-        if (!email) {
-            errorMsg.innerText = "❌ Email aniqlanmadi!";
-            errorMsg.style.display = "block";
-            return;
-        }
-    
-        console.log("📡 Yuborilayotgan ma'lumotlar:", { image: selectedImage, email: email });
-    
-        try {
-            let response = await fetch("{% url 'face_register' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": "{{ csrf_token }}"  // yoki meta teg orqali olish
-                },
-                body: JSON.stringify({ image: selectedImage, email: email })
-            });
-    
-            if (!response.ok) {
-                throw new Error("❌ Serverdan noto‘g‘ri javob keldi!");
-            }
-    
-            let data = await response.json();
-            console.log("✅ Serverdan javob:", data);
-    
-            if (data.success) {
-                successMsg.innerText = data.message;
-                successMsg.style.display = "block";
-                setTimeout(() => {
-                    window.location.href = data.redirect_url;
-                }, 2000);
-            } else {
-                errorMsg.innerText = data.message;
-                errorMsg.style.display = "block";
-            }
-        } catch (error) {
-            console.error("❌ Xatolik:", error);
-            errorMsg.innerText = "❌ Server bilan bog‘lanishda xatolik!";
-            errorMsg.style.display = "block";
-        }
-    });
-
-</script>
-
+	</footer>
+	<!-- end footer  -->
 </main>
 <script type="text/javascript" src="{% static "js/core.js" %}"></script>
 <script type="text/javascript" src="{% static "js/theme.js" %}"></script>

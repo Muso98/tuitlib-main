@@ -1,13 +1,11 @@
 from urllib.parse import urlencode
-
 from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 import requests
 import os
-
 from django.views.decorators.csrf import csrf_exempt
-
-from .models import STTModel, Category, Library
+from django.contrib.auth.decorators import login_required
+from .models import STTModel, Category, Library, Notification
 from dotenv import load_dotenv
 from .views.search import book_filter_queryset
 from .pagination import DefaultPaginator
@@ -153,3 +151,32 @@ def library_list(request):
 def map_view(request):
     return render(request, 'map.html')
 
+def user_notifications(request):
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user, is_read=False)
+        data = [{"message": n.message, "created_at": n.created_at} for n in notifications]
+        return JsonResponse({"notifications": data}, safe=False)
+    return JsonResponse({"error": "❌ Foydalanuvchi autentifikatsiyadan o‘tmagan!"}, status=403)
+
+@login_required
+def notifications_view(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    notifications = Notification.objects.filter(user=request.user, is_read=False).order_by('-created_at')
+    return render(request, 'notifications.html', {'notifications': notifications})
+
+@login_required
+def mark_notification_as_read(request, notification_id):
+    """Bitta bildirishnomani o‘qilgan deb belgilash"""
+    notification = get_object_or_404(Notification, id=notification_id, user=request.user, is_read=False)
+    notification.is_read = True
+    notification.save()
+    return JsonResponse({'success': True, 'notification_id': notification_id})
+
+
+@login_required
+def mark_all_notifications_as_read(request):
+    """Barcha bildirishnomalarni o‘qilgan deb belgilash"""
+    Notification.objects.filter(user=request.user, is_read=False).update(is_read=True)
+    return JsonResponse({'success': True})
