@@ -289,191 +289,236 @@
 
 	<!-- header -->
 	<header id="header">
-            <div class="header-banner">
-            </div>
-            <div class="header-top">
-               <div class="header_logo">
-                  <a href="{% url "main" %}">
-                  <img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="Bookrow - Book Store">
-                  </a>
-               </div>
-               <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
-                    <span class="search_button"></span>
-                    <div class="search_toggle">
-                        <form method="get" action="{% url 'search' %}">
-                            <input type="hidden" name="controller" value="search">
-                            <input type="text" name="q" value="{{ request.GET.q|default_if_none:'' }}" placeholder="Search our catalog">
-                            <button type="submit"></button>
-                            <button type="button" class="voice-search-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
-                                </svg>
-                            </button>
-                        </form>
-                    </div>
-               </div>
-                
-                <style>
-                    /* Qidiruv vidjeti uchun maxsus CSS */
-                    #search_widget {
-                        position: relative;
-                        width: 100%;
-                        max-width: 400px;
-                        margin: auto;
-                    }
-                
-                    #search_widget .search_toggle {
-                        display: flex;
-                        align-items: center;
-                        background: #f8f9fa;
-                        border-radius: 8px;
-                        padding: 5px;
-                        border: 1px solid #ddd;
-                    }
-                
-                    #search_widget input[type="text"] {
-                        flex: 1;
-                        border: none;
-                        outline: none;
-                        padding: 8px;
-                        font-size: 16px;
-                    }
-                
-                    #search_widget button {
-                        background: #ff0000;
-                        border: none;
-                        color: white;
-                        padding: 8px 12px;
-                        border-radius: 4px;
-                        cursor: pointer;
-                    }
-                
-                    #search_widget button:hover {
-                        background: #b30000;
-                    }
-                    #search_widget {
-                        position: relative;
-                        width: 100%;
-                        max-width: 400px;
-                        margin: auto;
-                    }
-                    
-                    #search_widget .search_toggle {
-                        display: flex;
-                        align-items: center;
-                        background: #f8f9fa;
-                        border-radius: 8px;
-                        padding: 5px;
-                        border: 1px solid #ddd;
-                    }
-                    
-                    #search-input {
-                        flex: 1;
-                        border: none;
-                        outline: none;
-                        padding: 8px;
-                        font-size: 16px;
-                    }
-                    
-                    #search-form button[type="submit"] {
-                        background: #ff0026;
-                        border: none;
-                        color: white;
-                        padding: 8px 12px;
-                        border-radius: 4px;
-                        cursor: pointer;
-                    }
-                    
-                    #search-form button[type="submit"]:hover {
-                        background: #b30000;
-                    }
-                    
-                    .voice-search-btn {
-                        border: none;
-                        background-color: transparent;
-                        cursor: pointer;
-                        padding: 0;
-                        margin-left: 5px;
-                    }
-                </style>
-               <!-- /Block search module TOP -->
-               <div class="user-info dropdown js-dropdown">
-                  <span class="user-info-title expand-more _gray-darker" data-toggle="dropdown"><span class="account_text">{% if user.is_authenticated %}{{ user.first_name }} {{ user.last_name }}{% else %}My Account{% endif %}</span></span>
-                  <ul class="dropdown-menu">
-                     <li>
-                         {% if user.is_authenticated %}
-                            <!-- User is authenticated, show logout link or any other authenticated content -->
-	                         <li>
-	                            <a href="{% url "profile" %}" title="Profile">{% trans "Profile" %}</a>
-	                         </li>
-                            <li>
-                                <a href="{% url 'logout' %}" title="Logout">{% trans "Logout" %}</a>
-                            </li>
-
-                         {% else %}
-                            <!-- User is not authenticated, show login and register links -->
-                            <li>
-                                <a class="dropdown-item" href="{% url 'login' %}" title="Log in to your customer account" rel="nofollow">
-                                    <span>Sign in</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'register' %}" data-link-action="display-register-form">{% trans "Register" %}</a>
-                            </li>
-                        {% endif %}
-                  </ul>
-               </div>
-                <div class="language-selector" id="language-selector">
-	                <div class="language_block">
-		                {% get_current_language as CURRENT_LANGUAGE %}
-		                {% get_available_languages as AVAILABLE_LANGUAGES %}
-		                {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
-		                <span class="language-title">{% trans "Til" %}:</span>
-		                <ul>
-			                {% for language in languages %}
-				                <li  {% if language.code == CURRENT_LANGUAGE %} class="current"{% endif %}>
-					                <a href="/{{ language.code }}/" class="language-item">{{ language.name_local }}</a>
-				                </li><br>
-			                {% endfor %}
-		                </ul>
-	                </div>
+		<div class="header-banner">
+		</div>
+		<div class="header-top">
+			<div class="header_logo">
+				<a href="{% url "main" %}">
+					<img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="smarttuit logo">
+				</a>                
+			</div>
+        
+            <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
+                <span class="search_button"></span>
+                <div class="search_toggle">
+                    <form method="get" action="{% url 'search' %}">
+                        <input type="hidden" name="controller" value="search">
+                        <input type="text" name="q" value="{{ request.GET.q|default_if_none:'' }}" placeholder="Search our catalog">
+                        <button type="submit"></button>
+                        <button type="button" class="voice-search-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                            </svg>
+                        </button>
+                    </form>
                 </div>
-               <div class="header-top-inner">
-                  <div class="text-xs-left mobile hidden-lg-up mobile-menu">
-                     <div class="menu-icon">
-                        <div class="cat-title">Menu</div>
-                     </div>
-                     <div id="mobile_top_menu_wrapper" class="row hidden-lg-up">
-                        <div class="mobile-menu-inner">
-                           <div class="menu-icon">
-                              <div class="cat-title">Menu</div>
-                           </div>
-                           <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="menu col-lg-12 js-top-menu position-static hidden-md-down" id="_desktop_top_menu">
-                     <ul class="top-menu  container" id="top-menu" data-depth="0">
+            </div>
+            
+            <style>
+                /* Qidiruv vidjeti uchun maxsus CSS */
+                #search_widget {
+                    position: relative;
+                    width: 100%;
+                    max-width: 400px;
+                    margin: auto;
+                }
+            
+                #search_widget .search_toggle {
+                    display: flex;
+                    align-items: center;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    padding: 5px;
+                    border: 1px solid #ddd;
+                }
+            
+                #search_widget input[type="text"] {
+                    flex: 1;
+                    border: none;
+                    outline: none;
+                    padding: 8px;
+                    font-size: 16px;
+                }
+            
+                #search_widget button {
+                    background: #ff0000;
+                    border: none;
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+            
+                #search_widget button:hover {
+                    background: #b30000;
+                }
+                #search_widget {
+                    position: relative;
+                    width: 100%;
+                    max-width: 400px;
+                    margin: auto;
+                }
+                
+                #search_widget .search_toggle {
+                    display: flex;
+                    align-items: center;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    padding: 5px;
+                    border: 1px solid #ddd;
+                }
+                
+                #search-input {
+                    flex: 1;
+                    border: none;
+                    outline: none;
+                    padding: 8px;
+                    font-size: 16px;
+                }
+                
+                #search-form button[type="submit"] {
+                    background: #ff0026;
+                    border: none;
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+                
+                #search-form button[type="submit"]:hover {
+                    background: #b30000;
+                }
+                
+                .voice-search-btn {
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
+                    padding: 0;
+                    margin-left: 5px;
+                }
+                .notifications-wrapper {
+                    position: absolute;
+                    top: 40px; /* Logoning ustida chiqib qolmasligi uchun */
+                    right: 50px; /* O‘ng tomonda chiqishi uchun */
+                }
+                
+                .notification-icon {
+                    font-size: 20px;
+                    text-decoration: none;
+                    position: relative;
+                }
+                
+                .notification-badge {
+                    position: absolute;
+                    top: -10px;
+                    right: -10px;
+                    background: red;
+                    color: white;
+                    border-radius: 50%;
+                    padding: 3px 7px;
+                    font-size: 14px;
+                }
+                /* === Mobil versiya uchun (max 768px) === */
+                @media (max-width: 768px) {
+                    .notifications-wrapper {
+                        top: 15px; /* Biroz pastroqda chiqishi uchun */
+                        right: 70px; /* O‘ngga yaqinroq joylashishi uchun */
+                    }
+                
+                    .notification-icon {
+                        font-size: 18px; /* Mobil ekranda biroz kichikroq */
+                    }
+                
+                    .notification-badge {
+                        top: -5px;
+                        right: -5px;
+                        font-size: 12px;
+                        padding: 2px 5px;
+                    }
+                }
+            </style>
+            <div class="col-md-4 text-center notifications-wrapper">
+                <a href="{% url 'notifications' %}" class="notification-icon">
+                    📩  
+                    {% if unread_notifications_count > 0 %}
+                        <span class="notification-badge text-danger">({{ unread_notifications_count }})</span>
+                    {% endif %}
+                </a>
+            </div>
+
+            
+			<!-- /Block search module TOP -->
+			<div class="d-flex align-items-center gap-3">
+                <div class="user-info dropdown js-dropdown">
+                    <span class="user-info-title expand-more _gray-darker" data-toggle="dropdown">
+                        <span class="account_text">
+                            {% if user.is_authenticated %}
+                                {{ user.first_name }} {{ user.last_name }}
+                            {% else %}
+                                Mening hisobim
+                            {% endif %}
+                        </span>
+                    </span>
+                    <ul class="dropdown-menu">
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'profile' %}" title="Profile">{% trans 'Profil' %}</a></li>
+                            <li><a href="{% url 'logout' %}" title="Logout">{% trans 'Chiqish' %}</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}" title="Log in to your customer account" rel="nofollow"><span>{% trans 'Kirish' %}</span></a></li>
+                            <li><a href="{% url 'register' %}" data-link-action="display-register-form">{% trans "Ro'yxatdan o'tish" %}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+			<div class="language-selector" id="language-selector">
+				<div class="language_block">
+					{% get_current_language as CURRENT_LANGUAGE %}
+					{% get_available_languages as AVAILABLE_LANGUAGES %}
+					{% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+					<span class="language-title">{% trans "Til" %}:</span>
+					<ul>
+						{% for language in languages %}
+							<li  {% if language.code == CURRENT_LANGUAGE %} class="current"{% endif %}>
+								<a href="/{{ language.code }}/" class="language-item">{{ language.name_local }}</a>
+							</li><br>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="header-top-inner">
+				<div class="text-xs-left mobile hidden-lg-up mobile-menu">
+					<div class="menu-icon">
+						<div class="cat-title">Menu</div>
+					</div>
+					<div id="mobile_top_menu_wrapper" class="row hidden-lg-up">
+						<div class="mobile-menu-inner">
+							<div class="menu-icon">
+								<div class="cat-title">Menu</div>
+							</div>
+							<div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+						</div>
+					</div>
+				</div>
+				<div class="menu col-lg-12 js-top-menu position-static hidden-md-down" id="_desktop_top_menu">
+					<ul class="top-menu container" id="top-menu" data-depth="0">
                         <li class="category" id="category-search">
                             <a class="dropdown-item" href="{% url 'searching_dissertations' %}" data-depth="0">
                                 Dissertatsiyalar bazasi
                             </a>
                         </li>
                         {% for category in categories %}
-                            <li class="category" id="category-6">
-                                <a
-                                   class="dropdown-item"
-                                   href="{% url "category" category.id %}" data-depth="0"
-                                   >
-                                   {{ category.name }}
+                            <li class="category" id="category-{{ category.id }}">
+                                <a class="dropdown-item" href="{% url 'category' category.id %}" data-depth="0">
+                                    {{ category.name }}
                                 </a>
-                             </li>
+                            </li>
                         {% endfor %}
-                     </ul>
-                  </div>
-               </div>
-            </div>
-         </header>
+                    </ul>
+				</div>
+			</div>
+		</div>
+	</header>
 	<!-- end header -->
 	<aside id="notifications">
 		<div class="container">

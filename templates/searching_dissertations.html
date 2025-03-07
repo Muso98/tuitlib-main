@@ -121,7 +121,7 @@
                 <img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="smarttuit logo">
             </a>
         </div>
-    
+
         <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
             <span class="search_button"></span>
             <div class="search_toggle">
@@ -137,7 +137,7 @@
                 </form>
             </div>
         </div>
-        
+
         <style>
             /* Qidiruv vidjeti uchun maxsus CSS */
             #search_widget {
@@ -146,7 +146,7 @@
                 max-width: 400px;
                 margin: auto;
             }
-        
+
             #search_widget .search_toggle {
                 display: flex;
                 align-items: center;
@@ -155,7 +155,7 @@
                 padding: 5px;
                 border: 1px solid #ddd;
             }
-        
+
             #search_widget input[type="text"] {
                 flex: 1;
                 border: none;
@@ -163,7 +163,7 @@
                 padding: 8px;
                 font-size: 16px;
             }
-        
+
             #search_widget button {
                 background: #ff0000;
                 border: none;
@@ -172,7 +172,7 @@
                 border-radius: 4px;
                 cursor: pointer;
             }
-        
+
             #search_widget button:hover {
                 background: #b30000;
             }
@@ -182,7 +182,7 @@
                 max-width: 400px;
                 margin: auto;
             }
-            
+
             #search_widget .search_toggle {
                 display: flex;
                 align-items: center;
@@ -191,7 +191,7 @@
                 padding: 5px;
                 border: 1px solid #ddd;
             }
-            
+
             #search-input {
                 flex: 1;
                 border: none;
@@ -199,7 +199,7 @@
                 padding: 8px;
                 font-size: 16px;
             }
-            
+
             #search-form button[type="submit"] {
                 background: #ff0026;
                 border: none;
@@ -208,11 +208,11 @@
                 border-radius: 4px;
                 cursor: pointer;
             }
-            
+
             #search-form button[type="submit"]:hover {
                 background: #b30000;
             }
-            
+
             .voice-search-btn {
                 border: none;
                 background-color: transparent;
@@ -221,7 +221,7 @@
                 margin-left: 5px;
             }
         </style>
-    
+
         <div class="user-info dropdown js-dropdown">
               <span class="user-info-title expand-more _gray-darker" data-toggle="dropdown"><span class="account_text">{% if user.is_authenticated %}{{ user.first_name }} {{ user.last_name }}{% else %}My Account{% endif %}</span></span>
               <ul class="dropdown-menu">
@@ -234,7 +234,7 @@
                         <li>
                             <a href="{% url 'logout' %}" title="Logout">Logout</a>
                         </li>
-    
+
                      {% else %}
                         <!-- User is not authenticated, show login and register links -->
                         <li>
@@ -263,7 +263,7 @@
                 </ul>
             </div>
         </div>
-    
+
         <div class="header-top-inner">
             <div class="text-xs-left mobile hidden-lg-up mobile-menu">
                 <div class="menu-icon">
@@ -297,6 +297,7 @@
         </div>
     </div>
 </header>
+
 <main id="page">    <!-- Header -->
     
     <!-- Qidiruv bo'limi -->
