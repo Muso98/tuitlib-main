@@ -654,19 +654,47 @@
                                         <a id="face-id-btn" href="{% url 'face_register' %}" class="btn btn-info">
                                             {% trans "Face ID orqali ro'yxatdan o'tish" %}
                                         </a>
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", function() {
+                                                document.getElementById("customer-form").addEventListener("submit", function(event) {
+                                                    let firstName = document.querySelector("input[name='first_name']").value.trim();
+                                                    let lastName = document.querySelector("input[name='last_name']").value.trim();
+                                                    let email = document.querySelector("input[name='email']").value.trim();
+                                                    
+                                                    if (!firstName || !lastName || !email) {
+                                                        event.preventDefault();
+                                                        alert("❌ Iltimos, barcha maydonlarni to‘ldiring!");
+                                                    }
+                                                });
+                                            });
+                                        </script>
 
                                         <script>
                                             document.getElementById("face-id-btn").addEventListener("click", function(event) {
                                                 event.preventDefault();
-
-                                                // Forma ma'lumotlarini olish
-                                                let formData = new FormData(document.getElementById("customer-form"));
-                                                let queryString = new URLSearchParams(formData).toString();
-
-                                                // Face ID sahifasiga ma'lumotlarni URL orqali yuborish
-                                                window.location.href = "{% url 'face_register' %}?" + queryString;
+                                            
+                                                // 📌 Forma ma’lumotlarini olish
+                                                let email = document.querySelector("input[name='email']").value;
+                                                let firstName = document.querySelector("input[name='first_name']").value;
+                                                let lastName = document.querySelector("input[name='last_name']").value;
+                                            
+                                                // 📌 Email, Ism va Familiya tekshiruvi
+                                                if (!email || !firstName || !lastName) {
+                                                    alert("❌ Iltimos, barcha maydonlarni to‘ldiring!");
+                                                    return;
+                                                }
+                                            
+                                                // 📌 Ma'lumotlarni `localStorage` ga saqlash
+                                                localStorage.setItem("user_email", email);
+                                                localStorage.setItem("user_first_name", firstName);
+                                                localStorage.setItem("user_last_name", lastName);
+                                            
+                                                // 📌 Face ID sahifasiga yo‘naltirish
+                                                window.location.href = "{% url 'face_register' %}";
                                             });
+
                                         </script>
+
 
 
                                         <button class="btn btn-primary form-control-submit" style="text-align: center"

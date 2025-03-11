@@ -1,5 +1,6 @@
 import base64
 import boto3
+import time
 import io
 from django.conf import settings
 from PIL import Image
@@ -72,6 +73,18 @@ def register_face(user, image_data):
     try:
         print(f"🔍 Foydalanuvchi: {user.id}, Rasmni AWS Rekognition'ga qo‘shyapmiz...")
 
+        # ✅ Eski Face ID mavjudligini tekshiramiz
+        faces = rekognition.list_faces(CollectionId=settings.AWS_REKOGNITION_COLLECTION)
+        for face in faces.get("Faces", []):
+            if face["ExternalImageId"] == str(user.id):
+                rekognition.delete_faces(
+                    CollectionId=settings.AWS_REKOGNITION_COLLECTION,
+                    FaceIds=[face["FaceId"]],
+                )
+                print(f"🗑️ Oldingi Face ID o‘chirildi: {face['FaceId']}")
+
+        time.sleep(1)  # ✅ AWS API cheklovlariga tushmaslik uchun kutish
+
         if isinstance(image_data, str):  # ✅ Agar Base64 bo‘lsa, dekodlash
             image_bytes = base64.b64decode(image_data.split(",")[1])
         elif isinstance(image_data, bytes):  # ✅ Agar bytes bo‘lsa, to‘g‘ridan-to‘g‘ri ishlatamiz
@@ -83,9 +96,9 @@ def register_face(user, image_data):
         # 🔥 AWS Rekognition'ga yuklash
         response = rekognition.index_faces(
             CollectionId=settings.AWS_REKOGNITION_COLLECTION,
-            Image={'Bytes': image_bytes},
+            Image={"Bytes": image_bytes},
             ExternalImageId=str(user.id),  # ✅ Foydalanuvchi ID sifatida saqlash
-            DetectionAttributes=['DEFAULT']
+            DetectionAttributes=["DEFAULT"],
         )
 
         print("🧐 AWS Rekognition javobi:", response)  # ✅ Log chiqarish

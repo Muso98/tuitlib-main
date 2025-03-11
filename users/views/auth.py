@@ -1,3 +1,5 @@
+import string
+import random
 import base64
 import os
 import requests
@@ -16,6 +18,7 @@ from django.contrib.auth import (
     logout,
     login, authenticate,get_user_model
 )
+from django.core.exceptions import ObjectDoesNotExist
 from users.models import EmailOTP
 from users.tasks import verification_mail_sender
 from dotenv import load_dotenv
@@ -36,28 +39,35 @@ URL = os.getenv('FACE_ID_URL')
 def get_categories():
     return Category.objects.all().order_by('id')
 
-
 def registration_view(request):
     research_areas = ResearchArea.objects.all()
+
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
+
         if form.is_valid():
-            email = form.data.get('email')
-            research_area_ids = request.POST.getlist('research_area_ids')
-            print(research_area_ids)
-            verification_mail_sender.apply_async(
-                args=(email,)
-            )
             user = form.save(commit=False)
-            user.is_active = False
+            user.is_active = False  # Foydalanuvchini tasdiqlash uchun faol emas qilib qo‘yamiz
             user.save()
-            request.session['email'] = email
 
+            # Foydalanuvchining tanlagan research area'larini bog‘lash
+            research_area_ids = request.POST.getlist('research_area_ids')
             for area_id in research_area_ids:
-                research_area = ResearchArea.objects.get(id=area_id)
-                user.research_area.add(research_area)
+                try:
+                    research_area = ResearchArea.objects.get(id=area_id)
+                    user.research_area.add(research_area)
+                except ObjectDoesNotExist:
+                    continue  # Agar noto‘g‘ri ID kiritilgan bo‘lsa, davom etamiz
 
+            # Email orqali tasdiqlash xabari yuborish
+            verification_mail_sender.apply_async(args=(user.email,))
+
+            messages.success(request, "✅ Ro‘yxatdan o‘tish muvaffaqiyatli! Iltimos, email orqali tasdiqlang.")
             return redirect('/users/verify/')
+
+        else:
+            messages.error(request, "❌ Ro‘yxatdan o‘tishda xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.")
+
     else:
         form = CustomUserCreationForm()
 
@@ -65,7 +75,9 @@ def registration_view(request):
         'form': form,
         'research_areas': research_areas
     }
+
     return render(request, 'accounts/register.html', context)
+
 
 def login_view(request):
     """
@@ -158,61 +170,80 @@ def email_verify_view(request):
     messages.success(request, "Email muvaffaqiyatli tasdiqlandi!")
     return redirect("profile")  # ✅ Profil sahifasiga yo‘naltirish
 
-
+def generate_random_password(length=12):
+    """ Tasodifiy kuchli parol yaratish """
+    characters = string.ascii_letters + string.digits + string.punctuation
+    return ''.join(random.choice(characters) for i in range(length))
 
 def face_register_view(request):
     if request.method == "POST":
-        print("📡 POST so‘rovi qabul qilindi!")  # ✅ Log qo‘shing
         try:
-            data = json.loads(request.body)  # ✅ JSON ma’lumotni dekodlash
-            email = data.get("email")  # ✅ Foydalanuvchi email'ini olish
-            image_data = data.get("image")  # ✅ Base64 rasm ma'lumotini olish
+            data = json.loads(request.body)
+            email = data.get("email", "").strip()
+            first_name = data.get("first_name", "").strip() or "NoName"
+            last_name = data.get("last_name", "").strip() or "NoLastName"
+            image_data = data.get("image", "")
 
             if not email or not image_data:
                 return JsonResponse({"success": False, "message": "❌ Email yoki rasm topilmadi!"}, status=400)
 
-            # ✅ Foydalanuvchini topish
-            user = User.objects.filter(email=email).first()
-            if not user:
-                return JsonResponse({"success": False, "message": "❌ Bunday foydalanuvchi topilmadi!"}, status=404)
+            # ✅ Rasm formatini tekshirish va dekodlash
+            if image_data.startswith("data:image/"):
+                try:
+                    format_part, imgstr = image_data.split(";base64,", 1)
+                    ext = format_part.split("/")[-1]  # Masalan, "image/png" => "png"
+                    image_bytes = base64.b64decode(imgstr)
+                except Exception as e:
+                    return JsonResponse({"success": False, "message": f"❌ Rasm dekodlashda xatolik: {str(e)}"}, status=400)
+            else:
+                # Agar `data:image/` bo‘lmasa, to‘g‘ridan-to‘g‘ri dekod qilishga harakat qilamiz
+                try:
+                    image_bytes = base64.b64decode(image_data)
+                    ext = "jpeg"  # Default format
+                except Exception as e:
+                    return JsonResponse({"success": False, "message": f"❌ Rasm noto‘g‘ri formatda!"}, status=400)
 
-            # ✅ Rasmni `Base64` formatdan dekodlash
-            format, imgstr = image_data.split(';base64,') if ';base64,' in image_data else ("jpeg", image_data)
-            ext = format.split("/")[-1]
-            file_name = f"face_{user.id}.{ext}"
-            image_bytes = base64.b64decode(imgstr)
+            # ✅ Foydalanuvchini yaratish yoki olish
+            user, created = User.objects.get_or_create(
+                email=email,
+                defaults={"first_name": first_name, "last_name": last_name}
+            )
+
+            update_fields = {}
+            if first_name and user.first_name != first_name:
+                update_fields["first_name"] = first_name
+            if last_name and user.last_name != last_name:
+                update_fields["last_name"] = last_name
+            if update_fields:
+                for key, value in update_fields.items():
+                    setattr(user, key, value)
+                user.save()
 
             # ✅ AWS Rekognition orqali yuzni ro‘yxatdan o‘tkazish
+            file_name = f"face_{user.id}.{ext}"
             face_id = register_face(user, image_bytes)
+
             if face_id:
-                # ✅ Agar foydalanuvchi Face ID bilan oldin ro‘yxatdan o‘tgan bo‘lsa, eski yozuvni yangilaymiz
-                face_record, created = FaceID.objects.update_or_create(
+                FaceID.objects.update_or_create(
                     user=user,
                     defaults={"aws_face_id": face_id, "image": ContentFile(image_bytes, name=file_name)}
                 )
-
-                if created:
-                    print(f"✅ Yangi Face ID qo‘shildi: {face_id}")
-                else:
-                    print(f"✅ Face ID yangilandi: {face_id}")
-
-                # ✅ Foydalanuvchini tizimga kiritish
                 login(request, user)
                 messages.success(request, "✅ Face ID muvaffaqiyatli saqlandi va tizimga kirdingiz!")
-                return JsonResponse({"success": True, "message": "✅ Face ID muvaffaqiyatli saqlandi!", "redirect_url": reverse('profile')})
-
-
+                return JsonResponse({"success": True, "message": "✅ Face ID muvaffaqiyatli saqlandi!",
+                                     "redirect_url": reverse('profile')})
             else:
-                return JsonResponse({"success": False, "message": "❌ AWS Rekognition'ga yuz ma’lumotlarini saqlab bo‘lmadi!"}, status=500)
+                return JsonResponse(
+                    {"success": False, "message": "❌ AWS Rekognition'ga yuz ma’lumotlarini saqlab bo‘lmadi!"},
+                    status=500
+                )
 
         except json.JSONDecodeError:
             return JsonResponse({"success": False, "message": "❌ JSON formatida xatolik bor!"}, status=400)
         except Exception as e:
             return JsonResponse({"success": False, "message": f"❌ Server xatosi: {str(e)}"}, status=500)
 
-    else:
-        form = CustomUserCreationForm()
-        return render(request, "accounts/register_faceid.html", {"form": form})
+    return render(request, "accounts/register_faceid.html", {"form": CustomUserCreationForm()})
 
 @csrf_exempt  # ✅ CSRFni o‘chirish (faqat AJAX uchun)
 def face_login_view(request):

@@ -2,6 +2,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Book, SearchQuery, Notification
 from users.tasks import get_users_list
+from django.contrib.auth import get_user_model
+
+User = get_user_model()  # Django foydalanuvchi modelini olish
 
 
 @receiver(post_save, sender=Book)

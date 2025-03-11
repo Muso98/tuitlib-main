@@ -45,3 +45,11 @@ class UserUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['research_area'].queryset = ResearchArea.objects.all()
+
+
+# forms.py
+from django import forms
+
+class RegistrationForm(forms.Form):
+    first_name = forms.CharField(max_length=255)
+    last_name = forms.CharField(max_length=255)

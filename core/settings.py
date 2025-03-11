@@ -163,8 +163,9 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = 'main'
 
 CORS_ALLOW_ORIGINS = [
-    '*.ngrok-free.app',
-    'https://example.com',
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://3.86.157.16",
 ]
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://localhost']
 CSRF_COOKIE_SECURE = False
@@ -197,7 +198,4 @@ AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")  # 🎯 **AWS Buc
 AWS_REGION = os.getenv("AWS_REGION", "us-east-1")  # ✅ Default: us-east-1
 AWS_REKOGNITION_COLLECTION = os.getenv("AWS_REKOGNITION_COLLECTION", "face-id-collection")
 
-# 🎯 AWS media fayllarni saqlash
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-AWS_S3_ADDRESSING_STYLE = "path"  # 🎯 **URL'ni to‘g‘ri shaklda ishlatish**
-AWS_QUERYSTRING_AUTH = False  # 🎯 **Har bir fayl URL'ni imzo qo‘yishsiz ishlatish**
+

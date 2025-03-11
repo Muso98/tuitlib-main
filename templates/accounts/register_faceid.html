@@ -321,17 +321,17 @@
 <main id="page">
 
 	<!-- header -->
-<header id="header">
+	<header id="header">
 		<div class="header-banner">
 		</div>
 		<div class="header-top">
 			<div class="header_logo">
 				<a href="{% url "main" %}">
-					<img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="smarttuit logo">
-				</a>                
+					<img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="Bookrow - Book Store">
+				</a>
 			</div>
-        
-            <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
+
+			<div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
                 <span class="search_button"></span>
                 <div class="search_toggle">
                     <form method="get" action="{% url 'search' %}">
@@ -346,7 +346,7 @@
                     </form>
                 </div>
             </div>
-            
+
             <style>
                 /* Qidiruv vidjeti uchun maxsus CSS */
                 #search_widget {
@@ -355,7 +355,7 @@
                     max-width: 400px;
                     margin: auto;
                 }
-            
+
                 #search_widget .search_toggle {
                     display: flex;
                     align-items: center;
@@ -364,7 +364,7 @@
                     padding: 5px;
                     border: 1px solid #ddd;
                 }
-            
+
                 #search_widget input[type="text"] {
                     flex: 1;
                     border: none;
@@ -372,7 +372,7 @@
                     padding: 8px;
                     font-size: 16px;
                 }
-            
+
                 #search_widget button {
                     background: #ff0000;
                     border: none;
@@ -381,17 +381,11 @@
                     border-radius: 4px;
                     cursor: pointer;
                 }
-            
+
                 #search_widget button:hover {
                     background: #b30000;
                 }
-                #search_widget {
-                    position: relative;
-                    width: 100%;
-                    max-width: 400px;
-                    margin: auto;
-                }
-                
+
                 #search_widget .search_toggle {
                     display: flex;
                     align-items: center;
@@ -400,7 +394,7 @@
                     padding: 5px;
                     border: 1px solid #ddd;
                 }
-                
+
                 #search-input {
                     flex: 1;
                     border: none;
@@ -408,7 +402,7 @@
                     padding: 8px;
                     font-size: 16px;
                 }
-                
+
                 #search-form button[type="submit"] {
                     background: #ff0026;
                     border: none;
@@ -417,11 +411,11 @@
                     border-radius: 4px;
                     cursor: pointer;
                 }
-                
+
                 #search-form button[type="submit"]:hover {
                     background: #b30000;
                 }
-                
+
                 .voice-search-btn {
                     border: none;
                     background-color: transparent;
@@ -429,87 +423,109 @@
                     padding: 0;
                     margin-left: 5px;
                 }
-                .notifications-wrapper {
-                    position: absolute;
-                    top: 40px; /* Logoning ustida chiqib qolmasligi uchun */
-                    right: 50px; /* O‘ng tomonda chiqishi uchun */
-                }
-                
-                .notification-icon {
-                    font-size: 20px;
-                    text-decoration: none;
-                    position: relative;
-                }
-                
-                .notification-badge {
-                    position: absolute;
-                    top: -10px;
-                    right: -10px;
-                    background: red;
-                    color: white;
-                    border-radius: 50%;
-                    padding: 3px 7px;
-                    font-size: 14px;
-                }
-                /* === Mobil versiya uchun (max 768px) === */
                 @media (max-width: 768px) {
-                    .notifications-wrapper {
-                        top: 15px; /* Biroz pastroqda chiqishi uchun */
-                        right: 70px; /* O‘ngga yaqinroq joylashishi uchun */
+                    #search_widget {
+                        max-width: 100%;
                     }
-                
-                    .notification-icon {
-                        font-size: 18px; /* Mobil ekranda biroz kichikroq */
+
+                    .search_toggle {
+                        flex-direction: column;
+                        align-items: stretch;
                     }
-                
-                    .notification-badge {
-                        top: -5px;
-                        right: -5px;
-                        font-size: 12px;
-                        padding: 2px 5px;
+
+                    #search_widget input[type="text"] {
+                        width: 100%;
+                    }
+
+                    #search_widget button {
+                        width: 100%;
+                        margin-top: 5px;
+                    }
+
+                    .user-info {
+                        text-align: center;
+                    }
+
+                    .language-selector ul {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                    }
+
+                    .menu.col-lg-12 {
+                        display: none; /* Mobil versiyada asosiy menyuni yashirish */
+                    }
+
+                }
+
+                @media (max-width: 480px) {
+                    .header_logo img {
+                        max-width: 150px; /* Kichik ekranlar uchun logo o‘lchamini kamaytirish */
+                    }
+
+                    .btn-container {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+                    }
+
+                    .btn-container button,
+                    .btn-container input {
+                        width: 100%;
+                    }
+                }
+                @media (max-width: 768px) {
+                    .header-top {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .user-info {
+                        text-align: center;
+                        margin-top: 10px;
+                    }
+
+                    .language-selector {
+                        margin-top: 5px;
                     }
                 }
             </style>
-            <div class="col-md-4 text-center notifications-wrapper">
-                <a href="{% url 'notifications' %}" class="notification-icon">
-                    📩  
-                    {% if unread_notifications_count > 0 %}
-                        <span class="notification-badge text-danger">({{ unread_notifications_count }})</span>
-                    {% endif %}
-                </a>
-            </div>
-
-            
 			<!-- /Block search module TOP -->
-			<div class="d-flex align-items-center gap-3">
-                <div class="user-info dropdown js-dropdown">
-                    <span class="user-info-title expand-more _gray-darker" data-toggle="dropdown">
-                        <span class="account_text">
-                            {% if user.is_authenticated %}
-                                {{ user.first_name }} {{ user.last_name }}
-                            {% else %}
-                                Mening hisobim
-                            {% endif %}
-                        </span>
-                    </span>
-                    <ul class="dropdown-menu">
-                        {% if user.is_authenticated %}
-                            <li><a href="{% url 'profile' %}" title="Profile">{% trans 'Profil' %}</a></li>
-                            <li><a href="{% url 'logout' %}" title="Logout">{% trans 'Chiqish' %}</a></li>
-                        {% else %}
-                            <li><a class="dropdown-item" href="{% url 'login' %}" title="Log in to your customer account" rel="nofollow"><span>{% trans 'Kirish' %}</span></a></li>
-                            <li><a href="{% url 'register' %}" data-link-action="display-register-form">{% trans "Ro'yxatdan o'tish" %}</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
+			<div class="user-info dropdown js-dropdown">
+				<span class="user-info-title expand-more _gray-darker" data-toggle="dropdown"><span
+						class="account_text">{% if user.is_authenticated %}{{ user.first_name }}
+					{{ user.last_name }}{% else %}Mening hisobim{% endif %}</span></span>
+				<ul class="dropdown-menu">
+						{% if user.is_authenticated %}
+							<!-- User is authenticated, show logout link or any other authenticated content -->
+							<li>
+								<a href="{% url "profile" %}" title="Profile">{% trans "Profil" %}</a>
+							</li>
+							<li>
+								<a href="{% url 'logout' %}" title="Logout">{% trans "Chiqish" %}</a>
+							</li>
 
+						{% else %}
+							<!-- User is not authenticated, show login and register links -->
+							<li>
+								<a class="dropdown-item" href="{% url 'login' %}"
+								   title="Log in to your customer account" rel="nofollow">
+									<span>{% trans "Kirish" %}</span>
+								</a>
+							</li>
+							<li>
+								<a href="{% url 'register' %}"
+								   data-link-action="display-register-form">{% trans "Ro'yxatdan o'tish" %}</a>
+							</li>
+						{% endif %}
+				</ul>
+			</div>
 			<div class="language-selector" id="language-selector">
 				<div class="language_block">
 					{% get_current_language as CURRENT_LANGUAGE %}
 					{% get_available_languages as AVAILABLE_LANGUAGES %}
 					{% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
-					<span class="language-title">{% trans "Til" %}:</span>
+					<span class="language-title">Til:</span>
 					<ul>
 						{% for language in languages %}
 							<li  {% if language.code == CURRENT_LANGUAGE %} class="current"{% endif %}>
@@ -533,52 +549,153 @@
 						</div>
 					</div>
 				</div>
-				<div class="menu col-lg-12 js-top-menu position-static hidden-md-down" id="_desktop_top_menu">
-					<ul class="top-menu container" id="top-menu" data-depth="0">
-                        <li class="category" id="category-search">
-                            <a class="dropdown-item" href="{% url 'searching_dissertations' %}" data-depth="0">
-                                Dissertatsiyalar bazasi
-                            </a>
-                        </li>
-                        {% for category in categories %}
-                            <li class="category" id="category-{{ category.id }}">
-                                <a class="dropdown-item" href="{% url 'category' category.id %}" data-depth="0">
-                                    {{ category.name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-				</div>
+				<div class="text-xs-left mobile hidden-lg-up mobile-menu">
+                    <button class="btn btn-primary" id="mobile-menu-toggle">☰ Menyu</button>
+                    <div id="mobile_top_menu_wrapper" class="hidden">
+                        <ul class="mobile-menu-inner">
+                            <li><a href="{% url 'searching_dissertations' %}">Dissertatsiyalar</a></li>
+                            {% for category in categories %}
+                                <li><a href="{% url "category" category.id %}">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</header>
+
     <div class="container mt-4">
         <h2 class="text-center">{% trans "Face ID orqali ro'yxatdan o'tish" %}</h2>
     
         <div class="camera-container">
-            <!-- Foydalanuvchi kameradan rasm olishi yoki rasm yuklashi mumkin -->
             <video id="video" autoplay></video>
             <img id="preview-image" src="#" alt="{% trans 'Yuklangan rasm' %}" />
-    
             <canvas id="canvas" style="display: none;"></canvas>
     
-            <p id="captured-alert">{% trans "✅ Rasm olindi yoki yuklandi! Tasdiqlash tugmasini bosing." %}</p>
+            <p id="captured-alert" style="display: none;">
+                {% trans "✅ Rasm olindi yoki yuklandi! Tasdiqlash tugmasini bosing." %}
+            </p>
     
             <div class="btn-container">
-                <button type="button" id="capture-btn" class="btn btn-info">{% trans "📸 Kameradan rasm olish" %}</button>
+                <button type="button" id="capture-btn" class="btn btn-info">
+                    {% trans "📸 Kameradan rasm olish" %}
+                </button>
                 <input type="file" id="upload-image" class="btn btn-light" accept="image/*">
-                <button id="confirm-btn" class="btn btn-success" disabled>{% trans "✅ Yuzni tasdiqlash" %}</button>
+                <button id="confirm-btn" class="btn btn-success" disabled>
+                    {% trans "✅ Yuzni tasdiqlash" %}
+                </button>
             </div>
     
-            <p id="success-message"></p>
-            <p id="error-message"></p>
+            <p id="success-message" style="display: none;"></p>
+            <p id="error-message" style="display: none;"></p>
     
             <div class="mt-3">
                 <a href="{% url 'register' %}" class="btn btn-secondary">{% trans "🔙 Orqaga qaytish" %}</a>
             </div>
-            
         </div>
     </div>
+    
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const video = document.getElementById("video");
+            const previewImage = document.getElementById("preview-image");
+            const canvas = document.getElementById("canvas");
+            const captureBtn = document.getElementById("capture-btn");
+            const uploadInput = document.getElementById("upload-image");
+            const confirmBtn = document.getElementById("confirm-btn");
+            const alertMsg = document.getElementById("captured-alert");
+            const successMsg = document.getElementById("success-message");
+            const errorMsg = document.getElementById("error-message");
+            let selectedImage = null;
+    
+            const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+            const faceRegisterUrl = `/${window.location.pathname.split('/')[1]}/users/register/faceid/`;
+    
+            function displayMessage(element, message) {
+                element.innerText = message;
+                element.style.display = "block";
+            }
+    
+            function hideElement(element) {
+                element.style.display = "none";
+            }
+    
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                    video.style.display = "block";
+                })
+                .catch(() => {
+                    console.error("❌ Kamera ishlamadi");
+                    uploadInput.style.display = "block";
+                });
+    
+            captureBtn.addEventListener("click", function () {
+                const context = canvas.getContext("2d");
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+                selectedImage = canvas.toDataURL("image/jpeg").split(",")[1];
+                alertMsg.style.display = "block";
+                confirmBtn.removeAttribute("disabled");
+            });
+    
+            uploadInput.addEventListener("change", function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = "block";
+                        video.style.display = "none";
+    
+                        selectedImage = e.target.result.split(",")[1];
+                        alertMsg.style.display = "block";
+                        confirmBtn.removeAttribute("disabled");
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+    
+            confirmBtn.addEventListener("click", async function () {
+                if (!selectedImage) return displayMessage(errorMsg, "❌ Rasm tanlanmagan!");
+            
+                const email = localStorage.getItem("user_email");
+                const firstName = localStorage.getItem("user_first_name") || "";
+                const lastName = localStorage.getItem("user_last_name") || "";
+            
+                if (!email) return displayMessage(errorMsg, "❌ Email aniqlanmadi!");
+            
+                try {
+                    let response = await fetch(faceRegisterUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrfToken
+                        },
+                        body: JSON.stringify({ image: selectedImage, email, first_name: firstName, last_name: lastName })
+                    });
+            
+                    let data = await response.json();
+                    console.log("✅ Serverdan javob:", data);
+            
+                    if (data.success) {
+                        displayMessage(successMsg, data.message);
+                        setTimeout(() => window.location.href = data.redirect_url, 2000);
+                    } else {
+                        displayMessage(errorMsg, data.message);
+                    }
+                } catch (error) {
+                    displayMessage(errorMsg, "❌ Server bilan bog‘lanishda xatolik! Tafsilotlar: " + error.message);
+                }
+            });
+
+        });
+    </script>
+
 <footer id="footer">
 		<div class="footer-before">
 			<div class="container">
@@ -794,134 +911,134 @@
 		</div>
 		<a class="top_button" href="#" style="">&nbsp;</a>
 </footer>
-<script>
-    
-    var video = document.getElementById('video');
-    var previewImage = document.getElementById('preview-image');
-    var canvas = document.getElementById('canvas');
-    var captureBtn = document.getElementById('capture-btn');
-    var uploadInput = document.getElementById('upload-image');
-    var confirmBtn = document.getElementById('confirm-btn');
-    var alertMsg = document.getElementById('captured-alert');
-    var successMsg = document.getElementById('success-message');
-    var errorMsg = document.getElementById('error-message');
-    var selectedImage = null;
-
-    document.getElementById("mobile-menu-toggle").addEventListener("click", function() {
-        var menu = document.getElementById("mobile_top_menu_wrapper");
-        menu.classList.toggle("hidden");
-    });
-
-    // ✅ Kamerani ishga tushirish
-   navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        video.srcObject = stream;
-        video.style.display = "block";
-    })
-    .catch(err => {
-        console.error("❌ Kamera ishlamadi:", err);
-        uploadInput.style.display = "block";  // Fayl yuklash opsiyasini faollashtirish
-    });
-
-    // ✅ Kameradan rasm olish
-    captureBtn.addEventListener("click", function () {
-        var context = canvas.getContext("2d");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        selectedImage = canvas.toDataURL("image/jpeg").split(',')[1];  // ✅ Base64 formatga o‘tkazish
-        alertMsg.style.display = "block";
-        confirmBtn.removeAttribute("disabled");  // ✅ Tugmani faollashtirish
-    });
-
-    // ✅ Fayldan rasm yuklash
-    uploadInput.addEventListener("change", function (event) {
-        var file = event.target.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = "block";
-                video.style.display = "none";  // ✅ Kamerani o‘chirish
-
-                selectedImage = e.target.result.split(',')[1];  // ✅ Base64 formatga o‘tkazish
-                alertMsg.style.display = "block";
-                confirmBtn.removeAttribute("disabled");  // ✅ Tugmani faollashtirish
-            };
-            reader.readAsDataURL(file);
-        }
-        if (file && file.size > 2 * 1024 * 1024) {  // 2MB limit
-            errorMsg.innerText = "❌ Fayl hajmi 2MB dan oshmasligi kerak!";
-            errorMsg.style.display = "block";
-            return;
-        }
-    });
-
-    // ✅ URL'dan foydalanuvchi ma'lumotlarini olish
-    function getQueryParams() {
-        let params = {};
-        window.location.search.substring(1).split("&").forEach(function(pair) {
-            let keyValue = pair.split("=");
-            params[keyValue[0]] = decodeURIComponent(keyValue[1] || "");
-        });
-        return params;
-    }
-
-    // ✅ Yuzni tasdiqlash va serverga yuborish
-    confirmBtn.addEventListener("click", async function () {
-        if (!selectedImage) {
-            errorMsg.innerText = "❌ Rasm tanlanmagan!";
-            errorMsg.style.display = "block";
-            return;
-        }
-    
-        let params = getQueryParams();
-        let email = params["email"];
-    
-        if (!email) {
-            errorMsg.innerText = "❌ Email aniqlanmadi!";
-            errorMsg.style.display = "block";
-            return;
-        }
-    
-        console.log("📡 Yuborilayotgan ma'lumotlar:", { image: selectedImage, email: email });
-    
-        try {
-            let response = await fetch("{% url 'face_register' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": "{{ csrf_token }}"  // yoki meta teg orqali olish
-                },
-                body: JSON.stringify({ image: selectedImage, email: email })
-            });
-    
-            if (!response.ok) {
-                throw new Error("❌ Serverdan noto‘g‘ri javob keldi!");
-            }
-    
-            let data = await response.json();
-            console.log("✅ Serverdan javob:", data);
-    
-            if (data.success) {
-                successMsg.innerText = data.message;
-                successMsg.style.display = "block";
-                setTimeout(() => {
-                    window.location.href = data.redirect_url;
-                }, 2000);
-            } else {
-                errorMsg.innerText = data.message;
-                errorMsg.style.display = "block";
-            }
-        } catch (error) {
-            console.error("❌ Xatolik:", error);
-            errorMsg.innerText = "❌ Server bilan bog‘lanishda xatolik!";
-            errorMsg.style.display = "block";
-        }
-    });
-
-</script>
+{#<script>#}
+{#    #}
+{#    var video = document.getElementById('video');#}
+{#    var previewImage = document.getElementById('preview-image');#}
+{#    var canvas = document.getElementById('canvas');#}
+{#    var captureBtn = document.getElementById('capture-btn');#}
+{#    var uploadInput = document.getElementById('upload-image');#}
+{#    var confirmBtn = document.getElementById('confirm-btn');#}
+{#    var alertMsg = document.getElementById('captured-alert');#}
+{#    var successMsg = document.getElementById('success-message');#}
+{#    var errorMsg = document.getElementById('error-message');#}
+{#    var selectedImage = null;#}
+{##}
+{#    document.getElementById("mobile-menu-toggle").addEventListener("click", function() {#}
+{#        var menu = document.getElementById("mobile_top_menu_wrapper");#}
+{#        menu.classList.toggle("hidden");#}
+{#    });#}
+{##}
+{#    // ✅ Kamerani ishga tushirish#}
+{#   navigator.mediaDevices.getUserMedia({ video: true })#}
+{#    .then(stream => {#}
+{#        video.srcObject = stream;#}
+{#        video.style.display = "block";#}
+{#    })#}
+{#    .catch(err => {#}
+{#        console.error("❌ Kamera ishlamadi:", err);#}
+{#        uploadInput.style.display = "block";  // Fayl yuklash opsiyasini faollashtirish#}
+{#    });#}
+{##}
+{#    // ✅ Kameradan rasm olish#}
+{#    captureBtn.addEventListener("click", function () {#}
+{#        var context = canvas.getContext("2d");#}
+{#        canvas.width = video.videoWidth;#}
+{#        canvas.height = video.videoHeight;#}
+{#        context.drawImage(video, 0, 0, canvas.width, canvas.height);#}
+{##}
+{#        selectedImage = canvas.toDataURL("image/jpeg").split(',')[1];  // ✅ Base64 formatga o‘tkazish#}
+{#        alertMsg.style.display = "block";#}
+{#        confirmBtn.removeAttribute("disabled");  // ✅ Tugmani faollashtirish#}
+{#    });#}
+{##}
+{#    // ✅ Fayldan rasm yuklash#}
+{#    uploadInput.addEventListener("change", function (event) {#}
+{#        var file = event.target.files[0];#}
+{#        if (file) {#}
+{#            var reader = new FileReader();#}
+{#            reader.onload = function (e) {#}
+{#                previewImage.src = e.target.result;#}
+{#                previewImage.style.display = "block";#}
+{#                video.style.display = "none";  // ✅ Kamerani o‘chirish#}
+{##}
+{#                selectedImage = e.target.result.split(',')[1];  // ✅ Base64 formatga o‘tkazish#}
+{#                alertMsg.style.display = "block";#}
+{#                confirmBtn.removeAttribute("disabled");  // ✅ Tugmani faollashtirish#}
+{#            };#}
+{#            reader.readAsDataURL(file);#}
+{#        }#}
+{#        if (file && file.size > 2 * 1024 * 1024) {  // 2MB limit#}
+{#            errorMsg.innerText = "❌ Fayl hajmi 2MB dan oshmasligi kerak!";#}
+{#            errorMsg.style.display = "block";#}
+{#            return;#}
+{#        }#}
+{#    });#}
+{##}
+{#    // ✅ URL'dan foydalanuvchi ma'lumotlarini olish#}
+{#    function getQueryParams() {#}
+{#        let params = {};#}
+{#        window.location.search.substring(1).split("&").forEach(function(pair) {#}
+{#            let keyValue = pair.split("=");#}
+{#            params[keyValue[0]] = decodeURIComponent(keyValue[1] || "");#}
+{#        });#}
+{#        return params;#}
+{#    }#}
+{##}
+{#    // ✅ Yuzni tasdiqlash va serverga yuborish#}
+{#    confirmBtn.addEventListener("click", async function () {#}
+{#        if (!selectedImage) {#}
+{#            errorMsg.innerText = "❌ Rasm tanlanmagan!";#}
+{#            errorMsg.style.display = "block";#}
+{#            return;#}
+{#        }#}
+{#    #}
+{#        let params = getQueryParams();#}
+{#        let email = params["email"];#}
+{#    #}
+{#        if (!email) {#}
+{#            errorMsg.innerText = "❌ Email aniqlanmadi!";#}
+{#            errorMsg.style.display = "block";#}
+{#            return;#}
+{#        }#}
+{#    #}
+{#        console.log("📡 Yuborilayotgan ma'lumotlar:", { image: selectedImage, email: email });#}
+{#    #}
+{#        try {#}
+{#            let response = await fetch("{% url 'face_register' %}", {#}
+{#                method: "POST",#}
+{#                headers: {#}
+{#                    "Content-Type": "application/json",#}
+{#                    "X-CSRFToken": "{{ csrf_token }}"  // yoki meta teg orqali olish#}
+{#                },#}
+{#                body: JSON.stringify({ image: selectedImage, email: email })#}
+{#            });#}
+{#    #}
+{#            if (!response.ok) {#}
+{#                throw new Error("❌ Serverdan noto‘g‘ri javob keldi!");#}
+{#            }#}
+{#    #}
+{#            let data = await response.json();#}
+{#            console.log("✅ Serverdan javob:", data);#}
+{#    #}
+{#            if (data.success) {#}
+{#                successMsg.innerText = data.message;#}
+{#                successMsg.style.display = "block";#}
+{#                setTimeout(() => {#}
+{#                    window.location.href = data.redirect_url;#}
+{#                }, 2000);#}
+{#            } else {#}
+{#                errorMsg.innerText = data.message;#}
+{#                errorMsg.style.display = "block";#}
+{#            }#}
+{#        } catch (error) {#}
+{#            console.error("❌ Xatolik:", error);#}
+{#            errorMsg.innerText = "❌ Server bilan bog‘lanishda xatolik!";#}
+{#            errorMsg.style.display = "block";#}
+{#        }#}
+{#    });#}
+{##}
+{#</script>#}
 
 </main>
 <script type="text/javascript" src="{% static "js/core.js" %}"></script>
@@ -932,7 +1049,7 @@
 <script type="text/javascript" src="{% static "js/myprestacomments.js" %}"></script>
 <script type="text/javascript" src="{% static "js/stfeature_compare.js" %}"></script>
 <script type="text/javascript" src="{% static "js/stfeature_wishlist.js" %}"></script>
-<script type="text/javascript" src="{% static "js/czcouponpop.js" %}"></script>
+{#<script type="text/javascript" src="{% static "js/czcouponpop.js" %}"></script>#}
 <script type="text/javascript" src="{% static "js/front.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery.fancybox.js" %}"></script>
