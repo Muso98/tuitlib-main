@@ -77,22 +77,22 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',  # Yoki 'django.db.backends.mysql' MySQL uchun
-#         'NAME': 'library',  # AWS RDS da yaratganingizni yozing
-#         'USER': 'postgres',  # AWS RDS da tanlagan username
-#         'PASSWORD': 'Abduqodir2025',  # AWS RDS paroli
-#         'HOST': 'library.cqdqcq8e0noq.us-east-1.rds.amazonaws.com',  # AWS RDS endpoint
-#         'PORT': '5432',  # PostgreSQL uchun, MySQL bo‘lsa '3306'
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',  # Yoki 'django.db.backends.mysql' MySQL uchun
+        'NAME': 'library',  # AWS RDS da yaratganingizni yozing
+        'USER': 'postgres',  # AWS RDS da tanlagan username
+        'PASSWORD': 'Abduqodir2025',  # AWS RDS paroli
+        'HOST': 'library.cqdqcq8e0noq.us-east-1.rds.amazonaws.com',  # AWS RDS endpoint
+        'PORT': '5432',  # PostgreSQL uchun, MySQL bo‘lsa '3306'
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
