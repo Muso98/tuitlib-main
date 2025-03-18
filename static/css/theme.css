@@ -6,6 +6,9 @@
  *  Made by István Ujj-Mészáros
  *  Under Apache License v2.0 License
  */
+#header {
+    background: white !important;
+}
 
 .bootstrap-touchspin .input-group-btn-vertical {
 	position: relative;
@@ -13214,7 +13217,7 @@ ul.product-flags li.new {
 	padding: 0px 50px;
 	float: left;
 	height: 100px;
-	background: #fff;
+	background:white;
 }
 #header .header-top.fixed {
     height: 75px;
