@@ -20,6 +20,7 @@ PASSWORD = os.getenv('PASSWORD')
 
 
 def get_token(url: str, username: str, password: str) -> dict:
+    print(f"Requesting token from: {url}")  # Debugging uchun
     request = requests.post(
         url,
         data={
@@ -27,6 +28,9 @@ def get_token(url: str, username: str, password: str) -> dict:
             'password': password
         }
     )
+    print(f"Response status code: {request.status_code}")  # Javob kodini ko‘rish uchun
+    print(f"Response content: {request.text}")  # Serverdan nima qaytayotganini ko‘rish
+
     if request.status_code == 200:
         save_token(request.json())
         return request.json()

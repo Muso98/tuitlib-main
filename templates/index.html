@@ -190,30 +190,46 @@
 									<div class="loadingdiv spinner"></div>
 									<div id="nivoslider" class="nivoSlider" data-interval="8000" data-pause="true">
 										<a href="#" title="sample-1">
-											<img src="{% static "img/views/tuit1.png" %}"
+											<img src="{% static "img/views/1.jpg" %}"
 											     data-thumb="{% static "img/views/sample-1.jpg" %}" alt="sample-1"
 											     title="Sample 1"/>
 										</a>
 										<a href="#" title="sample-1">
-											<img src="{% static "img/views/tuit2.png" %}"
+											<img src="{% static "img/views/2.jpg" %}"
 											     data-thumb="{% static "img/views/sample-1.jpg" %}" alt="sample-1"
 											     title="Sample 1"/>
 										</a>
 										<a href="#" title="sample-2">
-											<img src="{% static "img/views/tuit3.png" %}"
+											<img src="{% static "img/views/3.jpg" %}"
 											     data-thumb="{% static "img/views/sample-2.jpg" %}" alt="sample-2"
 											     title="Sample 2"/>
 										</a>
 										<a href="#" title="sample-1">
-											<img src="{% static "img/views/tuit4.png" %}"
+											<img src="{% static "img/views/4.jpg" %}"
 											     data-thumb="{% static "img/views/sample-1.jpg" %}" alt="sample-1"
 											     title="Sample 1"/>
 										</a>
 										<a href="#" title="sample-2">
-											<img src="{% static "img/views/tuit5.png" %}"
+											<img src="{% static "img/views/5.jpg" %}"
 											     data-thumb="{% static "img/views/sample-2.jpg" %}" alt="sample-2"
 											     title="Sample 2"/>
 										</a>
+                                        <a href="#" title="sample-2">
+											<img src="{% static "img/views/6.jpg" %}"
+											     data-thumb="{% static "img/views/sample-2.jpg" %}" alt="sample-2"
+											     title="Sample 2"/>
+										</a>
+                                        <a href="#" title="sample-2">
+											<img src="{% static "img/views/7.jpg" %}"
+											     data-thumb="{% static "img/views/sample-2.jpg" %}" alt="sample-2"
+											     title="Sample 2"/>
+										</a>
+                                        <a href="#" title="sample-2">
+											<img src="{% static "img/views/8.jpg" %}"
+											     data-thumb="{% static "img/views/sample-2.jpg" %}" alt="sample-2"
+											     title="Sample 2"/>
+										</a>
+                                        
 									</div>
 								</div>
 							</div>
@@ -390,12 +406,13 @@
 							</section>
 							<div id="czparallaxcmsblock" class="block czparallax">
 								<div class="parallax czparallax_1"
-								     data-source-url="{% static "/img/tuit_slide_four.jpg" %}">
-									<div class="parallax_container container">
+								     data-source-url="{% static "/img/views/51.jpg" %}">
+									<div class="parallax_container container"> 
 										<div class="parallax-text">
 											{% comment %} <div class="offer-title">Our Featured Book</div> {% endcomment %}
 											<div class="mainheadding"
-											     style="font-size:40px  ;">{% trans "Muhammad al-Xorazmiy nomidagi Toshkent Axborot Texnologiyalari Universiteti" %}</div>
+											     style="font-size:40px  ;">{% trans "Kitobxonlik madaniyatini yuksaltirish – buyuk maqsadlarimizga erishishning muhim kafolatidir." %}</div>
+                                            <div class="mainheadding" style="font-size:40px  ;">{% trans "SH. Mirziyoyev." %}</div>
 											{% comment %} <div class="shopnow"><a href="https://tuit.uz/" target="_blank" class="shopnow-button btn btn-primary" style="text-transform:none;">Rasmiy sayt o'tish</a></div> {% endcomment %}
 										</div>
 									</div>
@@ -559,11 +576,11 @@
 																	<span class="post-image-hover"></span>
 																</a>
 																<span class="blogicons">
-                                       <a title="Click to view Full Image" href="{{ monograf.image.url }}"
-                                          data-lightbox="example-set" class="icon zoom">&nbsp;</a>
-                                       <a title="Click to view Read More" href="{% url "book" monograf.id %}"
-                                          class="icon readmore_link">&nbsp;</a>
-                                       </span>
+                                                                   <a title="Click to view Full Image" href="{{ monograf.image.url }}"
+                                                                      data-lightbox="example-set" class="icon zoom">&nbsp;</a>
+                                                                   <a title="Click to view Read More" href="{% url "book" monograf.id %}"
+                                                                      class="icon readmore_link">&nbsp;</a>
+                                                                </span>
 																<div class="blog-meta">
 																</div>
 															</div>

@@ -118,25 +118,161 @@
     <div class="header-top">
         <div class="header_logo">
             <a href="{% url "main" %}">
-                <img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="smarttuit logo">
+                <img class="logo img-responsive" src="{% static "img/logo.svg" %}" alt="smarttuit logo">
             </a>
         </div>
 
-        <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
-            <span class="search_button"></span>
-            <div class="search_toggle">
-                <form method="get" action="{% url 'search' %}">
-                    <input type="hidden" name="controller" value="search">
-                    <input type="text" name="q" value="{{ request.GET.q|default_if_none:'' }}" placeholder="Search our catalog">
-                    <button type="submit"></button>
-                    <button type="button" class="voice-search-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
-                        </svg>
-                    </button>
-                </form>
+         <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
+                <span class="search_button"></span>
+                <div class="search_toggle">
+                    <form method="get" action="{% url 'search' %}">
+                        <input type="hidden" name="controller" value="search">
+                        <input type="text" name="q" value="{{ request.GET.q|default_if_none:'' }}" placeholder="Search our catalog">
+                        <button type="submit"></button>
+                        <button type="button" class="voice-search-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                if (window.voiceSearchInitialized) return;
+                window.voiceSearchInitialized = true;
+            
+                const voiceSearchBtn = document.querySelector(".voice-search-btn");
+                const searchInput = document.querySelector("input[name='q']");
+                const searchForm = searchInput.closest("form");
+            
+                if (!voiceSearchBtn || !searchInput || !searchForm) {
+                    console.error("❌ Qidiruv elementi topilmadi.");
+                    return;
+                }
+            
+                let recognition;
+                let isRecording = false;
+            
+                voiceSearchBtn.addEventListener("click", function () {
+                    if (isRecording) {
+                        console.warn("⏳ Ovozli qidiruv allaqachon ishlayapti...");
+                        return;
+                    }
+            
+                    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+                    if (!window.SpeechRecognition) {
+                        alert("❌ Brauzeringiz ovozli qidiruvni qo‘llab-quvvatlamaydi.");
+                        return;
+                    }
+            
+                    recognition = new SpeechRecognition();
+                    recognition.lang = "uz-UZ"; // **FAQAT O‘ZBEKCHA QIDIRUV**
+                    recognition.interimResults = false;
+                    recognition.maxAlternatives = 1;
+            
+                    isRecording = true;
+                    voiceSearchBtn.classList.add("listening"); // Tugmaga effekt qo‘shish
+                    recognition.start();
+                    console.log("🎤 Ovoz yozish boshlandi...");
+            
+                    recognition.onresult = function (event) {
+                        let transcript = event.results[0][0].transcript;
+                        console.log("✅ Natija:", transcript);
+                        searchInput.value = transcript;
+                        isRecording = false;
+                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
+            
+                        // **Foydalanuvchi sayti qaysi tilda bo‘lsa, shu tilda qidiruv yuboriladi**
+                        let langPrefix = document.documentElement.lang || "uz";
+                        searchForm.action = `/${langPrefix}/search/`;
+                        searchForm.submit();
+                    };
+            
+                    recognition.onspeechend = function () {
+                        console.log("🎤 Ovoz yozish tugadi.");
+                        isRecording = false;
+                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
+                        recognition.stop();
+                    };
+            
+                    recognition.onerror = function (event) {
+                        console.error("❌ Ovozli qidiruvda xatolik:", event.error);
+                        alert("❌ Ovozli qidiruvni amalga oshirib bo‘lmadi! (" + event.error + ")");
+                        isRecording = false;
+                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
+                    };
+                });
+            });
+            </script>
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // **Dropdown menyular uchun event**
+                $('.dropdown').on('click', function () {
+                    $(this).toggleClass('open');
+                });
+            
+                // **Qidiruv tugmasi toggling**
+                $('.search_button').on('click', function () {
+                    $('.search_toggle').toggleClass('active');
+                });
+            
+                // **Brauzerga moslash (Agar ishlamasa, jQuery event qo‘shiladi)**
+                if (!$('.dropdown-menu').length) {
+                    $('.user-info-title').click(function () {
+                        $(this).next('.dropdown-menu').toggle();
+                    });
+                }
+            });
+            </script>
+
+            <style>
+                
+                .header_logo {
+                    display: flex;
+                    justify-content: center; /* GORIZONTAL MARKAZ */
+                    align-items: center; /* VERTIKAL MARKAZ */
+                    height: 90px; /* Header balandligini o'zingizga moslashtiring */
+                }
+                
+                .logo {
+                    max-height: 60px; /* Logoning maksimal balandligi */
+                    width: auto; /* Proportsiyani saqlaydi */
+                }
+                   .listening {
+                    color: white !important;
+                    animation: pulse 1s infinite;
+                }
+                
+                @keyframes pulse {
+                    0% { opacity: 1; }
+                    50% { opacity: 0.5; }
+                    100% { opacity: 1; }
+                }
+                /* Dropdown menyular `z-index` ni oshirish */
+                .dropdown-menu {
+                    position: absolute;
+                    z-index: 1050; /* Bootstrap default: 1000 */
+                    background-color: white;
+                }
+                
+                /* Qidiruv tugmasini ochish/yopish uchun toggling */
+                .search_toggle {
+                    display: none;
+                    position: absolute;
+                    top: 40px;
+                    right: 0;
+                    background: #fff;
+                    padding: 10px;
+                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                    z-index: 1000;
+                }
+                .search_toggle.active {
+                    display: block;
+                }
+
+            </style>
 
         <style>
             /* Qidiruv vidjeti uchun maxsus CSS */
@@ -282,7 +418,7 @@
                 <ul class="top-menu  container" id="top-menu" data-depth="0">
                     <li class="category" id="category-search">
                         <a class="dropdown-item" href="{% url 'searching_dissertations' %}" data-depth="0">
-                            Dissertatsiyalar bazasi
+                            {% trans 'Dissertatsiyalar bazasi' %}
                         </a>
                     </li>
                     {% for category in categories %}
@@ -303,7 +439,7 @@
     <!-- Qidiruv bo'limi -->
     <div class="container mt-5">
         <div class="card shadow-lg p-4">
-            <h2 class="text-center mb-4">Dissertatsiyalar bazasi</h2>
+            <h2 class="text-center mb-4">{% trans 'Dissertatsiyalar bazasi' %}</h2>
             <form id="search-form" class="row g-3">
                 {% csrf_token %}  <!-- Django CSRF Token -->
                 <div class="col-md-6">
@@ -313,7 +449,7 @@
                     <input type="text" id="author" class="form-control" placeholder="Muallif bo‘yicha qidirish" autocomplete="off">
                 </div>
                 <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary w-50">Qidirish</button>
+                    <button type="submit" class="btn btn-primary w-50">{% trans 'Qidirish' %}</button>
                 </div>
             </form>
             <div id="error-message" class="alert alert-danger mt-3 d-none"></div>
@@ -323,13 +459,13 @@
             <nav>
                 <ul class="pagination justify-content-center mt-3">
                     <li class="page-item disabled" id="prev-page">
-                        <a class="page-link" href="#" aria-label="Oldingi">⬅ Oldingi</a>
+                        <a class="page-link" href="#" aria-label="Oldingi">⬅ {% trans 'Oldingi' %}</a>
                     </li>
                     <li class="page-item active" id="page-info">
                         <span class="page-link">1 / 1</span>
                     </li>
                     <li class="page-item disabled" id="next-page">
-                        <a class="page-link" href="#" aria-label="Keyingi">Keyingi ➡</a>
+                        <a class="page-link" href="#" aria-label="Keyingi">{% trans 'Keyingi' %} ➡</a>
                     </li>
                 </ul>
             </nav>
@@ -399,7 +535,9 @@
 					<div id="czfootercmsblock" class="footer-cms-block col-md-4 links block">
 						<div id="footerlogo">
 							<div class="footerdiv">
-								<div class="footerlogo"></div>
+								<div class="footerlogo1">
+                                    <img src="/static/img/logo.svg" alt="Company Logo">
+                                </div>
 								<div
 										class="footerdesc">{% trans "Oliy ta'lim muassasalarining yagona elektron kutubxona axborot tizimi" %}</div>
 							</div>
@@ -829,7 +967,7 @@
         });
 
     </script>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="{% static "js/core.js" %}"></script>
     <script type="text/javascript" src="{% static "js/theme.js" %}"></script>

@@ -27,13 +27,13 @@ def create_notification(sender, instance, created, **kwargs):
             )
             query.delete()
 
-@receiver(post_save, sender=Book)
-def notify_users_on_new_book(sender, instance, created, **kwargs):
-    if created:
-        users = User.objects.all()  # Barcha foydalanuvchilarga yuborish
-        for user in users:
-            Notification.objects.create(
-                user=user,
-                message=f"Yangi kitob qo‘shildi: {instance.name} - {instance.author}",
-                book=instance
-            )
+# @receiver(post_save, sender=Book)
+# def notify_users_on_new_book(sender, instance, created, **kwargs):
+#     if created:
+#         users = User.objects.all()  # Barcha foydalanuvchilarga yuborish
+#         for user in users:
+#             Notification.objects.create(
+#                 user=user,
+#                 message=f"Yangi kitob qo‘shildi: {instance.name} - {instance.author}",
+#                 book=instance
+#             )

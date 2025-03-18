@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Smart TUIT</title>
+	<title>Smart Library</title>
 	<meta name="description" content="smarttuit Smart TUIT">
 	<meta name="keywords" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,9 +42,10 @@
 		<div class="header-top">
 			<div class="header_logo">
 				<a href="{% url "main" %}">
-					<img class="logo img-responsive" src="{% static "img/smarttuit1.png" %}" alt="smarttuit logo">
+					<img class="logo img-responsive" src="{% static "img/logo.svg" %}" alt="smartlibrary logo">
 				</a>                
 			</div>
+        
         
             <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
                 <span class="search_button"></span>
@@ -61,8 +62,104 @@
                     </form>
                 </div>
             </div>
+        
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                if (window.voiceSearchInitialized) return;
+                window.voiceSearchInitialized = true;
             
+                const voiceSearchBtn = document.querySelector(".voice-search-btn");
+                const searchInput = document.querySelector("input[name='q']");
+                const searchForm = searchInput.closest("form");
+            
+                if (!voiceSearchBtn || !searchInput || !searchForm) {
+                    console.error("❌ Qidiruv elementi topilmadi.");
+                    return;
+                }
+            
+                let recognition;
+                let isRecording = false;
+            
+                voiceSearchBtn.addEventListener("click", function () {
+                    if (isRecording) {
+                        console.warn("⏳ Ovozli qidiruv allaqachon ishlayapti...");
+                        return;
+                    }
+            
+                    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+                    if (!window.SpeechRecognition) {
+                        alert("❌ Brauzeringiz ovozli qidiruvni qo‘llab-quvvatlamaydi.");
+                        return;
+                    }
+            
+                    recognition = new SpeechRecognition();
+                    recognition.lang = "uz-UZ"; // **FAQAT O‘ZBEKCHA QIDIRUV**
+                    recognition.interimResults = false;
+                    recognition.maxAlternatives = 1;
+            
+                    isRecording = true;
+                    voiceSearchBtn.classList.add("listening"); // Tugmaga effekt qo‘shish
+                    recognition.start();
+                    console.log("🎤 Ovoz yozish boshlandi...");
+            
+                    recognition.onresult = function (event) {
+                        let transcript = event.results[0][0].transcript;
+                        console.log("✅ Natija:", transcript);
+                        searchInput.value = transcript;
+                        isRecording = false;
+                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
+            
+                        // **Foydalanuvchi sayti qaysi tilda bo‘lsa, shu tilda qidiruv yuboriladi**
+                        let langPrefix = document.documentElement.lang || "uz";
+                        searchForm.action = `/${langPrefix}/search/`;
+                        searchForm.submit();
+                    };
+            
+                    recognition.onspeechend = function () {
+                        console.log("🎤 Ovoz yozish tugadi.");
+                        isRecording = false;
+                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
+                        recognition.stop();
+                    };
+            
+                    recognition.onerror = function (event) {
+                        console.error("❌ Ovozli qidiruvda xatolik:", event.error);
+                        alert("❌ Ovozli qidiruvni amalga oshirib bo‘lmadi! (" + event.error + ")");
+                        isRecording = false;
+                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
+                    };
+                });
+            });
+            </script>
+
+
+
             <style>
+                .header_logo {
+                    display: flex;
+                    justify-content: center; /* GORIZONTAL MARKAZ */
+                    align-items: center; /* VERTIKAL MARKAZ */
+                    height: 90px; /* Header balandligini o'zingizga moslashtiring */
+                }
+                
+                .logo {
+                    max-height: 60px; /* Logoning maksimal balandligi */
+                    width: auto; /* Proportsiyani saqlaydi */
+                }
+
+                
+                .listening {
+                    color: white !important;
+                    animation: pulse 1s infinite;
+                }
+                
+                @keyframes pulse {
+                    0% { opacity: 1; }
+                    50% { opacity: 0.5; }
+                    100% { opacity: 1; }
+                }
+
                 /* Qidiruv vidjeti uchun maxsus CSS */
                 #search_widget {
                     position: relative;
@@ -252,7 +349,7 @@
 					<ul class="top-menu container" id="top-menu" data-depth="0">
                         <li class="category" id="category-search">
                             <a class="dropdown-item" href="{% url 'searching_dissertations' %}" data-depth="0">
-                                Dissertatsiyalar bazasi
+                                {% trans 'Dissertatsiyalar bazasi' %}
                             </a>
                         </li>
                         {% for category in categories %}
@@ -283,9 +380,10 @@
 					<div id="czfootercmsblock" class="footer-cms-block col-md-4 links block">
 						<div id="footerlogo">
 							<div class="footerdiv">
-								<div class="footerlogo"></div>
-								<div
-										class="footerdesc">{% trans "Oliy ta'lim muassasalarining yagona elektron kutubxona axborot tizimi" %}</div>
+								<div class="footerlogo1">
+                                    <img src="/static/img/logo.svg" alt="Company Logo">
+                                </div>
+								<div class="footerdesc">{% trans "Oliy ta'lim muassasalarining yagona elektron kutubxona axborot tizimi" %}</div>
 							</div>
 						</div>
 					</div>
@@ -581,7 +679,7 @@
 	<script type="text/javascript" src="{% static "js/myprestacomments.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/stfeature_compare.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/stfeature_wishlist.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/czcouponpop.js" %}"></script>
+{#	<script type="text/javascript" src="{% static "js/czcouponpop.js" %}"></script>#}
 	<script type="text/javascript" src="{% static "js/front.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/jquery.fancybox.js" %}"></script>
