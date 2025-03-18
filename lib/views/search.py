@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views import View
 from django.core.paginator import Paginator
 from lib.models import Book, Category, SearchQuery
+from users.models import SearchHistory
 from users.tasks import save_user_search_history
 from django.core.serializers import serialize
 from django.contrib.auth.decorators import login_required
@@ -85,6 +86,10 @@ class SearchView(View):
         if not combined_results:
             if request.user.is_authenticated:
                 SearchQuery.objects.create(user=request.user, title=query)
+
+        # ✅ Foydalanuvchi qidiruvini saqlash (natijalardan qat'iy nazar)
+        if request.user.is_authenticated and query:
+            SearchHistory.objects.create(user=request.user, query=query)
 
         # ✅ Sahifalash (Pagination)
         paginator = Paginator(combined_results, 12)  # Har sahifada 12 ta natija

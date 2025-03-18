@@ -347,12 +347,20 @@ def requests_view(request):
     })
 
 
+def get_categories():
+    """Helper function to get all categories."""
+    return Category.objects.all()
+
+from django.core.paginator import Paginator as DefaultPaginator
+
 @login_required(login_url="/users/login/")
 def history(request):
-    histories = SearchHistory.objects.filter(user=request.user).order_by('-id')
-    paginator = DefaultPaginator(request, histories, per_page=30)
+    histories = SearchHistory.objects.filter(user=request.user).order_by('-created_at') # created_at bo'yicha saralash tavsiya etiladi
+    paginator = DefaultPaginator(histories, 30)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     return render(request, "accounts/history.html", {
-        "histories": paginator.get_paginated_response(),
+        "histories": page_obj,
         "categories": get_categories()
     })
 
