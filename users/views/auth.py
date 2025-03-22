@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from users.models import Downloads, Requests, FaceID, ResearchArea, SearchHistory, User
 from lib.pagination import DefaultPaginator
-from lib.models import Category
+from lib.models import Category, SearchQuery
 from django.contrib import messages
 from django.contrib.auth import (
     logout,
@@ -28,7 +28,7 @@ from django.http import JsonResponse
 import json
 from users.aws_rekognition import recognize_face, rekognition
 from django.views.decorators.csrf import csrf_exempt
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 User = get_user_model()
 load_dotenv('.env')
@@ -327,23 +327,48 @@ def profile_view(request):
                   })
 
 
-@login_required(login_url="/users/login/")
-def downloads_view(request):
-    downloads = Downloads.objects.filter(user=request.user).order_by('-id')
-    paginator = DefaultPaginator(request, downloads)
-    return render(request, "accounts/downloads.html", {
-        "categories": get_categories(),
-        "downloads": paginator.get_paginated_response()
-    })
 
 
 @login_required(login_url="/users/login/")
 def requests_view(request):
-    requests = Requests.objects.filter(user=request.user).order_by('-id')
-    paginator = DefaultPaginator(request, requests)
+    user_requests = Requests.objects.filter(user=request.user).order_by('-id')
+    search_queries = SearchQuery.objects.filter(user=request.user).order_by('-created_at')  # ❗ Foydalanuvchi qidirgan lekin topa olmagan kitoblar
+    not_found_books = [query.title for query in search_queries]  # Faqat nomlarini olish
+
+    paginator = Paginator(user_requests, 8)  # Har bir sahifada 8 ta element
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
     return render(request, "accounts/download_requests.html", {
-        "requests": paginator.get_paginated_response(),
+        "requests": page_obj,
+        "search_queries": search_queries,  # ❗ HTML sahifaga yuboramiz
+        "not_found_books": not_found_books,  # ❗ HTML sahifaga jo‘natamiz
+
         "categories": get_categories(),
+    })
+
+
+
+@login_required(login_url="/users/login/")
+def downloads_view(request):
+    user_downloads = Downloads.objects.filter(user=request.user).order_by('-id')
+    paginator = Paginator(user_downloads, 8)  # Har bir sahifada 8 ta element
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
+    return render(request, "accounts/downloads.html", {
+        "categories": get_categories(),
+        "downloads": page_obj,
     })
 
 

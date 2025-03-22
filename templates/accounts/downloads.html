@@ -380,26 +380,7 @@
                 });
             });
             </script>
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // **Dropdown menyular uchun event**
-                $('.dropdown').on('click', function () {
-                    $(this).toggleClass('open');
-                });
             
-                // **Qidiruv tugmasi toggling**
-                $('.search_button').on('click', function () {
-                    $('.search_toggle').toggleClass('active');
-                });
-            
-                // **Brauzerga moslash (Agar ishlamasa, jQuery event qo‘shiladi)**
-                if (!$('.dropdown-menu').length) {
-                    $('.user-info-title').click(function () {
-                        $(this).next('.dropdown-menu').toggle();
-                    });
-                }
-            });
-            </script>
 
             <style>
                 .header_logo {
@@ -659,19 +640,87 @@
 	</aside>
 	<section id="wrapper">
 		<nav data-depth="2" class="breadcrumb">
-			<div class="container">
-				<form action="{% url "search" %}" id="search-form">
-					<input name="q" type="text" placeholder="Qidiruv" autocomplete="off" autofocus>
-					<a id="submit-url" href="{% url "recog" %}"></a>
-					<button type="button" id="start-recording"><i id="mic-icon" class="fas fa-microphone"></i></button>
-					<!-- Button to start recording -->
-					<button type="button" id="stop-recording" style="display: none;"><i
-							class="fas fa-microphone-slash"></i></button>
-					<!-- Button to stop recording -->
-				</form>
-				<p class="info"></p>
-			</div>
-		</nav>
+            <div id="loading-spinner" class="spinner-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div class="container">
+                <form action="{% url 'search' %}" id="search-form">
+                    <input name="q" id="search-input" type="text" placeholder="Qidirish..." autocomplete="off" autofocus>
+                    <button type="submit"></button>
+                    <button type="button" id="start-recording"><i id="mic-icon" class="fas fa-microphone"></i></button>
+                    <button type="button" id="stop-recording" style="display: none;"><i class="fas fa-microphone-slash"></i></button>
+                </form>
+                <p class="info"></p>
+            </div>
+        </nav>
+        
+        <script>
+        document.getElementById("search-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            
+            let query = document.getElementById("search-input").value.trim();
+            if (!query) {
+                alert("❌ Iltimos, qidiruv so‘rovini kiriting!");
+                return;
+            }
+        
+            document.getElementById("loading-spinner").style.display = "block";
+        
+            let api_url = "/ru/search/?q=" + encodeURIComponent(query);
+            
+            fetch(api_url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("loading-spinner").style.display = "none";
+                    document.querySelector("body").innerHTML = html; // Sahifani yangilaydi
+                })
+                .catch(error => {
+                    document.getElementById("loading-spinner").style.display = "none";
+                    console.error("Xato:", error);
+                });
+        });
+        
+        // Ovozli qidiruvni ishga tushirish
+        let recognition;
+        document.getElementById("start-recording").addEventListener("click", function () {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("❌ Sizning brauzeringiz ovozli qidiruvni qo‘llab-quvvatlamaydi.");
+                return;
+            }
+        
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = "uz-UZ";
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+        
+            recognition.start();
+            document.getElementById("mic-icon").classList.add("listening");
+            document.getElementById("stop-recording").style.display = "inline";
+            document.getElementById("start-recording").style.display = "none";
+        
+            recognition.onresult = function (event) {
+                let transcript = event.results[0][0].transcript;
+                document.getElementById("search-input").value = transcript;
+            };
+        
+            recognition.onerror = function () {
+                alert("❌ Ovozli qidiruvda xatolik yuz berdi!");
+            };
+        
+            recognition.onend = function () {
+                document.getElementById("mic-icon").classList.remove("listening");
+                document.getElementById("stop-recording").style.display = "none";
+                document.getElementById("start-recording").style.display = "inline";
+            };
+        });
+        
+        // Ovozli qidiruvni to‘xtatish
+        document.getElementById("stop-recording").addEventListener("click", function () {
+            if (recognition) {
+                recognition.stop();
+            }
+        });
+        </script>
 
 		<div class="container">
 			<div id="columns_inner">

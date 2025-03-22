@@ -415,26 +415,7 @@
                 });
             });
             </script>
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // **Dropdown menyular uchun event**
-                $('.dropdown').on('click', function () {
-                    $(this).toggleClass('open');
-                });
             
-                // **Qidiruv tugmasi toggling**
-                $('.search_button').on('click', function () {
-                    $('.search_toggle').toggleClass('active');
-                });
-            
-                // **Brauzerga moslash (Agar ishlamasa, jQuery event qo‘shiladi)**
-                if (!$('.dropdown-menu').length) {
-                    $('.user-info-title').click(function () {
-                        $(this).next('.dropdown-menu').toggle();
-                    });
-                }
-            });
-            </script>
 
             <style>
                 .header_logo {

@@ -30,10 +30,12 @@ def find_similar_resources():
     for i, missed_query in enumerate(missed_queries):
         for j, book in enumerate(books):
             if book_sim_matrix[i][j] > 0.6:  # 60% o‘xshashlik
-                new_notifications.append(Notification(
-                    user=missed_query.user,
-                    message=f"📚 Yangi kitob qo‘shildi: {book.name}"
-                ))
+                # Oldindan bunday bildirishnoma mavjudligini tekshirish
+                if not Notification.objects.filter(user=missed_query.user, message__icontains=book.name).exists():
+                    new_notifications.append(Notification(
+                        user=missed_query.user,
+                        message=f"📚 Yangi kitob qo‘shildi: {book.name}. <a href='/books/{book.id}/'>Ko‘rish</a>"
+                    ))
 
-    # Bildirishnomalarni optimallashtirib bazaga qo‘shish
+    # Bildirishnomalarni bazaga qo‘shish
     Notification.objects.bulk_create(new_notifications)

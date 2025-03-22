@@ -801,7 +801,7 @@ msgstr "Главная страница"
 
 #: .\templates\myaccount.html:691
 msgid "Sizning hisobingiz"
-msgstr "Ваш запрос отклонен."
+msgstr "Ваш аккаунт"
 
 #: .\templates\myaccount.html:705
 msgid "Ma`lumotlarni tahrirlash"

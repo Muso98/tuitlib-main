@@ -621,7 +621,7 @@ msgstr "Ommabop Monografiyalar"
 
 #: templates/myaccount.html:424
 msgid "Sizning hisobingiz"
-msgstr "Sizning so'rovingiz rad etilgan."
+msgstr "Sizning hisobingiz"
 
 #: templates/myaccount.html:438
 msgid "Ma`lumotlarni tahrirlash"

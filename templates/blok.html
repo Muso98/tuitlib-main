@@ -4,11 +4,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Smart TUIT</title>
-	<meta name="description" content="smarttuit Smart TUIT">
-	<meta name="keywords" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Codezeel added -->
 	<link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="{% static "css/theme.css" %}" type="text/css" media="all">
@@ -26,31 +22,264 @@
 	<link rel="stylesheet" href="{% static "css/nivo-slider.css" %}" type="text/css" media="all">
 	<link rel="stylesheet" href="{% static "css/custom.css" %}" type="text/css" media="all">
 	<link rel="stylesheet" href="{% static "css/index.css" %}">
+	<link rel="stylesheet" href="{% static "css/loadingspinner.css" %}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 	      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
 	      crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <meta name="keywords" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-	<link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,700" rel="stylesheet">
-	<link rel="stylesheet" href="{% static "css/theme.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/font-awesome.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/front.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/myprestacomments.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/vews/front.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/psblog.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/lightbox.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/czcouponpop.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/views/front.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/jquery-ui.min.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/jquery.ui.theme.min.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/jquery.fancybox.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/nivo-slider.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/custom.css" %}" type="text/css" media="all">
-	<link rel="stylesheet" href="{% static "css/index.css" %}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-	      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-	      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+	<script type="text/javascript">
+        var buttoncompare_title_add = "Add to Compare";
+        var buttoncompare_title_remove = "Remove from Compare";
+        var buttonwishlist_title_add = "Add to Wishlist";
+        var buttonwishlist_title_remove = "Remove from WishList";
+        var comparator_max_item = 3;
+        var compared_products = [];
+        var isLogged = false;
+        var prestashop = {
+            "cart": {
+                "products": [],
+                "totals": {
+                    "total": {"type": "total", "label": "Total", "amount": 0, "value": "\u20ac0.00"},
+                    "total_including_tax": {
+                        "type": "total",
+                        "label": "Total (tax incl.)",
+                        "amount": 0,
+                        "value": "\u20ac0.00"
+                    },
+                    "total_excluding_tax": {
+                        "type": "total",
+                        "label": "Total (tax excl.)",
+                        "amount": 0,
+                        "value": "\u20ac0.00"
+                    }
+                },
+                "subtotals": {
+                    "products": {"type": "products", "label": "Subtotal", "amount": 0, "value": "\u20ac0.00"},
+                    "discounts": null,
+                    "shipping": {"type": "shipping", "label": "Shipping", "amount": 0, "value": "Free"},
+                    "tax": null
+                },
+                "products_count": 0,
+                "summary_string": "0 items",
+                "vouchers": {"allowed": 0, "added": []},
+                "discounts": [],
+                "minimalPurchase": 0,
+                "minimalPurchaseRequired": ""
+            },
+            "currency": {"name": "Euro", "iso_code": "EUR", "iso_code_num": "978", "sign": "\u20ac"},
+            "customer": {
+                "lastname": null,
+                "firstname": null,
+                "email": null,
+                "birthday": null,
+                "newsletter": null,
+                "newsletter_date_add": null,
+                "optin": null,
+                "website": null,
+                "company": null,
+                "siret": null,
+                "ape": null,
+                "is_logged": false,
+                "gender": {"type": null, "name": null},
+                "addresses": []
+            },
+            "language": {
+                "name": "English (English)",
+                "iso_code": "en",
+                "locale": "en-US",
+                "language_code": "en-us",
+                "is_rtl": "0",
+                "date_format_lite": "m\/d\/Y",
+                "date_format_full": "m\/d\/Y H:i:s",
+                "id": 1
+            },
+            "page": {
+                "title": "",
+                "canonical": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1",
+                "meta": {
+                    "title": "Cooking",
+                    "description": "The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable that it has a more-or-less normal distribution of letters.",
+                    "keywords": "",
+                    "robots": "index"
+                },
+                "page_name": "category",
+                "body_classes": {
+                    "lang-en": true,
+                    "lang-rtl": false,
+                    "country-DE": true,
+                    "currency-EUR": true,
+                    "layout-left-column": true,
+                    "page-category": true,
+                    "tax-display-enabled": true,
+                    "category-id-9": true,
+                    "category-Cooking": true,
+                    "category-id-parent-2": true,
+                    "category-depth-level-2": true
+                },
+                "admin_notifications": []
+            },
+            "shop": {
+                "name": "Bookrow - Book Store",
+                "logo": "\/prestashop\/PRS17\/PRS170418\/img\/demo-store-logo-1629801402.jpg",
+                "stores_icon": "\/prestashop\/PRS17\/PRS170418\/img\/logo_stores.png",
+                "favicon": "\/prestashop\/PRS17\/PRS170418\/img\/favicon.ico"
+            },
+            "urls": {
+                "base_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/",
+                "current_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1",
+                "shop_domain_url": "https:\/\/demo.codezeel.com",
+                "img_ps_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/",
+                "img_cat_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/c\/",
+                "img_lang_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/l\/",
+                "img_prod_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/",
+                "img_manu_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/m\/",
+                "img_sup_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/su\/",
+                "img_ship_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/s\/",
+                "img_store_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/st\/",
+                "img_col_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/co\/",
+                "img_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/themes\/Bookrow\/assets\/img\/",
+                "css_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/themes\/Bookrow\/assets\/css\/",
+                "js_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/themes\/Bookrow\/assets\/js\/",
+                "pic_url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/upload\/",
+                "pages": {
+                    "address": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=address",
+                    "addresses": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=addresses",
+                    "authentication": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication",
+                    "cart": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=cart",
+                    "category": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=category",
+                    "cms": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=cms",
+                    "contact": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=contact",
+                    "discount": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=discount",
+                    "guest_tracking": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=guest-tracking",
+                    "history": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=history",
+                    "identity": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=identity",
+                    "index": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php",
+                    "my_account": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=my-account",
+                    "order_confirmation": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-confirmation",
+                    "order_detail": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-detail",
+                    "order_follow": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-follow",
+                    "order": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order",
+                    "order_return": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-return",
+                    "order_slip": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order-slip",
+                    "pagenotfound": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=pagenotfound",
+                    "password": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=password",
+                    "pdf_invoice": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=pdf-invoice",
+                    "pdf_order_return": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=pdf-order-return",
+                    "pdf_order_slip": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=pdf-order-slip",
+                    "prices_drop": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=prices-drop",
+                    "product": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=product",
+                    "search": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=search",
+                    "sitemap": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=sitemap",
+                    "stores": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=stores",
+                    "supplier": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=supplier",
+                    "register": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=authentication&create_account=1",
+                    "order_login": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?controller=order&login=1"
+                },
+                "alternative_langs": {
+                    "en-us": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1",
+                    "fr-fr": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=3",
+                    "es-es": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=4",
+                    "de-de": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=5",
+                    "it-it": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=6",
+                    "pl-pl": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=7",
+                    "nl-nl": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=8",
+                    "ru-ru": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=9",
+                    "ar-sa": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=10"
+                },
+                "theme_assets": "\/prestashop\/PRS17\/PRS170418\/themes\/Bookrow\/assets\/",
+                "actions": {"logout": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?mylogout="},
+                "no_picture_image": {
+                    "bySize": {
+                        "cart_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-cart_default.jpg",
+                            "width": 85,
+                            "height": 123
+                        },
+                        "small_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-small_default.jpg",
+                            "width": 85,
+                            "height": 123
+                        },
+                        "home_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-home_default.jpg",
+                            "width": 277,
+                            "height": 400
+                        },
+                        "medium_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-medium_default.jpg",
+                            "width": 585,
+                            "height": 844
+                        },
+                        "large_default": {
+                            "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-large_default.jpg",
+                            "width": 693,
+                            "height": 1000
+                        }
+                    },
+                    "small": {
+                        "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-cart_default.jpg",
+                        "width": 85,
+                        "height": 123
+                    },
+                    "medium": {
+                        "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-home_default.jpg",
+                        "width": 277,
+                        "height": 400
+                    },
+                    "large": {
+                        "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/img\/p\/en-default-large_default.jpg",
+                        "width": 693,
+                        "height": 1000
+                    },
+                    "legend": ""
+                }
+            },
+            "configuration": {
+                "display_taxes_label": true,
+                "display_prices_tax_incl": true,
+                "is_catalog": false,
+                "show_prices": true,
+                "opt_in": {"partner": true},
+                "quantity_discount": {"type": "discount", "label": "Discount"},
+                "voucher_enabled": 0,
+                "return_enabled": 0
+            },
+            "field_required": [],
+            "breadcrumb": {
+                "links": [{
+                    "title": "Home",
+                    "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php"
+                }, {
+                    "title": "Cooking",
+                    "url": "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?id_category=9&controller=category&id_lang=1"
+                }], "count": 2
+            },
+            "link": {"protocol_link": "https:\/\/", "protocol_content": "https:\/\/"},
+            "time": 1706004804,
+            "static_token": "8bd9f42887793a736c2d38fd8a0dceff",
+            "token": "ef790335294386fee1fcfae858c954d8"
+        };
+        var productcompare_add = "The product has been added to list compare";
+        var productcompare_max_item = "You cannot add more than 3 product(s) to the product comparison";
+        var productcompare_remove = "The product was successfully removed from list compare";
+        var productcompare_url = "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?fc=module&module=stfeature&controller=productscompare&id_lang=1";
+        var productcompare_viewlistcompare = "View list compare";
+        var psr_icon_color = "#F19D76";
+        var wishlist_add = "The product was successfully added to your wishlist";
+        var wishlist_cancel_txt = "Cancel";
+        var wishlist_confirm_del_txt = "Delete selected item?";
+        var wishlist_del_default_txt = "Cannot delete default wishlist";
+        var wishlist_email_txt = "Email";
+        var wishlist_loggin_required = "You must be logged in to manage your wishlist";
+        var wishlist_ok_txt = "Ok";
+        var wishlist_quantity_required = "You must enter a quantity";
+        var wishlist_remove = "The product was successfully removed from your wishlist";
+        var wishlist_reset_txt = "Reset";
+        var wishlist_send_txt = "Send";
+        var wishlist_send_wishlist_txt = "Send wishlist";
+        var wishlist_url = "https:\/\/demo.codezeel.com\/prestashop\/PRS17\/PRS170418\/index.php?fc=module&module=stfeature&controller=mywishlist&id_lang=1";
+        var wishlist_viewwishlist = "View your wishlist";
+	</script>
+    
 </head>
 <body id="index" class="lang-en country-de currency-eur layout-full-width page-index tax-display-enabled">
 <main id="page">
@@ -61,7 +290,7 @@
 		<div class="header-top">
 			<div class="header_logo">
 				<a href="{% url "main" %}">
-					<img class="logo img-responsive" src="{% static "img/logo.svg" %}" alt="smart library">
+					<img class="logo img-responsive" src="{% static "img/logo.svg" %}" alt="smarttuit logo">
 				</a>
 			</div>
 
@@ -80,95 +309,6 @@
                     </form>
                 </div>
             </div>
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                if (window.voiceSearchInitialized) return;
-                window.voiceSearchInitialized = true;
-            
-                const voiceSearchBtn = document.querySelector(".voice-search-btn");
-                const searchInput = document.querySelector("input[name='q']");
-                const searchForm = searchInput.closest("form");
-            
-                if (!voiceSearchBtn || !searchInput || !searchForm) {
-                    console.error("❌ Qidiruv elementi topilmadi.");
-                    return;
-                }
-            
-                let recognition;
-                let isRecording = false;
-            
-                voiceSearchBtn.addEventListener("click", function () {
-                    if (isRecording) {
-                        console.warn("⏳ Ovozli qidiruv allaqachon ishlayapti...");
-                        return;
-                    }
-            
-                    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
-                    if (!window.SpeechRecognition) {
-                        alert("❌ Brauzeringiz ovozli qidiruvni qo‘llab-quvvatlamaydi.");
-                        return;
-                    }
-            
-                    recognition = new SpeechRecognition();
-                    recognition.lang = "uz-UZ"; // **FAQAT O‘ZBEKCHA QIDIRUV**
-                    recognition.interimResults = false;
-                    recognition.maxAlternatives = 1;
-            
-                    isRecording = true;
-                    voiceSearchBtn.classList.add("listening"); // Tugmaga effekt qo‘shish
-                    recognition.start();
-                    console.log("🎤 Ovoz yozish boshlandi...");
-            
-                    recognition.onresult = function (event) {
-                        let transcript = event.results[0][0].transcript;
-                        console.log("✅ Natija:", transcript);
-                        searchInput.value = transcript;
-                        isRecording = false;
-                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
-            
-                        // **Foydalanuvchi sayti qaysi tilda bo‘lsa, shu tilda qidiruv yuboriladi**
-                        let langPrefix = document.documentElement.lang || "uz";
-                        searchForm.action = `/${langPrefix}/search/`;
-                        searchForm.submit();
-                    };
-            
-                    recognition.onspeechend = function () {
-                        console.log("🎤 Ovoz yozish tugadi.");
-                        isRecording = false;
-                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
-                        recognition.stop();
-                    };
-            
-                    recognition.onerror = function (event) {
-                        console.error("❌ Ovozli qidiruvda xatolik:", event.error);
-                        alert("❌ Ovozli qidiruvni amalga oshirib bo‘lmadi! (" + event.error + ")");
-                        isRecording = false;
-                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
-                    };
-                });
-            });
-            </script>
-        <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // **Dropdown menyular uchun event**
-            $('.dropdown').on('click', function () {
-                $(this).toggleClass('open');
-            });
-        
-            // **Qidiruv tugmasi toggling**
-            $('.search_button').on('click', function () {
-                $('.search_toggle').toggleClass('active');
-            });
-        
-            // **Brauzerga moslash (Agar ishlamasa, jQuery event qo‘shiladi)**
-            if (!$('.dropdown-menu').length) {
-                $('.user-info-title').click(function () {
-                    $(this).next('.dropdown-menu').toggle();
-                });
-            }
-        });
-        </script>
 
             <style>
 
@@ -183,11 +323,7 @@
                     max-height: 60px; /* Logoning maksimal balandligi */
                     width: auto; /* Proportsiyani saqlaydi */
                 }
-                   .listening {
-                    color: white !important;
-                    animation: pulse 1s infinite;
-                }
-                
+
                 @keyframes pulse {
                     0% { opacity: 1; }
                     50% { opacity: 0.5; }
@@ -218,12 +354,11 @@
             </style>
                 
             <style>
-		#header {
-		    background: white !important;
-		    position: relative;
-		    z-index: 9999;
-		}
-
+            #header {
+                background: white !important;
+                position: relative;
+                z-index: 9999;
+            }
 
 
                 /* Qidiruv vidjeti uchun maxsus CSS */
@@ -366,7 +501,7 @@
                             {% if user.is_authenticated %}
                                 {{ user.first_name }} {{ user.last_name }}
                             {% else %}
-                                Mening hisobim
+                                {% trans 'Mening hisobim' %}
                             {% endif %}
                         </span>
                     </span>
@@ -429,7 +564,7 @@
 				</div>
 			</div>
 		</div>
-	</header>
+	</header>	<!-- end header -->
 	<!-- end header -->
 	<aside id="notifications">
 		<div class="container">
@@ -679,11 +814,20 @@
                                     <label class="label">{% trans "Resurs ruxsati" %}: </label>
                                     <span>{{ book.permission }}</span>
                                 </div>
-                                
                                 <div class="product-reference">
-                                    <label class="label">{% trans "Kutubxonalar" %}: </label>
-                                    <span>{{ book.library }}</span>
+                                    <label class="label">{% trans "Kutubxona" %}: </label>
+                                    {% with book.library.first as library %}
+                                        {% if library %}
+                                            <a href="{{ library.location }}" target="_blank">
+                                                {{ library.name }}
+                                            </a>
+                                        {% else %}
+                                            <span>{% trans "Ma'lumot yo'q" %}</span>
+                                        {% endif %}
+                                    {% endwith %}
                                 </div>
+
+
                                 <div class="product-reference">
                                     <label class="label">{% trans "ISBN" %}: </label>
                                     <span itemprop="sku">{{ book.isbn }}</span>
@@ -920,8 +1064,7 @@
 	<!-- end footer  -->
 </main>
 <!-- jQuery va Bootstrap JS yuklash -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script type="text/javascript" src="{% static "js/core.js" %}"></script>
 <script type="text/javascript" src="{% static "js/theme.js" %}"></script>
 <script type="text/javascript" src="{% static "js/front.js" %}"></script>

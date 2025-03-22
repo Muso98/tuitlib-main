@@ -3,10 +3,6 @@
 {% load i18n %}
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<!-- Codezeel added -->
-	<link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-	<link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,700" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="{% static "css/theme.css" %}" type="text/css" media="all">
@@ -25,7 +21,6 @@
 	<link rel="stylesheet" href="{% static "css/custom.css" %}" type="text/css" media="all">
 	<link rel="stylesheet" href="{% static "css/index.css" %}">
 	<link rel="stylesheet" href="{% static "css/loadingspinner.css" %}">
-
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 	      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
 	      crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -295,10 +290,10 @@
 			<div class="header_logo">
 				<a href="{% url "main" %}">
 					<img class="logo img-responsive" src="{% static "img/logo.svg" %}" alt="smarttuit logo">
-				</a>                
+				</a>
 			</div>
-        
-             <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
+
+            <div id="search_widget" class="col-lg-4 col-md-5 col-sm-12 search-widget" data-search-controller-url="{% url 'search' %}">
                 <span class="search_button"></span>
                 <div class="search_toggle">
                     <form method="get" action="{% url 'search' %}">
@@ -313,95 +308,6 @@
                     </form>
                 </div>
             </div>
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                if (window.voiceSearchInitialized) return;
-                window.voiceSearchInitialized = true;
-            
-                const voiceSearchBtn = document.querySelector(".voice-search-btn");
-                const searchInput = document.querySelector("input[name='q']");
-                const searchForm = searchInput.closest("form");
-            
-                if (!voiceSearchBtn || !searchInput || !searchForm) {
-                    console.error("❌ Qidiruv elementi topilmadi.");
-                    return;
-                }
-            
-                let recognition;
-                let isRecording = false;
-            
-                voiceSearchBtn.addEventListener("click", function () {
-                    if (isRecording) {
-                        console.warn("⏳ Ovozli qidiruv allaqachon ishlayapti...");
-                        return;
-                    }
-            
-                    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
-                    if (!window.SpeechRecognition) {
-                        alert("❌ Brauzeringiz ovozli qidiruvni qo‘llab-quvvatlamaydi.");
-                        return;
-                    }
-            
-                    recognition = new SpeechRecognition();
-                    recognition.lang = "uz-UZ"; // **FAQAT O‘ZBEKCHA QIDIRUV**
-                    recognition.interimResults = false;
-                    recognition.maxAlternatives = 1;
-            
-                    isRecording = true;
-                    voiceSearchBtn.classList.add("listening"); // Tugmaga effekt qo‘shish
-                    recognition.start();
-                    console.log("🎤 Ovoz yozish boshlandi...");
-            
-                    recognition.onresult = function (event) {
-                        let transcript = event.results[0][0].transcript;
-                        console.log("✅ Natija:", transcript);
-                        searchInput.value = transcript;
-                        isRecording = false;
-                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
-            
-                        // **Foydalanuvchi sayti qaysi tilda bo‘lsa, shu tilda qidiruv yuboriladi**
-                        let langPrefix = document.documentElement.lang || "uz";
-                        searchForm.action = `/${langPrefix}/search/`;
-                        searchForm.submit();
-                    };
-            
-                    recognition.onspeechend = function () {
-                        console.log("🎤 Ovoz yozish tugadi.");
-                        isRecording = false;
-                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
-                        recognition.stop();
-                    };
-            
-                    recognition.onerror = function (event) {
-                        console.error("❌ Ovozli qidiruvda xatolik:", event.error);
-                        alert("❌ Ovozli qidiruvni amalga oshirib bo‘lmadi! (" + event.error + ")");
-                        isRecording = false;
-                        voiceSearchBtn.classList.remove("listening"); // Effektni olib tashlash
-                    };
-                });
-            });
-            </script>
-        <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // **Dropdown menyular uchun event**
-            $('.dropdown').on('click', function () {
-                $(this).toggleClass('open');
-            });
-        
-            // **Qidiruv tugmasi toggling**
-            $('.search_button').on('click', function () {
-                $('.search_toggle').toggleClass('active');
-            });
-        
-            // **Brauzerga moslash (Agar ishlamasa, jQuery event qo‘shiladi)**
-            if (!$('.dropdown-menu').length) {
-                $('.user-info-title').click(function () {
-                    $(this).next('.dropdown-menu').toggle();
-                });
-            }
-        });
-        </script>
 
             <style>
                 .header_logo {
@@ -416,41 +322,6 @@
                     width: auto; /* Proportsiyani saqlaydi */
                 }
                 
-                   .listening {
-                    color: white !important;
-                    animation: pulse 1s infinite;
-                }
-                
-                @keyframes pulse {
-                    0% { opacity: 1; }
-                    50% { opacity: 0.5; }
-                    100% { opacity: 1; }
-                }
-                /* Dropdown menyular `z-index` ni oshirish */
-                .dropdown-menu {
-                    position: absolute;
-                    z-index: 1050; /* Bootstrap default: 1000 */
-                    background-color: white;
-                }
-                
-                /* Qidiruv tugmasini ochish/yopish uchun toggling */
-                .search_toggle {
-                    display: none;
-                    position: absolute;
-                    top: 40px;
-                    right: 0;
-                    background: #fff;
-                    padding: 10px;
-                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-                    z-index: 1000;
-                }
-                .search_toggle.active {
-                    display: block;
-                }
-
-            </style>
-            
-            <style>
                 /* Qidiruv vidjeti uchun maxsus CSS */
                 #search_widget {
                     position: relative;
@@ -458,7 +329,7 @@
                     max-width: 400px;
                     margin: auto;
                 }
-            
+
                 #search_widget .search_toggle {
                     display: flex;
                     align-items: center;
@@ -467,7 +338,7 @@
                     padding: 5px;
                     border: 1px solid #ddd;
                 }
-            
+
                 #search_widget input[type="text"] {
                     flex: 1;
                     border: none;
@@ -475,7 +346,7 @@
                     padding: 8px;
                     font-size: 16px;
                 }
-            
+
                 #search_widget button {
                     background: #ff0000;
                     border: none;
@@ -484,7 +355,7 @@
                     border-radius: 4px;
                     cursor: pointer;
                 }
-            
+
                 #search_widget button:hover {
                     background: #b30000;
                 }
@@ -494,7 +365,7 @@
                     max-width: 400px;
                     margin: auto;
                 }
-                
+
                 #search_widget .search_toggle {
                     display: flex;
                     align-items: center;
@@ -503,7 +374,7 @@
                     padding: 5px;
                     border: 1px solid #ddd;
                 }
-                
+
                 #search-input {
                     flex: 1;
                     border: none;
@@ -511,7 +382,7 @@
                     padding: 8px;
                     font-size: 16px;
                 }
-                
+
                 #search-form button[type="submit"] {
                     background: #ff0026;
                     border: none;
@@ -520,11 +391,11 @@
                     border-radius: 4px;
                     cursor: pointer;
                 }
-                
+
                 #search-form button[type="submit"]:hover {
                     background: #b30000;
                 }
-                
+
                 .voice-search-btn {
                     border: none;
                     background-color: transparent;
@@ -537,13 +408,13 @@
                     top: 40px; /* Logoning ustida chiqib qolmasligi uchun */
                     right: 50px; /* O‘ng tomonda chiqishi uchun */
                 }
-                
+
                 .notification-icon {
                     font-size: 20px;
                     text-decoration: none;
                     position: relative;
                 }
-                
+
                 .notification-badge {
                     position: absolute;
                     top: -10px;
@@ -560,11 +431,11 @@
                         top: 15px; /* Biroz pastroqda chiqishi uchun */
                         right: 70px; /* O‘ngga yaqinroq joylashishi uchun */
                     }
-                
+
                     .notification-icon {
                         font-size: 18px; /* Mobil ekranda biroz kichikroq */
                     }
-                
+
                     .notification-badge {
                         top: -5px;
                         right: -5px;
@@ -575,14 +446,14 @@
             </style>
             <div class="col-md-4 text-center notifications-wrapper">
                 <a href="{% url 'notifications' %}" class="notification-icon">
-                    📩  
+                    📩
                     {% if unread_notifications_count > 0 %}
                         <span class="notification-badge text-danger">({{ unread_notifications_count }})</span>
                     {% endif %}
                 </a>
             </div>
 
-            
+
 			<!-- /Block search module TOP -->
 			<div class="d-flex align-items-center gap-3">
                 <div class="user-info dropdown js-dropdown">
@@ -654,7 +525,7 @@
 				</div>
 			</div>
 		</div>
-	</header>
+	</header>	
 	<!-- end header -->
 	<aside id="notifications">
 		<div class="container">
@@ -1054,8 +925,6 @@
 	<!-- end footer  -->
 </main>
 <!-- jQuery va Bootstrap JS yuklash -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{% static "js/core.js" %}"></script>
 <script type="text/javascript" src="{% static "js/theme.js" %}"></script>
 <script type="text/javascript" src="{% static "js/front.js" %}"></script>
@@ -1068,7 +937,6 @@
 <script type="text/javascript" src="{% static "js/front.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery.fancybox.js" %}"></script>
-<script type="text/javascript" src="{% static "js/ps_searchbar.js" %}"></script>
 <script type="text/javascript" src="{% static "js/ps_shoppingcart.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery.nivo.slider.js" %}"></script>
 <script type="text/javascript" src="{% static "js/parallax.js" %}"></script>

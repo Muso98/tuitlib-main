@@ -797,11 +797,11 @@ msgstr "Popular monographs"
 
 #: .\templates\myaccount.html:660
 msgid "Bosh Sahifa"
-msgstr "Bosh Sahifa"
+msgstr "Home Page"
 
 #: .\templates\myaccount.html:691
 msgid "Sizning hisobingiz"
-msgstr "Your request has been rejected."
+msgstr "Your account"
 
 #: .\templates\myaccount.html:705
 msgid "Ma`lumotlarni tahrirlash"

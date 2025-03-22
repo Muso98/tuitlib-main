@@ -380,26 +380,7 @@
                 });
             });
             </script>
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // **Dropdown menyular uchun event**
-                $('.dropdown').on('click', function () {
-                    $(this).toggleClass('open');
-                });
             
-                // **Qidiruv tugmasi toggling**
-                $('.search_button').on('click', function () {
-                    $('.search_toggle').toggleClass('active');
-                });
-            
-                // **Brauzerga moslash (Agar ishlamasa, jQuery event qo‘shiladi)**
-                if (!$('.dropdown-menu').length) {
-                    $('.user-info-title').click(function () {
-                        $(this).next('.dropdown-menu').toggle();
-                    });
-                }
-            });
-            </script>
 
             <style>
                 .header_logo {
@@ -659,19 +640,87 @@
 	</aside>
 	<section id="wrapper">
 		<nav data-depth="2" class="breadcrumb">
-			<div class="container">
-				<form action="{% url "search" %}" id="search-form">
-					<input name="q" type="text" placeholder="Qidiruv" autocomplete="off" autofocus>
-					<a id="submit-url" href="{% url "recog" %}"></a>
-					<button type="button" id="start-recording"><i id="mic-icon" class="fas fa-microphone"></i></button>
-					<!-- Button to start recording -->
-					<button type="button" id="stop-recording" style="display: none;"><i
-							class="fas fa-microphone-slash"></i></button>
-					<!-- Button to stop recording -->
-				</form>
-				<p class="info"></p>
-			</div>
-		</nav>
+            <div id="loading-spinner" class="spinner-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div class="container">
+                <form action="{% url 'search' %}" id="search-form">
+                    <input name="q" id="search-input" type="text" placeholder="Qidirish..." autocomplete="off" autofocus>
+                    <button type="submit"></button>
+                    <button type="button" id="start-recording"><i id="mic-icon" class="fas fa-microphone"></i></button>
+                    <button type="button" id="stop-recording" style="display: none;"><i class="fas fa-microphone-slash"></i></button>
+                </form>
+                <p class="info"></p>
+            </div>
+        </nav>
+        
+        <script>
+        document.getElementById("search-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            
+            let query = document.getElementById("search-input").value.trim();
+            if (!query) {
+                alert("❌ Iltimos, qidiruv so‘rovini kiriting!");
+                return;
+            }
+        
+            document.getElementById("loading-spinner").style.display = "block";
+        
+            let api_url = "/ru/search/?q=" + encodeURIComponent(query);
+            
+            fetch(api_url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("loading-spinner").style.display = "none";
+                    document.querySelector("body").innerHTML = html; // Sahifani yangilaydi
+                })
+                .catch(error => {
+                    document.getElementById("loading-spinner").style.display = "none";
+                    console.error("Xato:", error);
+                });
+        });
+        
+        // Ovozli qidiruvni ishga tushirish
+        let recognition;
+        document.getElementById("start-recording").addEventListener("click", function () {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("❌ Sizning brauzeringiz ovozli qidiruvni qo‘llab-quvvatlamaydi.");
+                return;
+            }
+        
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = "uz-UZ";
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+        
+            recognition.start();
+            document.getElementById("mic-icon").classList.add("listening");
+            document.getElementById("stop-recording").style.display = "inline";
+            document.getElementById("start-recording").style.display = "none";
+        
+            recognition.onresult = function (event) {
+                let transcript = event.results[0][0].transcript;
+                document.getElementById("search-input").value = transcript;
+            };
+        
+            recognition.onerror = function () {
+                alert("❌ Ovozli qidiruvda xatolik yuz berdi!");
+            };
+        
+            recognition.onend = function () {
+                document.getElementById("mic-icon").classList.remove("listening");
+                document.getElementById("stop-recording").style.display = "none";
+                document.getElementById("start-recording").style.display = "inline";
+            };
+        });
+        
+        // Ovozli qidiruvni to‘xtatish
+        document.getElementById("stop-recording").addEventListener("click", function () {
+            if (recognition) {
+                recognition.stop();
+            }
+        });
+        </script>
 
 		<div class="container">
 			<div id="columns_inner">
@@ -715,109 +764,54 @@
 						<input id="getTokenId" name="getTokenId" value="8bd9f42887793a736c2d38fd8a0dceff" type="hidden">
 
 						<section id="products">
-							<div id="">
-								<div id="js-product-list-top" class="products-selection">
-									<div class="col-md-6 hidden-md-down total-products">
-										<ul class="display hidden-xs grid_list">
-											<li id="list"><a href="#" title="List">List</a></li>
-										</ul>
-										<p>{{ requests.paginator.count }}</p>
-									</div>
-									<div class="col-md-6">
-
-									</div>
-									<div class="col-sm-12 hidden-lg-up showing">
-										Showing 1-12 of 15 item(s)
-									</div>
-								</div>
-							</div>
-{#							loading spinner#}
-							<div id="loading-spinner" class="spinner-container">
-								<div class="spinner"></div>
-							</div>
-
-							<div id="">
-								<div id="js-product-list">
-									<div class="products row">
-										<ul class="product_list gridcount list row">
-											{% for download in requests %}
-												<li class="product_item col-lg-2 col-xs-12">
-													<div class="product-description center-block col-xs-4 col-xs-7 col-md-8">
-														<h3 class="h3 news_books" itemprop="name">
-															<a href="{% url "book" download.book.id %}">{{ download.book.name }}</a>
-														</h3>
-
-														<div class="product-detail" itemprop="description">
-															<p>{% trans "Authors" %}: {{ download.book.author }}</p>
-									                        <p>{% trans "Key words" %}: {{ download.book.key_words }}</p>
-									                        <p>{% trans "Published year" %}: {{ download.book.published_year }}</p>
-														</div>
-														<div class="outer-functional">
-															<div class="functional-buttons" style="text-align: left;">
-																<div class="product-actions">
-																	<form action="" method="post"
-																	      class="add-to-cart-or-refresh">
-																		<a class="btn btn-primary add-to-cart"
-																		   href="{% url "book" download.book.id %}">
-																			{% trans "Batafsil" %}
-																		</a>
-																	</form>
-																</div>
-
-															</div>
-														</div>
-													</div>
-												</li>
-											{% endfor %}
-										</ul>
-									</div>
-									<nav class="pagination">
-										<div class="col-md-4">
-											Resurslar: {{ requests.number }}-{{ requests.paginator.num_pages }}
-										</div>
-										<div class="col-md-8">
-											<ul class="page-list clearfix text-xs-right">
-												<li>
-													{% if requests.has_previous %}
-														<a
-																rel=""
-																href="?page={{ requests.previous_page_number }}"
-																class=""
-														>
-															<i class="fa fa-long-arrow-left"></i>
-														</a>
-													{% endif %}
-												</li>
-												<li class="current">
-													<a
-
-															href="?page={{ requests.number }}"
-															class=""
-													>
-														{{ requests.number }}
-													</a>
-												</li>
-
-												<li>
-													{% if requests.has_next %}
-														<a
-																rel="next"
-																href="?page={{ requests.next_page_number }}"
-																class=""
-														>
-															<i class="fa fa-long-arrow-right"></i>
-														</a>
-													{% endif %}
-												</li>
-											</ul>
-										</div>
-									</nav>
-								</div>
-							</div>
-							<div id="js-product-list-bottom">
-								<div id="js-product-list-bottom"></div>
-							</div>
-						</section>
+                            <div id="js-product-list">
+                                {% if requests %}
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>{% trans "Kitob nomi" %}</th>
+                                                <th>{% trans "Muallif" %}</th>
+                                                <th>{% trans "Tugri so‘zlar" %}</th>
+                                                <th>{% trans "Nashr yili" %}</th>
+                                                <th>{% trans "Harakat" %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for download in requests %}
+                                            <tr>
+                                                <td>
+                                                    <a href="{% url 'book' download.book.id %}">
+                                                        {{ download.book.name }}
+                                                    </a>
+                                                </td>
+                                                <td>{{ download.book.author }}</td>
+                                                <td>{{ download.book.key_words }}</td>
+                                                <td>{{ download.book.published_year }}</td>
+                                                <td>
+                                                    <a class="btn btn-info btn-sm" href="{% url 'book' download.book.id %}">
+                                                        {% trans "Batafsil" %}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {% else %}
+                                <div class="alert alert-warning">
+                                    <h4>{% trans "Siz ilgari qidirgan, lekin topilmagan kitoblar:" %}</h4>
+                                    
+                                    <ul class="list-group">
+                                        {% for book in not_found_books %}
+                                            <li class="list-group-item">{{ book }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </section>
+				
 					</section>
 				</div>
 			</div>

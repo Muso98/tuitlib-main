@@ -367,28 +367,10 @@
                 });
             });
             </script>
-        <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // **Dropdown menyular uchun event**
-            $('.dropdown').on('click', function () {
-                $(this).toggleClass('open');
-            });
         
-            // **Qidiruv tugmasi toggling**
-            $('.search_button').on('click', function () {
-                $('.search_toggle').toggleClass('active');
-            });
-        
-            // **Brauzerga moslash (Agar ishlamasa, jQuery event qo‘shiladi)**
-            if (!$('.dropdown-menu').length) {
-                $('.user-info-title').click(function () {
-                    $(this).next('.dropdown-menu').toggle();
-                });
-            }
-        });
-        </script>
 
             <style>
+                
                 .header_logo {
                     display: flex;
                     justify-content: center; /* GORIZONTAL MARKAZ */
@@ -1108,30 +1090,28 @@
 </main>
 {% block javascript %}
     <!-- jQuery va Bootstrap JS yuklash -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="{% static "js/core.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/theme.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/front.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/jquery.rating.pack.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/jquery.textareaCounter.plugin.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/myprestacomments.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/stfeature_compare.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/stfeature_wishlist.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/czcouponpop.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/front.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/jquery.fancybox.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/ps_searchbar.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/ps_shoppingcart.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/jquery.nivo.slider.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/parallax.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/owl.carousel.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/totalstorage.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/lightbox.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/lazysizes.min.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/custom.js" %}"></script>
-	<script src="{% static "js/index.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/core.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/theme.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/front.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.rating.pack.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.textareaCounter.plugin.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/myprestacomments.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/stfeature_compare.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/stfeature_wishlist.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/czcouponpop.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/front.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.fancybox.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/ps_shoppingcart.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.nivo.slider.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/parallax.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/owl.carousel.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/totalstorage.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/lightbox.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/lazysizes.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/custom.js" %}"></script>
+    <script src="{% static "js/index.js" %}"></script>
+    
 {% endblock %}
 </body>
 </html>
